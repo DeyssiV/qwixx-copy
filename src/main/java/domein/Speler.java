@@ -18,4 +18,8 @@ public class Speler {
   }
 
   // TODO: controleermethodes toevoegen
+  private void controleerGebruikersnaam(String gebruikersnaam){
+
+  }
+
 }
