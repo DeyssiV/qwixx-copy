@@ -6,6 +6,7 @@ public class Speler {
 
   public Speler(String gebruikersnaam, int geboortejaar) {
         //TODO: controleermethodes aanroepen
+        controleerGebruikersnaam(gebruikersnaam);
         this.gebruikersnaam = gebruikersnaam;
         this.geboortejaar = geboortejaar;
   }
