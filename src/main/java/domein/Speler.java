@@ -5,7 +5,7 @@ public class Speler {
   private final int geboortejaar;
 
   public Speler(String gebruikersnaam, int geboortejaar) {
-        // TODO: controleermethodes aanroepen
+        //TODO: controleermethodes aanroepen
         this.gebruikersnaam = gebruikersnaam;
         this.geboortejaar = geboortejaar;
   }
@@ -17,7 +17,7 @@ public class Speler {
     return geboortejaar;
   }
 
-  // TODO: controleermethodes toevoegen
+  //TODO: controleermethodes toevoegen
   private void controleerGebruikersnaam(String gebruikersnaam){
 
   }
