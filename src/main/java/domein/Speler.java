@@ -19,8 +19,14 @@ public class Speler {
   }
 
   //TODO: controleermethodes toevoegen
-  private void controleerGebruikersnaam(String gebruikersnaam){
-
+  private void controleerGebruikersnaam(String gebruikersnaam)
+  {
+    if (gebruikersnaam == null || gebruikersnaam.isBlank())
+        throw new IllegalArgumentException("Gebruikersnaam moet ingevuld zijn!");
+    else if (gebruikersnaam.length() < 5)
+    {
+      throw new IllegalArgumentException("Gebruikersnaam moet minstens 5 karakters hebben!");
+    }
   }
 
 }
