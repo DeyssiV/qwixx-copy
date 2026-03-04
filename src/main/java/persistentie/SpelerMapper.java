@@ -29,11 +29,19 @@ public class SpelerMapper {
     try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
          PreparedStatement query = conn.prepareStatement(GEEF_SPELER)) {
       // TODO: Query variabelen invullen en uitvoeren, speler object aanmaken (Tip: kijk in het voorbeeldproject dobbelsteen)
-      throw new UnsupportedOperationException("Not yet implemented");
+        query.setString(1, gebruikersnaam);
+        try (ResultSet rs =query.executeQuery()){
+            if(rs.next()){
+                String naam = rs.getString("gebruikersnaam");
+                int geboortejaar = rs.getInt("geboortejaar");
+                speler = new Speler(naam, geboortejaar);
+            }
+        }
+
     } catch (SQLException ex) {
       throw new RuntimeException(ex);
     }
-    // TODO: gevonden Speler of null retourneren
+   return speler; // TODO: gevonden Speler of null retourneren
   }
 
   public Speler geefSpelerDummy(String gebruikersnaam) {
