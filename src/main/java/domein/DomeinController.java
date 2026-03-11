@@ -1,7 +1,10 @@
 package domein;
 
+import java.util.List;
+
 public class DomeinController {
   private final SpelerRepository spelerRepository;
+  private Speler speler;
 
   public DomeinController() {
     spelerRepository = new SpelerRepository();
