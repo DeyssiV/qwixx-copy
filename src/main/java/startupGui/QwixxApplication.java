@@ -57,6 +57,8 @@ public class QwixxApplication extends Application {
         System.out.println("ERROR: " + e.getMessage());
         invoer.nextLine(); //buffer leegmaken
       }
+
+      
     }
   }
 
