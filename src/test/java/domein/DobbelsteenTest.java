@@ -9,5 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DobbelsteenTest
 {
+    @ParameterizedTest
+    @ValueSource(strings = {"wit", "rood", "blauw", "geel", "groen"})
+    void maakDobbelsteen_GeldigeKleur_MaaktDobbelsteen(String kleur) {
+        Dobbelsteen d = new Dobbelsteen(kleur);
+        assertEquals(kleur, d.getKleur());
+    }
 
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"   ", "    ", "bruin", "zwart", "a"})
+    void maakDobbelsteen_OngeldigeKleur_WerptException(String kleur) {
+        assertThrows(IllegalArgumentException.class, () -> new Dobbelsteen(kleur));
+    }
 }
