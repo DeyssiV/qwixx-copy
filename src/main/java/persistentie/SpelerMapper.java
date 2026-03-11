@@ -11,7 +11,7 @@ public class SpelerMapper {
   private static final String INSERT_SPELER = "INSERT INTO G85.speler (gebruikersnaam, geboortejaar) VALUES (?, ?)";
 
   // TODO: PreparedStatement Query invullen (Tip: kijk in het voorbeeldproject dobbelsteen)
-  private static final String GEEF_SPELER = "SELECT gebruikersnaam, geboortejaar FROM Speler WHERE gebruikersnaam = ? AND geboortejaar = ?";
+  private static final String GEEF_SPELER = "SELECT gebruikersnaam, geboortejaar FROM Speler WHERE gebruikersnaam = ?";
 
   private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar FROM Speler";
 
@@ -21,6 +21,8 @@ public class SpelerMapper {
       // TODO: Query variabelen invullen en uitvoeren, gebruik Speler (Tip: kijk in het voorbeeldproject dobbelsteen)
       query.setString(1, speler.getGebruikersnaam());
       query.setInt(2, speler.getGeboortejaar());
+
+        query.executeUpdate(); //Zorgt ervoor dat het in de database komt
       //throw new UnsupportedOperationException("Not yet implemented");
     } catch (SQLException ex) {
       throw new RuntimeException(ex);
@@ -33,19 +35,19 @@ public class SpelerMapper {
          PreparedStatement query = conn.prepareStatement(GEEF_SPELER)) {
       // TODO: Query variabelen invullen en uitvoeren, speler object aanmaken (Tip: kijk in het voorbeeldproject dobbelsteen)
         query.setString(1, gebruikersnaam);
-        try (ResultSet rs =query.executeQuery()){
+        try (ResultSet rs = query.executeQuery()){
             if(rs.next()){
                 String naam = rs.getString("gebruikersnaam");
                 int geboortejaar = rs.getInt("geboortejaar");
                 speler = new Speler(naam, geboortejaar);
+                return speler;
             }
         }
 
     } catch (SQLException ex) {
       throw new RuntimeException(ex);
     }
-
-   return speler; // TODO: gevonden Speler of null retourneren
+   return null; // TODO: gevonden Speler of null retourneren
   }
 
     public List<Speler> geefAlleSpelers() {

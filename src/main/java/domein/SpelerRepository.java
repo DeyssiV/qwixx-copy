@@ -19,8 +19,8 @@ public class SpelerRepository {
     if (bestaatSpeler(speler.getGebruikersnaam())){
       throw new GebruikersnaamInGebruikException();
     }
-
     mapper.voegToe(speler);
+    spelers.add(speler);
   }
 
   private boolean bestaatSpeler(String gebruikersnaam){
