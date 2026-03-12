@@ -11,9 +11,9 @@ public class SpelerMapper {
   private static final String INSERT_SPELER = "INSERT INTO G85.speler (gebruikersnaam, geboortejaar) VALUES (?, ?)";
 
   // TODO: PreparedStatement Query invullen (Tip: kijk in het voorbeeldproject dobbelsteen)
-  private static final String GEEF_SPELER = "SELECT gebruikersnaam, geboortejaar FROM Speler WHERE gebruikersnaam = ?";
+  private static final String GEEF_SPELER = "SELECT gebruikersnaam, geboortejaar FROM speler WHERE gebruikersnaam = ?";
 
-  private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar FROM Speler";
+  private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar FROM speler";
 
   public void voegToe(Speler speler) {
     try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
