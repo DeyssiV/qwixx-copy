@@ -50,6 +50,10 @@ public class Speler implements Comparable<Speler> {
     return scoreBlad.getScore();
   }
 
+  public void kiesRij(Rij rij){
+    //TODO
+  }
+
   //Doordat we de interface Comparable implementeren moeten we de compareTo methode overriden
   //Dit doen we om later makkelijk de spelers te kunnen sorteren obv de gewonnen score en zo de winnaar makkelijk aan te duiden
   @Override

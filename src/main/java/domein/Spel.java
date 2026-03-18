@@ -6,6 +6,7 @@ import java.util.List;
 public class Spel {
     List<Speler> spelers;
     List<Dobbelsteen> dobbelstenen;
+    //Dobbelsteen[] dobbelstenen = new Dobbelsteen[6];
 
     public Spel(List<Speler> spelers) {
         this.spelers = spelers;
