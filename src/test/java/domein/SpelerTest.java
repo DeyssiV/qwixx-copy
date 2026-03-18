@@ -44,7 +44,7 @@ class SpelerTest {
     //test om de gebruikersnaam te controleren (ONGELDIG)
     @ParameterizedTest
     @NullAndEmptySource //-> levert de notatie van lege string "" en null automatisch mee
-    @ValueSource(strings = {"   ", "    ", "abcd", "ab"}) //-> ongeldige gebruikersnaam = spaties, tabs, net minder dan ondergrens (4), minder dan ondergrens(2)
+    @ValueSource(strings = {"   ", "    ", "abcd", "ab"}) //-> ongeldige gebruikersnaam = spaties, tabs, net minder dan ondergrens (4), minder dan ondergrens(2) # spaties kan te kort zijn
     void maakSpeler_NaamOngeldigOfTeKort_WerptException(String naam) {
         int geldigGeboortejaar = huidigJaar - 10;
         assertThrows(IllegalArgumentException.class, () -> new Speler(naam, geldigGeboortejaar));

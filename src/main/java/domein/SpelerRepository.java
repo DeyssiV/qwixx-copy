@@ -16,14 +16,16 @@ public class SpelerRepository {
   }
 
   public void voegToe(Speler speler) {
-    if (bestaatSpeler(speler.getGebruikersnaam())){
+    if (bestaatSpeler(speler.getGebruikersnaam())) {
       throw new GebruikersnaamInGebruikException();
     }
     mapper.voegToe(speler);
     spelers.add(speler);
   }
 
-  private boolean bestaatSpeler(String gebruikersnaam){
-    return mapper.geefSpelerDummy(gebruikersnaam) != null;
+  private boolean bestaatSpeler(String gebruikersnaam) {
+    for (Speler speler : spelers)
+      return gebruikersnaam.equals(speler.getGebruikersnaam());
+    return false;
   }
 }

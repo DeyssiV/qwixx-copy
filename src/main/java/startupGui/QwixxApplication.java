@@ -42,8 +42,11 @@ public class QwixxApplication extends Application {
         System.out.print("Geef gebruikersnaam in (of 'stop' als je wilt stoppen):"); //gebruikersnaam vragen en laten invullen in console met SCANNER
         String gebrNaam = invoer.next();
 
-        if (gebrNaam.equalsIgnoreCase("stop")) // elke mogelijke combi voor stop zoals STOP of Stop of stop door equalsIgnoreCase
+        if (gebrNaam.equalsIgnoreCase("stop")) {// elke mogelijke combi voor stop zoals STOP of Stop of stop door equalsIgnoreCase
           stoppen = true;
+          break;
+        }
+
 
         System.out.print("Geef geboortejaar in:"); //geboortejaar vragen en laten invullen in console met SCANNER INDIEN STOP NIET INGEVULD IS
         int gebJaar = invoer.nextInt();
@@ -58,7 +61,7 @@ public class QwixxApplication extends Application {
         invoer.nextLine(); //buffer leegmaken
       }
 
-      
+
     }
   }
 
