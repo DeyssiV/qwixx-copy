@@ -14,7 +14,7 @@ public class Speler implements Comparable<Speler> {
         controleerGeboortejaar(geboortejaar);
         this.gebruikersnaam = gebruikersnaam;
         this.geboortejaar = geboortejaar;
-        this.scoreBlad = new ScoreBlad(); // Elke speler wordt eigen scoreblad aan toegewezen
+        this.scoreBlad = new ScoreBlad(gebruikersnaam); // Elke speler wordt eigen scoreblad aan toegewezen
   }
 
   public String getGebruikersnaam() {
