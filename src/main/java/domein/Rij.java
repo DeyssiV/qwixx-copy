@@ -6,6 +6,7 @@ import java.util.List;
 public class Rij {
     private Kleur kleur;
     private boolean gesloten;
+    private ScoreBlad scoreBlad;
     private List<Vakje> vakjes;
     //private Vakje[] vakjes = new Vakje[11];
 }
