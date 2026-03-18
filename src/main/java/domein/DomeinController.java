@@ -28,4 +28,18 @@ public class DomeinController {
       spelers.add(speler);
     }
   }
+
+  public void startBeurt(){
+
+  }
+
+  public void kiesRij(Rij rij){
+
+  }
+
+  public void kiesCombinatie(){
+
+  }
+
+
 }
