@@ -28,25 +28,24 @@ public class QwixxApplication extends Application {
   public QwixxApplication(DomeinController dc) {this.dc = dc;}
 
   public void start(){
-    List<String> bestaandeSpelers = dc.geefGeregistreerdeSpelers();
+    List<String> bestaandeSpelers = dc.geefGeregistreerdeSpelers(); //lijst van de spelers halen in de repo via dc
 
+
+    //er moeten minimaal 2 spelers zijn om qwixx te spelen
     if (bestaandeSpelers.size()<2) {
       System.out.println("Er zijn te weinig spelers in de database. Je moet eerst spelers registreren.");
+      //door te weinig spelers moet eerst de registratie doorgaan
       registreerSpelers();
       startQwixx();
     } else {
       System.out.printf("Er zijn al %d spelers bekend in het systeem.%n", bestaandeSpelers.size());
       System.out.print("Wil je nieuwe spelers registreren Y(es)/N(o): ");
       String keuze = invoer.next();
-
-      if (keuze.equalsIgnoreCase("y")) {
+      if (keuze.equalsIgnoreCase("y")) { //als gebruiker nog spelers wenst toe te voegen
         registreerSpelers();
-
       }
       startQwixx();
     }
-
-
   }
 
   private void registreerSpelers() {
@@ -88,39 +87,40 @@ public class QwixxApplication extends Application {
         List<String> beschikbareNamen = dc.geefGeregistreerdeSpelers();
         List<String> gekozenNamen = new ArrayList<>();
 
-        /*if (beschikbareNamen.size()<2){
+        //TODO
+        /* if (beschikbareNamen.size()<2){
           //exception
-        }*/
+        } */
 
+        //toon lijst van beschikbare spelers met hun index in de list als nummering
         System.out.println("Beschikbare spelers:");
         for (String naam : beschikbareNamen) {
           System.out.println(beschikbareNamen.indexOf(naam) + " " + naam);
         }
         for (int i = 1; i <= beschikbareNamen.size(); i++){
-          if (i>=2){
+          if (i>=2){ //zodra je al 2 spelers hebt, krijgt de gebruiker keuze om spelers nog toe te voegen
             System.out.print("Wil je nog spelers toevoegen? Y(es)/N(o): ");
             String keuzeYN = invoer.next();
             if (keuzeYN.equalsIgnoreCase("n")) {
-
               break;
             }
           }
-          if (i == 5){
+          if (i >= 5){ //max 5 spelers
             break;
           }
+          //telkens nieuwe spelers vragen in de for-lus tot max index bound of break.
           System.out.print("Kies jouw "+ i +"e speler: ");
           int keuzeSpeler = invoer.nextInt();
           gekozenNamen.add(beschikbareNamen.get(keuzeSpeler));
-
         }
+        //afsluiter
         System.out.println("Ok, spelers zijn gekozen!");
         System.out.println("Dit zijn je spelers: " + gekozenNamen);
         stoppen = true;
-      } else if (antwoord.equalsIgnoreCase("n")) {
+
+      } else { //in geval dat de gebruiker niet Qwixx wilt spelen
         System.out.println("Ok, fijne dag nog!");
         stoppen = true;
-      } else {
-        System.out.println("Foutive invoer, probeer opnieuw!");
       }
     }
 
