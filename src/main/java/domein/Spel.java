@@ -1,5 +1,7 @@
 package domein;
 
+import utils.Kleur;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +33,22 @@ public class Spel {
         return dobbelsteen.getKleur();
     }
 
-    public void toonDobbelstenen(int waarde, Kleur kleur){
-        waarde = geefWaardeDobbelsteen();
-        kleur = geefKleurDobbelsteen();
+    public List<Dobbelsteen> toonDobbelstenen(){
+        int waarde = geefWaardeDobbelsteen();
+        Kleur kleur = geefKleurDobbelsteen();
+        for (Dobbelsteen dobbelsteen:dobbelstenen){
+            dobbelstenen.add(dobbelsteen);
+        }
+        return dobbelstenen;
+
     }
 
-    //TODO : (deyssi) ik zit hier vast, ik weet ni helemaal hoe ik een witte dobbelsteen kan opvragen
     public int toonSomWaardeWitteDobbelstenenEnScoreblad(){
         return geefWaardeDobbelsteen() + scoreBlad.getScore();
     }
 
-    //TODO
-    public void toonAlleMogelijkeCombinaties(){
+    public List<Integer> toonAlleMogelijkeCombinaties(){
+
 
     }
 

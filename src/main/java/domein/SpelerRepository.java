@@ -15,6 +15,10 @@ public class SpelerRepository {
     spelers = mapper.geefAlleSpelers();
   }
 
+  public Speler geefSpeler(String gebruikersnaam){
+    return mapper.geefSpeler(gebruikersnaam);
+  }
+
   public List<Speler> geefSpelersLijst(){
     return spelers;
   }

@@ -58,6 +58,6 @@ public class Speler implements Comparable<Speler> {
   //Dit doen we om later makkelijk de spelers te kunnen sorteren obv de gewonnen score en zo de winnaar makkelijk aan te duiden
   @Override
   public int compareTo(Speler andereSpeler) {
-    return Integer.compare(this.getScore(), andereSpeler.getScore());
+    return Integer.compare(andereSpeler.getScore(), this.getScore());
   }
 }

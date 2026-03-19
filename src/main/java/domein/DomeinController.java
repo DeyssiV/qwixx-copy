@@ -1,6 +1,7 @@
 package domein;
 
 import persistentie.SpelerMapper;
+import utils.Kleur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,19 @@ public class DomeinController {
     List<Speler> spelers = new ArrayList<>();
 
     for (String gebruikersNaam:gebruikersNamen){
-      Speler speler = spelerMapper.geefSpeler(gebruikersNaam);
+      Speler speler = spelerRepository.geefSpeler(gebruikersNaam);
       spelers.add(speler);
     }
   }
 
   public void startBeurt(){
-
+    int waarde = spel.geefWaardeDobbelsteen();
+    Kleur kleur = spel.geefKleurDobbelsteen();
+    System.out.println(spel.dobbelstenen);
   }
 
-  public void kiesRij(Rij rij){
+  public void kiesRij(Rij rij){ //TODO Rij mag niet meegegeven worden
+
 
   }
 

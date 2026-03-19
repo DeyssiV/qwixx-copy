@@ -1,8 +1,6 @@
 package startupGui;
 
 import domein.DomeinController;
-import domein.Speler;
-import domein.SpelerRepository;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -25,6 +23,7 @@ public class QwixxApplication extends Application {
 
   private final DomeinController dc;
   Scanner invoer = new Scanner(System.in);
+  List<String> gekozenNamen;
   public QwixxApplication(DomeinController dc) {this.dc = dc;}
 
   public void start(){
@@ -85,7 +84,7 @@ public class QwixxApplication extends Application {
 
       if (antwoord.equalsIgnoreCase("y")) {
         List<String> beschikbareNamen = dc.geefGeregistreerdeSpelers();
-        List<String> gekozenNamen = new ArrayList<>();
+        gekozenNamen = new ArrayList<>();
 
         //TODO
         /* if (beschikbareNamen.size()<2){
@@ -123,6 +122,14 @@ public class QwixxApplication extends Application {
         stoppen = true;
       }
     }
+
+  }
+
+  public void speelBeurt(){
+      for (String gekozenNaman : gekozenNamen) {
+          System.out.println("Speler :" + gekozenNaman + " is aan de beurt.");
+          dc.startBeurt();
+      }
 
   }
 
