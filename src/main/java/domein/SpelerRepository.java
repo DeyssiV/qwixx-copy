@@ -15,6 +15,10 @@ public class SpelerRepository {
     spelers = mapper.geefAlleSpelers();
   }
 
+  public List<Speler> geefSpelersLijst(){
+    return spelers;
+  }
+
   public void voegToe(Speler speler) {
     if (bestaatSpeler(speler.getGebruikersnaam())) {
       throw new GebruikersnaamInGebruikException();

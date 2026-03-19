@@ -9,7 +9,15 @@ public class DomeinController {
   private final SpelerRepository spelerRepository;
   private Speler speler;
   private Spel spel;
-  private SpelerMapper sm;
+  private SpelerMapper spelerMapper;
+
+  public List<String> geefGeregistreerdeSpelers() {
+    List<String> mogelijkeSpeler = new ArrayList<>();
+    for (Speler speler : spelerRepository.geefSpelersLijst()) {
+      mogelijkeSpeler.add(speler.getGebruikersnaam());
+    }
+    return mogelijkeSpeler;
+  }
 
   public DomeinController() {
     spelerRepository = new SpelerRepository();
@@ -24,7 +32,7 @@ public class DomeinController {
     List<Speler> spelers = new ArrayList<>();
 
     for (String gebruikersNaam:gebruikersNamen){
-      Speler speler = sm.geefSpeler(gebruikersNaam);
+      Speler speler = spelerMapper.geefSpeler(gebruikersNaam);
       spelers.add(speler);
     }
   }
