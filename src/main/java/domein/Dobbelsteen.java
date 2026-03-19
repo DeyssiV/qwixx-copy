@@ -23,6 +23,8 @@ public class Dobbelsteen {
     }
 
 
+    //waarde ophalen van de dobbelsteen
+    //-> welke waarde als de waarde eerst moet bepaald worden door het rollen van dobbelsteen??
     public int getWaarde() {
         return waarde;
     }
