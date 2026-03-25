@@ -1,5 +1,7 @@
 package domein;
 
+import dtos.SpelDTO;
+import dtos.SpelerDTO;
 import persistentie.SpelerMapper;
 import utils.Kleur;
 
@@ -51,6 +53,16 @@ public class DomeinController {
 
   public void kiesCombinatie(){
 
+  }
+
+  public SpelDTO geefSpelDTO()
+  {
+    return new SpelDTO(spel.getSpelers(),spel.getDobbelstenen(),spel.getDobbelsteen(),spel.getScoreBlad());
+  }
+
+  public SpelerDTO geefSpelerDTO()
+  {
+    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
   }
 
 

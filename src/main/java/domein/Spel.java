@@ -1,5 +1,6 @@
 package domein;
 
+import dtos.SpelDTO;
 import utils.Kleur;
 
 import java.util.ArrayList;
@@ -25,6 +26,25 @@ public class Spel {
         dobbelstenen.add(new Dobbelsteen(Kleur.BLAUW));
     }
 
+    public List<Speler> getSpelers()
+    {
+        return spelers;
+    }
+
+    public List<Dobbelsteen> getDobbelstenen()
+    {
+        return dobbelstenen;
+    }
+
+    public Dobbelsteen getDobbelsteen() {
+        return dobbelsteen;
+    }
+
+    public ScoreBlad getScoreBlad()
+    {
+        return scoreBlad;
+    }
+
     public int geefWaardeDobbelsteen(){
         return dobbelsteen.getWaarde();
     }
@@ -42,6 +62,8 @@ public class Spel {
 //        return dobbelstenen;
 //
 //    }
+
+
 
     public List<Dobbelsteen> toonDobbelstenen(int waarde, Kleur kleur) {
         if (kleur == null) {
