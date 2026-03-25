@@ -33,24 +33,31 @@ public class Spel {
         return dobbelsteen.getKleur();
     }
 
-    public List<Dobbelsteen> toonDobbelstenen(){
-        int waarde = geefWaardeDobbelsteen();
-        Kleur kleur = geefKleurDobbelsteen();
-        for (Dobbelsteen dobbelsteen:dobbelstenen){
-            dobbelstenen.add(dobbelsteen);
-        }
-        return dobbelstenen;
+//    public List<Dobbelsteen> toonDobbelstenen(){
+//        int waarde = geefWaardeDobbelsteen();
+//        Kleur kleur = geefKleurDobbelsteen();
+//        for (Dobbelsteen dobbelsteen:dobbelstenen){
+//            dobbelstenen.add(dobbelsteen);
+//        }
+//        return dobbelstenen;
+//
+//    }
 
+    public List<Dobbelsteen> toonDobbelstenen(int waarde, Kleur kleur) {
+        if (kleur == null) {
+            throw new NullPointerException("Kleur mag niet null zijn");
+        }
+        return new ArrayList<>(dobbelstenen); // kopie van dobbelstenen
     }
 
     public int toonSomWaardeWitteDobbelstenenEnScoreblad(){
         return geefWaardeDobbelsteen() + scoreBlad.getScore();
     }
 
-    public List<Integer> toonAlleMogelijkeCombinaties(){
-
-
-    }
+//    public List<Integer> toonAlleMogelijkeCombinaties(){
+//
+//
+//    }
 
 
 }
