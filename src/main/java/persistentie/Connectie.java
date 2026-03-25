@@ -8,4 +8,6 @@ public class Connectie
           //"jdbc:mysql://vichogent.be:41262/G85?user=G85&password=DOaqPKxejm5Ixmd2cr9JjLXaACxJbQCZ";
           //Louis
           //"jdbc:mysql://localhost:3306/G85?user=root&password=root";
+          //Silas
+          //"jdbc:mysql://localhost:3306/G85?user=appusr&password=LetmeIn.now123";
 }
