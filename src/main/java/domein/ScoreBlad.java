@@ -11,7 +11,7 @@ public class ScoreBlad {
     private int mislukteWorpen;
     private List<Rij> rijen;
     //private Rij[] rijen = new Rij[4]
-    private int[] scoreRij = new int[12];
+    private static int[] scoreRij = new int[12];
 
     public ScoreBlad(String gebruikersnaam) {
         this.gebruikersnaam = gebruikersnaam;
@@ -59,10 +59,6 @@ public class ScoreBlad {
         return matrix;
     }
 
-    /*public int berekenScoreRij(Rij rij, int aantal){
-        scoreRij = [1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78]; //TODO in static array
 
-
-    }*/
 
 }

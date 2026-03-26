@@ -34,7 +34,6 @@ public class Rij {
         return gesloten;
     }
 
-
     public List<Vakje> getVakjes() {
         return vakjes;
     }
@@ -61,5 +60,10 @@ public class Rij {
         System.out.println("vak gevonden");
         return true;
 
+    }
+
+    public int berekenScoreRij(int aantal){
+        int [] scoreRij = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78};
+        return scoreRij[aantal-1];
     }
 }
