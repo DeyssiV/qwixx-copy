@@ -95,8 +95,4 @@ public class Spel {
 
     //getSomWitteDobbelstenen
 
-
-    public List<Dobbelsteen> getDobbelstenen() {
-        return this.dobbelstenen;
-    }
 }
