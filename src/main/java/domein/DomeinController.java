@@ -186,5 +186,19 @@ public class DomeinController {
     gekozenNamen.clear();
   }
 
+  public void voegMislukteWorpToe(){
+    speler.setMislukteWorpen();
+  }
+
+  public boolean isEindeSpelDoorMislukteWorpen(){
+    return speler.getMislukteWorpen() >= 4;
+  }
+
+  public boolean isEindeSpelDoorRijDoorkruising(){
+    return spel.getAantalDoorkruisteRijen() >= 2;
+  }
+
+
+
 
 }

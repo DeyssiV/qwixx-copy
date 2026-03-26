@@ -11,6 +11,7 @@ public class QwixxCui {
     List<String> gekozenSpelers;
     List<String> gekozenNamen;
 
+
     public QwixxCui(DomeinController dc) {
         this.dc = dc;
     }
@@ -107,6 +108,7 @@ public class QwixxCui {
         for (int i = 0; i < speelVolgorde.size(); i++) {
             System.out.println((i + 1) + ". " + speelVolgorde.get(i));
         }
+
         speelBeurt();
     }
 
@@ -131,12 +133,13 @@ public class QwixxCui {
                 System.out.println("\n--- Resultaat van worp ---\n");
                 for (String dobbelsteen : geroldeDobbelstenen) System.out.println("[" + dobbelsteen + "]");
 
-                //HIER VOLGENDE METHODE
-                rondeActieveSpeler(actieveSpeler, dc.geefWitteSom());
                 rondeAndereSpelers(actieveSpeler, dc.geefWitteSom());
+                rondeActieveSpeler(actieveSpeler, dc.geefWitteSom());
             }
-            System.out.println("\n--- Einde van ronde ---\n");
-            isEindeSpel = true;
+            if(dc.isEindeSpelDoorMislukteWorpen() || dc.isEindeSpelDoorRijDoorkruising()){
+                isEindeSpel=true;
+            }
+
         }
         afsluiten();
     }
@@ -153,37 +156,44 @@ public class QwixxCui {
         }
     }
 
-    private void rondeActieveSpeler(String naam, int witteSom) {
+    private void verwerkRijKeuze(String naam, int som) {
+        boolean succes = false;
+        while (!succes) {
+            System.out.print("In welke rij? (rood, geel, groen, blauw): ");
+            String kleur = invoer.next().toUpperCase();
+            succes = dc.kiesRij(naam, kleur, som);
+            if (!succes) {
+                System.out.println("Hier mag je geen kruis zetten! Probeer het opnieuw.");
+            }
+        }
+    }
 
+    private void rondeActieveSpeler(String naam, int witteSom) {
         System.out.println("\n--- OPTIE: wit ---"); // de witte-combinatie
         toonScoreBord(naam);
         System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? (j/n): ");
+
         if (invoer.next().equalsIgnoreCase("j")) {
-            System.out.print("In welke rij? (rood, geel, groen, blauw): ");
-            String kleur = invoer.next();
-            boolean succes = dc.kiesRij(naam, kleur.toUpperCase(), witteSom);
-            while(!succes){
-                System.out.println("Hier mag je geen kruis zetten!");
-                System.out.print("In welke rij? (rood, geel, groen, blauw): ");
-                kleur = invoer.next();
-                succes = dc.kiesRij(naam, kleur.toUpperCase(), witteSom);
-            }
+            verwerkRijKeuze(naam, witteSom);
             System.out.println("Kruisje gezet!");
             //toonScoreBord(naam);
+        } else {
+        System.out.println(naam + " slaat beurt over");
+    }
 
-        }
-
-        System.out.println("\n--- OPTIE: gekleurde ---"); // de kleur-combinaties
+        System.out.println("\n--- OPTIE: gekleurde VERPLICHT ander strafpunt van -5 ---"); // de kleur-combinaties
         toonMogelijkCombinaties();
         //toonScoreBord(naam);
         System.out.print(naam + ", maak je keuze (1-8) of 0 voor om over te slaan: ");
         int keuze = invoer.nextInt();
 
-        if (keuze != 1) {
-            String resultaat = dc.kiesCombinatie(naam, keuze);
-            System.out.println(resultaat);
+        if (keuze == 0) {
+            dc.voegMislukteWorpToe();
         }
+        String resultaat = dc.kiesCombinatie(naam, keuze);
+        System.out.println(resultaat);
         //toonScoreBord(naam);
+
     }
 
     private void rondeAndereSpelers(String actieveSpeler, int witteSom) {
@@ -196,19 +206,8 @@ public class QwixxCui {
 
                 System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ");
                 if (invoer.next().equalsIgnoreCase("j")) {
-                    boolean succes = false;
-                    while (!succes) {
-                        System.out.print("In welke rij? (rood, geel, groen, blauw): ");
-                        String kleur = invoer.next();
-
-                        succes = dc.kiesRij(naam, kleur, witteSom);
-                        if (succes) {
-                            System.out.println("Kruisje gezet!");
-                            //toonScoreBord(naam);
-                        } else {
-                            System.out.println("Hier mag je geen kruis zetten!");
-                        }
-                    }
+                    verwerkRijKeuze(naam, witteSom);
+                    System.out.println("Kruisje gezet!");
                 } else {
                     System.out.println(naam + " slaat beurt over");
                 }

@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBlad {
-    private final String gebruikersnaam;
+    private Speler speler;
+    String gebruikersnaam;
     private int score;
-    private int mislukteWorpen;
     private List<Rij> rijen;
     //private Rij[] rijen = new Rij[4]
     private static int[] scoreRij = new int[12];
 
     public ScoreBlad(String gebruikersnaam) {
+
         this.gebruikersnaam = gebruikersnaam;
         this.score = 0;
-        this.mislukteWorpen = 0;
 
         this.rijen = new ArrayList<>();
         this.rijen.add(new Rij(Kleur.ROOD));
@@ -25,18 +25,11 @@ public class ScoreBlad {
         this.rijen.add(new Rij(Kleur.BLAUW));
     }
 
-    public String getGebruikersnaam() {
-        return gebruikersnaam;
-    }
-
 
     public int getScore() {
         return score;
     }
 
-    public int getMislukteWorpen() {
-        return mislukteWorpen;
-    }
 
     public boolean kruisVakje(Kleur kleur, int vakje){
         for (Rij rij : rijen) {
@@ -57,6 +50,16 @@ public class ScoreBlad {
             }
         }
         return matrix;
+    }
+
+    public int berekenTotalePrijs(){
+        int totScore = 0;
+        for (Rij rij:rijen){
+            int aantalKruisjes = rij.getAantalKruisjes();
+            totScore += rij.berekenScoreRij(aantalKruisjes);
+        }
+        totScore -= (speler.getMislukteWorpen()*5);
+        return totScore;
     }
 
 

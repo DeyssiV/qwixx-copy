@@ -12,6 +12,7 @@ public class Spel {
     //Dobbelsteen[] dobbelstenen = new Dobbelsteen[6];
     private Dobbelsteen dobbelsteen;
     private ScoreBlad scoreBlad;
+    private int aantalDoorkruisteRijen = 0;
 
     public Spel(List<Speler> spelers) {
         this.spelers = new ArrayList<>(spelers);
@@ -25,6 +26,10 @@ public class Spel {
         dobbelstenen.add(new Dobbelsteen(Kleur.GEEL));
         dobbelstenen.add(new Dobbelsteen(Kleur.GROEN));
         dobbelstenen.add(new Dobbelsteen(Kleur.BLAUW));
+    }
+
+    public int getAantalDoorkruisteRijen() {
+        return aantalDoorkruisteRijen;
     }
 
     public List<Speler> getSpelers()
@@ -93,11 +98,8 @@ public class Spel {
     }
 
     public List<Integer> toonAlleMogelijkeCombinaties(){
-
-
         return List.of();
     }
 
-    //getSomWitteDobbelstenen
 
 }

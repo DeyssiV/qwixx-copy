@@ -9,9 +9,10 @@ public class Speler implements Comparable<Speler> {
   private final String gebruikersnaam;
   private final int geboortejaar;
   private ScoreBlad scoreBlad;
+  private int mislukteWorpen;
+
 
   public Speler(String gebruikersnaam, int geboortejaar) {
-        //TODO: controleermethodes aanroepen
         controleerGebruikersnaam(gebruikersnaam);
         controleerGeboortejaar(geboortejaar);
         this.gebruikersnaam = gebruikersnaam;
@@ -26,8 +27,17 @@ public class Speler implements Comparable<Speler> {
   public String getGebruikersnaam() {
     return gebruikersnaam;
   }
+
   public int getGeboortejaar() {
     return geboortejaar;
+  }
+
+  public void setMislukteWorpen() {
+    this.mislukteWorpen++;
+  }
+
+  public int getMislukteWorpen() {
+    return mislukteWorpen;
   }
 
   //TODO: controleermethodes toevoegen
@@ -55,6 +65,7 @@ public class Speler implements Comparable<Speler> {
   public int getScore(){
     return scoreBlad.getScore();
   }
+
 
   public void kiesRij(Rij rij){
     //TODO

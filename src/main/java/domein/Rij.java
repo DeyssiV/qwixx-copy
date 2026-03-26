@@ -66,4 +66,8 @@ public class Rij {
         int [] scoreRij = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78};
         return scoreRij[aantal-1];
     }
+
+    public int getAantalKruisjes() {
+        return 5;
+    }
 }
