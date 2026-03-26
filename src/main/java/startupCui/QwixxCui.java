@@ -10,20 +10,6 @@ public class QwixxCui {
     Scanner invoer = new Scanner(System.in);
     List<String> gekozenSpelers;
     List<String> gekozenNamen;
-    String scoreBlad = "-------------------------------------------------------------\n" +
-            "  RED  |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | (L) |\n" +
-            "       -------------------------------------------------------------\n" +
-            "  YLW  |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | (L) |\n" +
-            "       -------------------------------------------------------------\n" +
-            "  GRN  | 12 | 11 | 10 |  9 |  8 |  7 |  6 |  5 |  4 |  3 |  2 | (L) |\n" +
-            "       -------------------------------------------------------------\n" +
-            "  BLU  | 12 | 11 | 10 |  9 |  8 |  7 |  6 |  5 |  4 |  3 |  2 | (L) |\n" +
-            "       -------------------------------------------------------------\n" +
-            "\n" +
-            "  X's:    1x  2x  3x  4x  5x  6x  7x  8x  9x  10x  11x  12x   Miss: -5\n" +
-            "  Pts:    1   3   6   10  15  21  28  36  45   55   66   78   [ ][ ][ ][ ]\n" +
-            "\n" +
-            "  SCORE: [ R ] + [ Y ] + [ G ] + [ B ] - [ Miss ] = [ TOTAL ]";
 
     public QwixxCui(DomeinController dc) {
         this.dc = dc;
@@ -32,19 +18,6 @@ public class QwixxCui {
     public void start() {
         List<String> bestaandeSpelers = dc.geefGeregistreerdeSpelers();
         toonHoofdMenu();
-        /*if (bestaandeSpelers.size() < 2) {
-            System.out.println("Er zijn te weinig spelers geregistreerd.");
-            registreerSpelers();
-            startQwixx();
-        } else {
-            System.out.printf("Er zijn al %d spelers bekend in het systeem.%n", bestaandeSpelers.size());
-            System.out.print("Wil je nieuwe spelers registreren Y(es)/N(o): ");
-            String keuze = invoer.next();
-            if (keuze.equalsIgnoreCase("y")) {
-                registreerSpelers();
-            }
-            startQwixx();
-        }*/
     }
 
     private void toonHoofdMenu(){
