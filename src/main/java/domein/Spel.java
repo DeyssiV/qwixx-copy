@@ -14,7 +14,8 @@ public class Spel {
     private ScoreBlad scoreBlad;
 
     public Spel(List<Speler> spelers) {
-        this.spelers = spelers;
+        this.spelers = new ArrayList<>(spelers);
+        java.util.Collections.sort(this.spelers);
         this.dobbelstenen = new ArrayList<>();
 
         //de 6 dobbelstenen volgens spelregels QWIXX toevoegen
@@ -72,6 +73,17 @@ public class Spel {
         return new ArrayList<>(dobbelstenen); // kopie van dobbelstenen
     }
 
+    public void rolDobbelstenen() {
+        for (Dobbelsteen dobbelsteen : dobbelstenen) {
+            dobbelsteen.rolDobbelsteen();
+        }
+    }
+
+    public List<Speler> geefSpelers(){
+        return this.spelers;
+    }
+
+
     public int toonSomWaardeWitteDobbelstenenEnScoreblad(){
         return geefWaardeDobbelsteen() + scoreBlad.getScore();
     }
@@ -81,5 +93,10 @@ public class Spel {
 //
 //    }
 
+    //getSomWitteDobbelstenen
 
+
+    public List<Dobbelsteen> getDobbelstenen() {
+        return this.dobbelstenen;
+    }
 }

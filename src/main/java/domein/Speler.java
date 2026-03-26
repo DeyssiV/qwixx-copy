@@ -1,5 +1,7 @@
 package domein;
 
+import utils.Kleur;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -15,6 +17,10 @@ public class Speler implements Comparable<Speler> {
         this.gebruikersnaam = gebruikersnaam;
         this.geboortejaar = geboortejaar;
         this.scoreBlad = new ScoreBlad(gebruikersnaam); // Elke speler wordt eigen scoreblad aan toegewezen
+  }
+
+  public ScoreBlad getScoreBlad() {
+    return scoreBlad;
   }
 
   public String getGebruikersnaam() {
@@ -54,10 +60,27 @@ public class Speler implements Comparable<Speler> {
     //TODO
   }
 
+  public boolean kruisAan(Kleur kleur, int vakje){
+    return scoreBlad.kruisVakje(kleur, vakje);
+  }
+
+
+
   //Doordat we de interface Comparable implementeren moeten we de compareTo methode overriden
   //Dit doen we om later makkelijk de spelers te kunnen sorteren obv de gewonnen score en zo de winnaar makkelijk aan te duiden
   @Override
   public int compareTo(Speler andereSpeler) {
-    return Integer.compare(andereSpeler.getScore(), this.getScore());
+    // sortering obv geboortejaar
+    if (this.geboortejaar != andereSpeler.geboortejaar) {
+      return Integer.compare(andereSpeler.geboortejaar, this.geboortejaar);
+    }
+    // sortering obv lengte gebruikersnaam
+    if (this.gebruikersnaam.length() != andereSpeler.gebruikersnaam.length()) {
+      return Integer.compare(andereSpeler.gebruikersnaam.length(), this.gebruikersnaam.length());
+    }
+    // sortering obv alfabetische volgorde
+    return this.gebruikersnaam.compareToIgnoreCase(andereSpeler.gebruikersnaam);
+
+    //return Integer.compare(andereSpeler.getScore(), this.getScore());
   }
 }
