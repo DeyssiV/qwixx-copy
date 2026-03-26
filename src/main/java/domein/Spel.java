@@ -63,7 +63,11 @@ public class Spel {
 //
 //    }
 
-
+    public void rolAlleDobbelstenen() {
+        for (Dobbelsteen d : dobbelstenen) {
+            d.rolDobbelsteen();
+        }
+    }
 
     public List<Dobbelsteen> toonDobbelstenen(int waarde, Kleur kleur) {
         if (kleur == null) {
@@ -76,10 +80,11 @@ public class Spel {
         return geefWaardeDobbelsteen() + scoreBlad.getScore();
     }
 
-//    public List<Integer> toonAlleMogelijkeCombinaties(){
-//
-//
-//    }
+    public List<Integer> toonAlleMogelijkeCombinaties(){
+
+
+        return List.of();
+    }
 
 
 }

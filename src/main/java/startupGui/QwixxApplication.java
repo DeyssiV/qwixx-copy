@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 public class QwixxApplication extends Application {
 
@@ -13,8 +14,12 @@ public class QwixxApplication extends Application {
   public QwixxApplication() {}
 
   @Override
-  public void start(Stage stage) {
-    Scene scene = new Scene(new Pane(), 320, 240);
+  public void start(Stage stage) throws Exception {
+    if (dc == null) {
+      dc = new DomeinController();
+    }
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+    Scene scene = new Scene(loader.load());
     stage.setTitle("Qwixx");
     stage.setScene(scene);
     stage.show();
