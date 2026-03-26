@@ -38,13 +38,12 @@ public class DomeinController {
       Speler speler = spelerRepository.geefSpeler(gebruikersNaam);
       spelers.add(speler);
     }
-    spel = new Spel(spelers);
   }
 
   public void startBeurt(){
     int waarde = spel.geefWaardeDobbelsteen();
     Kleur kleur = spel.geefKleurDobbelsteen();
-    System.out.println(spel.getDobbelstenen());
+    System.out.println(spel.dobbelstenen);
   }
 
   public void kiesRij(Rij rij){ //TODO Rij mag niet meegegeven worden
@@ -66,22 +65,5 @@ public class DomeinController {
     return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
   }
 
-  private List<String> gekozenNamen = new ArrayList<>();
-
-  public void voegSpelerToeAanSpel(String naam) {
-    gekozenNamen.add(naam);
-  }
-
-  public List<String> geefGekozenSpelers() {
-    return gekozenNamen;
-  }
-
-  public void verwijderSpelerUitSpel(String naam) {
-    gekozenNamen.remove(naam);
-  }
-
-  public void resetGekozenSpelers() {
-    gekozenNamen.clear();
-  }
 
 }

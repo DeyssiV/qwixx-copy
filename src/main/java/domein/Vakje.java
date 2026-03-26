@@ -5,6 +5,11 @@ public class Vakje {
     private boolean aangekruist;
     private Rij rij;
 
+    public Vakje(int waarde) {
+        this.waarde = waarde;
+        this.aangekruist = false;
+    }
+
     public int getWaarde() {
         return waarde;
     }
