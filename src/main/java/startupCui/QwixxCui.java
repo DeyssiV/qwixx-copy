@@ -190,7 +190,7 @@ public class QwixxCui {
                 System.out.println("\nBeurt voor andere speler: " + naam);
                 toonScoreBord(naam);
 
-                System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? (j/n): ");
+                System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ");
                 if (invoer.next().equalsIgnoreCase("j")) {
                     boolean succes = false;
                     while (!succes) {

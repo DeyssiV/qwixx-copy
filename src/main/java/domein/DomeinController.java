@@ -59,6 +59,7 @@ public class DomeinController {
     spel.rolDobbelstenen();
   }
 
+
   public List<String> geefDetailsDobbelstenen() {
     List<String> resultaat = new ArrayList<>();
     for (Dobbelsteen dobbelsteen : spel.getDobbelstenen()) {
