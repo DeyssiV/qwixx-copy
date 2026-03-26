@@ -1,13 +1,13 @@
 package domein;
 
 import dtos.SpelDTO;
+import dtos.SpelerDTO;
 import persistentie.SpelerMapper;
 import utils.Kleur;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class DomeinController {
   private final SpelerRepository spelerRepository;
@@ -39,12 +39,17 @@ public class DomeinController {
     return new SpelDTO(spel.getSpelers(),spel.getDobbelstenen(),spel.getDobbelsteen(),spel.getScoreBlad());
   }
 
+    public SpelerDTO geefSpelerDTO()
+    {
+        return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
+    }
+
   public void registreerSpeler(String gebruikersnaam, int geboortejaar) {
     Speler nieuweSpeler = new Speler(gebruikersnaam, geboortejaar);
     spelerRepository.voegToe(nieuweSpeler);
   }
 
-  public void startNieuwSpel(List<String> gekozenSpelers) {
+  public void startNieuwSpel() {
     List<Speler> geselecteerdeSpelers = new ArrayList<>();
     for (String naam : gekozenNamen) {
       Speler speler = spelerRepository.geefSpeler(naam);
@@ -53,7 +58,6 @@ public class DomeinController {
     this.spel = new Spel(geselecteerdeSpelers);
     gekozenNamen.clear();
   }
-
 
   public void startBeurt() {
     spel.rolDobbelstenen();

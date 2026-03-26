@@ -96,7 +96,11 @@ public class QwixxCui {
     public void startSpel(){
         System.out.println("\nJe spelers zijn gekozen: " + gekozenSpelers);
         System.out.println("\nElke speler krijgt scoreblad, er zijn ook 6 dobbelstenen beschikbaar (ROOD, GEEL, GROEN, BLAUW, WIT)");
-        dc.startNieuwSpel(gekozenSpelers);
+
+        //dc.startNieuwSpel(gekozenSpelers);
+
+        gekozenSpelers.forEach(dc::voegSpelerToeAanSpel);
+        dc.startNieuwSpel();
         List<String> speelVolgorde = dc.geefSpelersInVolgorde();
 
         System.out.println("De speelvolgorde (volgens de DR) is:");
