@@ -9,5 +9,5 @@ public class Connectie
           //Louis
           //"jdbc:mysql://localhost:3306/G85?user=root&password=root";
           //Silas
-          //"jdbc:mysql://localhost:3306/G85?user=appusr&password=LetmeIn.now123";
+          //"jdbc:mysql://192.168.56.20/appdb?user=appusr&password=LetmeIn.now123";
 }
