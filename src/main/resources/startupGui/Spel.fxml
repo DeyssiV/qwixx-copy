@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelController">
+   <center>
+      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0">
+         <children>
+            <GridPane fx:id="grpDobbelstenen" translateY="-100.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" percentWidth="16.66" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="grpScorekaart" translateY="-40.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="57.0" minHeight="0.0" percentHeight="25.0" prefHeight="57.0" />
+                  <RowConstraints maxHeight="57.0" minHeight="0.0" percentHeight="25.0" prefHeight="0.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="0.0" minHeight="0.0" percentHeight="25.0" prefHeight="0.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="0.0" minHeight="0.0" percentHeight="25.0" prefHeight="0.0" vgrow="ALWAYS" />
+               </rowConstraints>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <Button fx:id="btnRolDobbelstenen" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rolDobbelstenen" text="Rol Dobbelstenen" translateY="-30.0">
+               <font>
+                  <Font name="Calibri" size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblSpelerAanDeBeurt" alignment="TOP_CENTER" text="Label" StackPane.alignment="CENTER">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnStop" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#stopSpel" style="-fx-background-color: #e74c3c; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" text="Exit" StackPane.alignment="TOP_LEFT" />
+         </children>
+      </StackPane>
+   </top>
+</BorderPane>

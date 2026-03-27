@@ -22,6 +22,10 @@ public class QwixxApplication extends Application {
     Scene scene = new Scene(loader.load());
     stage.setTitle("Qwixx");
     stage.setScene(scene);
+
+    stage.setMinWidth(800);
+    stage.setMinHeight(600);
+
     stage.show();
   }
 }

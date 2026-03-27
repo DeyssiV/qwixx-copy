@@ -14,7 +14,8 @@ public class DomeinController {
   private Speler speler;
   private Spel spel;
   private SpelerMapper spelerMapper;
-
+  private boolean alternatiefModus = false;
+  private int huidigeSpelerIndex = 0;
 
   private List<String> gekozenNamen = new ArrayList<>();
 
@@ -70,6 +71,10 @@ public class DomeinController {
       resultaat.add(String.format("%s %d", dobbelsteen.getKleur(), dobbelsteen.getWaarde()));
     }
     return resultaat;
+  }
+
+  public List<Dobbelsteen> getDobbelstenen() {
+    return spel.getDobbelstenen();
   }
 
   /*public int geefWitteSom() {
@@ -172,6 +177,29 @@ public class DomeinController {
       spelersInVolgorde.add(speler.getGebruikersnaam());
     }
     return spelersInVolgorde;
+  }
+
+  public String getSpelerAanDeBeurt() {
+    List<String> spelers = geefSpelersInVolgorde();
+    return spelers.get(huidigeSpelerIndex);
+  }
+
+  public void volgendeSpeler() {
+    List<String> spelers = geefSpelersInVolgorde();
+    huidigeSpelerIndex = (huidigeSpelerIndex + 1) % spelers.size();
+  }
+
+
+  public void setAlternatiefModus(boolean alternatief) {
+    this.alternatiefModus = alternatief;
+  }
+
+  public boolean isAlternatiefModus() {
+    return alternatiefModus;
+  }
+
+  public String geefSpelerAanDeBeurt() {
+    return speler.getGebruikersnaam();
   }
 
   public void voegSpelerToeAanSpel(String naam) {
