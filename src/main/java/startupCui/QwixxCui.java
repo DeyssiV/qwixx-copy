@@ -49,13 +49,13 @@ public class QwixxCui {
 
     private void registreerSpelers() {
             try {
-                System.out.println("\nSpeler registreren:");
+                System.out.print("\n--- Speler registreren: ---\n");
                 System.out.print("Geef gebruikersnaam in: ");
                 String gebrNaam = invoer.next();
                 System.out.print("Geef geboortejaar in: ");
                 int gebJaar = invoer.nextInt();
                 dc.registreerSpeler(gebrNaam, gebJaar);
-                System.out.println("\nSpeler is geregistreerd in het systeem!\n");
+                System.out.println("\n--> Speler is geregistreerd in het systeem!\n");
             } catch (Exception e) { //TODO exception bij al een bestaande speler met dezelfde gebruikersnaam
                 System.out.println("ERROR: " + e.getMessage());
                 invoer.nextLine();
@@ -136,7 +136,7 @@ public class QwixxCui {
                 rondeAndereSpelers(actieveSpeler, dc.geefWitteSom());
                 rondeActieveSpeler(actieveSpeler, dc.geefWitteSom());
             }
-            if(dc.isEindeSpelDoorMislukteWorpen() || dc.isEindeSpelDoorRijDoorkruising()){
+            if(dc.isEindeSpelDoorMislukteWorpen(dc.getSpelerAanDeBeurt()) || dc.isEindeSpelDoorRijDoorkruising()){
                 isEindeSpel=true;
             }
 
@@ -149,7 +149,7 @@ public class QwixxCui {
 
 
         System.out.println("\n--- Mogelijke combinaties ---");
-        System.out.println("0. Mislukte worp == overslaan");
+        System.out.println("0. Mislukte worp == strafpunt");
 
         for (int i = 0; i < combinaties.size(); i++) {
             System.out.printf("%d. %s%n", (i+1), combinaties.get(i));
@@ -157,12 +157,14 @@ public class QwixxCui {
     }
 
     private void verwerkRijKeuze(String naam, int som) {
-        boolean succes = false;
-        while (!succes) {
+        boolean gelukt = false;
+        boolean goedeRij = true;
+        while (!gelukt) {
             System.out.print("In welke rij? (rood, geel, groen, blauw): ");
             String kleur = invoer.next().toUpperCase();
-            succes = dc.kiesRij(naam, kleur, som);
-            if (!succes) {
+
+            gelukt = dc.kiesRij(naam, kleur, som);
+            if (!gelukt) {
                 System.out.println("Hier mag je geen kruis zetten! Probeer het opnieuw.");
             }
         }
@@ -171,28 +173,51 @@ public class QwixxCui {
     private void rondeActieveSpeler(String naam, int witteSom) {
         System.out.println("\n--- OPTIE: wit ---"); // de witte-combinatie
         toonScoreBord(naam);
-        System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? (j/n): ");
+        System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ");
 
         if (invoer.next().equalsIgnoreCase("j")) {
             verwerkRijKeuze(naam, witteSom);
             System.out.println("Kruisje gezet!");
             //toonScoreBord(naam);
         } else {
-        System.out.println(naam + " slaat beurt over");
+        System.out.println(naam + " slaat de witte som over");
     }
 
         System.out.println("\n--- OPTIE: gekleurde VERPLICHT ander strafpunt van -5 ---"); // de kleur-combinaties
         toonMogelijkCombinaties();
-        //toonScoreBord(naam);
+
+        boolean actieVoltooid = false;
+        while (!actieVoltooid) {
+            System.out.print(naam + ", maak je keuze (1-8) of 0 voor een mislukte worp: ");
+            int keuze = invoer.nextInt();
+
+            if (keuze == 0) {
+                dc.voegMislukteWorpToe(naam);
+                System.out.println("Mislukte worp genoteerd (-5 punten).");
+                actieVoltooid = true;
+            } else if (keuze >= 1 && keuze <= 8) {
+                String resultaat = dc.kiesCombinatie(naam, keuze);
+                System.out.println(resultaat);
+
+                if (resultaat.equals("Kruisje gezet!")) {
+                    actieVoltooid = true;
+                } else {
+                    System.out.println("Deze combinatie is ongeldig. Kies een andere optie.");
+                }
+            } else {
+                System.out.println("Ongeldige invoer. Kies een getal tussen 0 en 8.");
+            }
+        }
+        /*//toonScoreBord(naam);
         System.out.print(naam + ", maak je keuze (1-8) of 0 voor om over te slaan: ");
         int keuze = invoer.nextInt();
 
         if (keuze == 0) {
-            dc.voegMislukteWorpToe();
+            dc.voegMislukteWorpToe(naam);
         }
         String resultaat = dc.kiesCombinatie(naam, keuze);
         System.out.println(resultaat);
-        //toonScoreBord(naam);
+        //toonScoreBord(naam);*/
 
     }
 
@@ -221,6 +246,7 @@ public class QwixxCui {
 
         System.out.println("\nScoreblad van " + naam + ":");
         System.out.println("------------------------------------------------------------------------");
+        System.out.println("Dit is de score: " + dc.geefTotaleScore(naam));
 
         for (int r = 0; r < 4; r++) {
             //kleur tonen in begin

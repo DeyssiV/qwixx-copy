@@ -25,6 +25,9 @@ public class ScoreBlad {
         this.rijen.add(new Rij(Kleur.BLAUW));
     }
 
+    public List<Rij> getRijen() {
+        return rijen;
+    }
 
     public int getScore() {
         return score;
@@ -32,9 +35,13 @@ public class ScoreBlad {
 
 
     public boolean kruisVakje(Kleur kleur, int vakje){
+        boolean isGeelOfRood = false;
         for (Rij rij : rijen) {
             if (rij.getKleur() == kleur) {
-                return rij.registreerKruis(vakje);
+                if (kleur.equals(Kleur.ROOD) || kleur.equals(Kleur.GEEL)){
+                    isGeelOfRood = true;
+                }
+                return rij.registreerKruis(vakje, isGeelOfRood);
             }
         }
         return false;
@@ -52,13 +59,12 @@ public class ScoreBlad {
         return matrix;
     }
 
-    public int berekenTotalePrijs(){
+    public int berekenTotaleScore(int aantalMislukteWorpen){
         int totScore = 0;
         for (Rij rij:rijen){
-            int aantalKruisjes = rij.getAantalKruisjes();
-            totScore += rij.berekenScoreRij(aantalKruisjes);
+            totScore += rij.berekenScoreRij(rij.getAantalKruisjes());
         }
-        totScore -= (speler.getMislukteWorpen()*5);
+        totScore -= (aantalMislukteWorpen*5);
         return totScore;
     }
 

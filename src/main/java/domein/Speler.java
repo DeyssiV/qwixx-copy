@@ -63,13 +63,9 @@ public class Speler implements Comparable<Speler> {
   }
 
   public int getScore(){
-    return scoreBlad.getScore();
+    return scoreBlad.berekenTotaleScore(getMislukteWorpen());
   }
 
-
-  public void kiesRij(Rij rij){
-    //TODO
-  }
 
   public boolean kruisAan(Kleur kleur, int vakje){
     return scoreBlad.kruisVakje(kleur, vakje);

@@ -13,7 +13,6 @@ public class DomeinController {
   private final SpelerRepository spelerRepository;
   private Speler speler;
   private Spel spel;
-  private SpelerMapper spelerMapper;
   private boolean alternatiefModus = false;
   private int huidigeSpelerIndex = 0;
 
@@ -184,12 +183,6 @@ public class DomeinController {
     return spelers.get(huidigeSpelerIndex);
   }
 
-  public void volgendeSpeler() {
-    List<String> spelers = geefSpelersInVolgorde();
-    huidigeSpelerIndex = (huidigeSpelerIndex + 1) % spelers.size();
-  }
-
-
   public void setAlternatiefModus(boolean alternatief) {
     this.alternatiefModus = alternatief;
   }
@@ -198,9 +191,6 @@ public class DomeinController {
     return alternatiefModus;
   }
 
-  public String geefSpelerAanDeBeurt() {
-    return speler.getGebruikersnaam();
-  }
 
   public void voegSpelerToeAanSpel(String naam) {
     gekozenNamen.add(naam);
@@ -214,16 +204,37 @@ public class DomeinController {
     gekozenNamen.clear();
   }
 
-  public void voegMislukteWorpToe(){
-    speler.setMislukteWorpen();
+  public void voegMislukteWorpToe(String gebruikersnaam){
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    s.setMislukteWorpen();
   }
 
-  public boolean isEindeSpelDoorMislukteWorpen(){
-    return speler.getMislukteWorpen() >= 4;
+  public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    return s.getMislukteWorpen() >= 4;
   }
 
   public boolean isEindeSpelDoorRijDoorkruising(){
     return spel.getAantalDoorkruisteRijen() >= 2;
+  }
+
+  public int geefTotaleScore(String gebruikersnaam){
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    return s.getScore();
+  }
+
+  public boolean magRijSluiten(String gebruikersnaam, String kleurNaam, int waardeVak) {
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+
+    for(Rij rij:s.getScoreBlad().getRijen()){
+      if(rij.getKleur() == k){
+        boolean isUiterste = (waardeVak == 12 && (k == Kleur.ROOD || k == Kleur.GEEL)) ||
+                (waardeVak == 2 && (k == Kleur.GROEN || k == Kleur.BLAUW));
+        return isUiterste && rij.getAantalKruisjes() >= 6;
+      }
+    }
+    return false;
   }
 
 

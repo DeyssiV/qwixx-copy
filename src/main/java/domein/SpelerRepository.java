@@ -16,7 +16,13 @@ public class SpelerRepository {
   }
 
   public Speler geefSpeler(String gebruikersnaam){
-    return mapper.geefSpeler(gebruikersnaam);
+    for (Speler s : spelers){
+      if(s.getGebruikersnaam().equalsIgnoreCase(gebruikersnaam)){
+        return s;
+      }
+    }
+    return null;
+    //return mapper.geefSpeler(gebruikersnaam);
   }
 
   public List<Speler> geefSpelersLijst(){
