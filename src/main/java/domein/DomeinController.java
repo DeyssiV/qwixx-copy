@@ -2,7 +2,6 @@ package domein;
 
 import dtos.SpelDTO;
 import dtos.SpelerDTO;
-import persistentie.SpelerMapper;
 import utils.Kleur;
 
 import java.time.LocalDate;
@@ -34,15 +33,14 @@ public class DomeinController {
     spelerRepository = new SpelerRepository();
   }
 
-  public SpelDTO geefSpelDTO()
-  {
-    return new SpelDTO(spel.getSpelers(),spel.getDobbelstenen(),spel.getDobbelsteen(),spel.getScoreBlad());
+  public SpelDTO geefSpelDTO() {
+    return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen(), spel.getDobbelsteen(), spel.getScoreBlad());
   }
 
-    public SpelerDTO geefSpelerDTO()
-    {
-        return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
-    }
+  public SpelerDTO geefSpelerDTO()
+  {
+    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
+  }
 
   public void registreerSpeler(String gebruikersnaam, int geboortejaar) {
     Speler nieuweSpeler = new Speler(gebruikersnaam, geboortejaar);
@@ -86,7 +84,7 @@ public class DomeinController {
   }*/
 
 
-  public String kiesCombinatie(String gebruikersnaam, int keuze){
+  public boolean kiesCombinatie(String gebruikersnaam, int keuze){
     List<Dobbelsteen> stenen = spel.getDobbelstenen();
 
     int w1 = 0, w2 = 0, rood = 0, geel = 0, groen = 0, blauw = 0;
@@ -104,17 +102,99 @@ public class DomeinController {
 
     Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
 
+    //TODO de switch cases verkorten mbv een hulpmethode
     switch (keuze){
-      case 1 -> { return speler.kruisAan(Kleur.ROOD,  rood + w1) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 2 -> { return speler.kruisAan(Kleur.ROOD,  rood + w2) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 3 -> { return speler.kruisAan(Kleur.GEEL,  geel + w1) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 4 -> { return speler.kruisAan(Kleur.GEEL,  geel + w2) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 5 -> { return speler.kruisAan(Kleur.GROEN, groen + w1) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 6 -> { return speler.kruisAan(Kleur.GROEN, groen + w2) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 7 -> { return speler.kruisAan(Kleur.BLAUW, blauw + w1) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
-      case 8 -> { return speler.kruisAan(Kleur.BLAUW, blauw + w2) ? "Kruisje gezet!" : "Hier mag je geen kruis zetten!"; }
+      case 1 -> {
+        boolean gelukt = speler.kruisAan(Kleur.ROOD, rood + w1);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.ROOD && r.isGesloten()) {
+              sluitRij(Kleur.ROOD);
+            }
+          }
+          return true;
+        }
+        return false;
+        }
+      case 2 -> {
+        boolean gelukt = speler.kruisAan(Kleur.ROOD, rood + w2);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.ROOD && r.isGesloten()) {
+              sluitRij(Kleur.ROOD);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 3 -> {
+        boolean gelukt = speler.kruisAan(Kleur.GEEL, geel + w1);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.GEEL && r.isGesloten()) {
+              sluitRij(Kleur.GEEL);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 4 -> {
+        boolean gelukt = speler.kruisAan(Kleur.GEEL, geel + w2);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.GEEL && r.isGesloten()) {
+              sluitRij(Kleur.GEEL);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 5 -> {
+        boolean gelukt = speler.kruisAan(Kleur.GROEN, groen + w1);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.GROEN && r.isGesloten()) {
+              sluitRij(Kleur.GROEN);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 6 -> {
+        boolean gelukt = speler.kruisAan(Kleur.GROEN, groen + w2);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.GROEN && r.isGesloten()) {
+              sluitRij(Kleur.GROEN);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 7 -> {
+        boolean gelukt = speler.kruisAan(Kleur.BLAUW, blauw + w1);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.BLAUW && r.isGesloten()) {
+              sluitRij(Kleur.BLAUW);
+            }
+          }
+          return true;
+        }
+        return false; }
+      case 8 -> {
+        boolean gelukt = speler.kruisAan(Kleur.BLAUW, blauw + w2);
+        if (gelukt) {
+          for (Rij r : speler.getScoreBlad().getRijen()) {
+            if (r.getKleur() == Kleur.BLAUW && r.isGesloten()) {
+              sluitRij(Kleur.BLAUW);
+            }
+          }
+          return true;
+        }
+        return false; }
 
-      default -> { return "Beurt overgeslagen"; }
+      default -> { return false; }
     }
   }
 
@@ -142,8 +222,6 @@ public class DomeinController {
         gekleurd.add(d);
       }
     }
-
-
 
     for (Dobbelsteen kleurSteen : gekleurd) {
       for (Dobbelsteen witteSteen : wit) {
@@ -223,7 +301,7 @@ public class DomeinController {
     return s.getScore();
   }
 
-  public boolean magRijSluiten(String gebruikersnaam, String kleurNaam, int waardeVak) {
+  public boolean rijSluitenToegestaan(String gebruikersnaam, String kleurNaam, int waardeVak) {
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
 
@@ -235,6 +313,34 @@ public class DomeinController {
       }
     }
     return false;
+  }
+
+  public void sluitRij(Kleur kleur) {
+    for (Speler s : spel.geefSpelers()) {
+      for (Rij rij : s.getScoreBlad().getRijen()) {
+        if (rij.getKleur() == kleur) {
+          rij.setGesloten(true);
+        }
+      }
+    }
+
+    Dobbelsteen teVerwijderenDS = null;
+
+    for (Dobbelsteen d : spel.getDobbelstenen()) {
+      if (d.getKleur() == kleur) {
+        teVerwijderenDS = d;
+        break;
+      }
+    }
+
+    if (teVerwijderenDS != null) {
+      spel.getDobbelstenen().remove(teVerwijderenDS);
+    }
+  }
+
+  public int geefAantalMislukteWorpen(String gebruikersnaam) {
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    return s.getMislukteWorpen();
   }
 
 

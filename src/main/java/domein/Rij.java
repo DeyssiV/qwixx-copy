@@ -5,6 +5,9 @@ import utils.Kleur;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.Kleur.GEEL;
+import static utils.Kleur.ROOD;
+
 public class Rij {
     private Kleur kleur;
     private boolean gesloten;
@@ -19,7 +22,7 @@ public class Rij {
 
         this.vakjes = new ArrayList<>();
 
-        if (kleur == Kleur.ROOD || kleur == Kleur.GEEL) {
+        if (kleur == ROOD || kleur == GEEL) {
             for (int i = 2; i <= 12; i++) vakjes.add(new Vakje(i));
             this.laatsteWaarde = 1;
         } else {
@@ -46,15 +49,17 @@ public class Rij {
     }
 
     public boolean registreerKruis(int waardeVak, boolean isRoodOfGeel){
+        if (this.gesloten) {
+            return false;
+        }
+
         for (Vakje v : vakjes) {
             if (v.getWaarde() == waardeVak) {
                 if(v.isAangekruist()){
-                    System.out.println("  -> FAILED: Vakje is al bezet.");
                     return false;
                 }
                 boolean isUitersteVakje = (isRoodOfGeel && waardeVak == 12) || (!isRoodOfGeel && waardeVak == 2);
                 if(isUitersteVakje && getAantalKruisjes() < 5){
-                    System.out.println("  -> FAILED: Je hebt minstens 5 kruisjes nodig om het laatste vakje aan te kruisen!");
                     return false;
                 }
                 boolean kruisZetten = false;
@@ -63,14 +68,8 @@ public class Rij {
                 if (kruisZetten) {
                     v.setAangekruist(true);
                     this.laatsteWaarde = waardeVak;
-                    if (isUitersteVakje) {
-                        this.gesloten = true;
-                        System.out.println("  -> SUCCESS: Rij gesloten! Je krijgt een extra kruisje.");
-                    }
-                    System.out.println("  -> SUCCESS: Kruisje gezet.");
                     return true;
                 }
-                System.out.println("  -> FAILED: Kruisje niet gezet.");
             }
         }
         return false;
