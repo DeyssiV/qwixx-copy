@@ -24,7 +24,10 @@ public class SpelerMapper {
 
         query.executeUpdate(); //Zorgt ervoor dat het in de database komt
       //throw new UnsupportedOperationException("Not yet implemented");
-    } catch (SQLException ex) {
+    } catch (SQLIntegrityConstraintViolationException ex) {
+        throw new exceptions.GebruikersnaamInGebruikException("Gebruikersnaam reeds in gebruik.");
+
+    }catch (SQLException ex) {
       throw new RuntimeException(ex);
     }
   }
