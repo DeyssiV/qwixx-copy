@@ -58,6 +58,25 @@ public class QwixxCui {
         }
     }
 
+    //extra hulpmethode om de Ja of Nee van speler in te lezen
+    private boolean leesJaNee(String vraag) {
+        while (true) {
+            try {
+                System.out.print(vraag);
+                String antwoord = invoer.next().toLowerCase();
+                invoer.nextLine(); // buffer leegmaken
+
+                if (!antwoord.equalsIgnoreCase("j") && !antwoord.equalsIgnoreCase("n")) {
+                    throw new exceptions.FouteInvoerException("Ongeldige keuze! Typ 'J' voor ja of 'N' voor nee.");
+                }
+
+                return antwoord.equalsIgnoreCase("j"); // geeft true terug bij 'j'en false bij 'n'
+            } catch (exceptions.FouteInvoerException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     //spel info
     public void startSpel() {
         System.out.println("\nJe spelers zijn gekozen: " + gekozenSpelers);
@@ -124,11 +143,7 @@ public class QwixxCui {
 
     private void rijSluiten(String naam, String kleur, int som) {
         if (dc.rijSluitenToegestaan(naam, kleur, som)) {
-            System.out.print("Je mag deze rij sluiten. Wilt u dit doen? J/N: ");
-            String antwoord = invoer.next();
-            invoer.nextLine();
-
-            if (antwoord.equalsIgnoreCase("j")) {
+            if (leesJaNee("Je mag deze rij sluiten. Wilt u dit doen? J(a)/N(ee): ")) {
                 dc.sluitRij(utils.Kleur.valueOf(kleur.toUpperCase()));
                 System.out.println("De rij " + kleur + " is nu gesloten voor iedereen!");
             }
@@ -192,13 +207,10 @@ public class QwixxCui {
                     System.out.println("--> " + gekozenNaam + " toegevoegd.");
 
                     if (i >= 2 && i < 5) {
-                        System.out.print("Wil je nog een speler toevoegen? J(a)/N(ee): ");
-                        if (invoer.next().equalsIgnoreCase("n")) {
-                            invoer.nextLine();
+                        if (!leesJaNee("Wil je nog een speler toevoegen? J(a)/N(ee): ")) {
                             startSpel();
                             return;
                         }
-                        invoer.nextLine();
                     }
 
                 } catch (exceptions.SpelerAlGekozenException e) {
@@ -215,13 +227,12 @@ public class QwixxCui {
     private void rondeActieveSpeler(String naam, int witteSom) {
         System.out.println("\n--- Optie van de witte dobbelstenen ---"); // de witte-combinatie
         toonScoreBord(naam);
-        System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ");
-        if (invoer.next().equalsIgnoreCase("j")) {
+        if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
             verwerkRijKeuze(naam, witteSom);
             System.out.println("Kruisje gezet!");
         } else {
-        System.out.println(naam + " slaat de witte som over");
-    }
+            System.out.println(naam + " slaat de witte som over");
+        }
 
         toonScoreBord(naam);
 
@@ -273,8 +284,7 @@ public class QwixxCui {
                 System.out.println("\nBeurt voor andere speler: " + naam);
                 toonScoreBord(naam);
 
-                System.out.print(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ");
-                if (invoer.next().equalsIgnoreCase("j")) {
+                if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
                     verwerkRijKeuze(naam, witteSom);
                     System.out.println("Kruisje gezet!");
                 } else {
