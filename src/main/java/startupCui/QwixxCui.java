@@ -10,16 +10,12 @@ public class QwixxCui {
     private final Scanner invoer = new Scanner(System.in);
     List<String> gekozenSpelers;
 
-    private static final String[] KLEUREN = {"ROOD", "GEEL", "GROEN", "BLAUW"};
-
     public QwixxCui(DomeinController dc) {
         this.dc = dc;
     }
 
     //hoofdmenu en setup
-
     public void start() {
-        //hoofdmenu tonen
         int keuze;
         do {
             toonMenuTekst();
@@ -29,10 +25,10 @@ public class QwixxCui {
                 case 2 -> opstartQwixx();
                 case 3 -> afsluiten();
             }
-        } while (keuze != 3);
+        } while (keuze != 3); // zolang de gebruiker niet voor afsluiten kiest
     }
 
-    //achterliggende info
+    //tekst voor het hoofdmenu weergeven
     private void toonMenuTekst() {
         System.out.printf("%n--- Hoofdmenu ---%n");
         System.out.println("1. Registreer nieuwe speler");
@@ -40,27 +36,26 @@ public class QwixxCui {
         System.out.println("3. Afsluiten");
     }
 
+    //hulpmethode om invoer te controleren
     private int leesInvoer(String keuze, int min, int max) {
-        int getal = -1;
-        boolean geldig = false;
-
-        while (!geldig) {
+        while (true) {
+            try{
             System.out.print(keuze);
-            if (invoer.hasNextInt()) {
-                getal = invoer.nextInt();
-                invoer.nextLine();
+            if (!invoer.hasNextInt()) {
+                invoer.nextLine(); //buffer leegmaken
+                throw new exceptions.FouteInvoerException("Dit is geen geldig getal!");
+            }
 
-                if (getal >= min && getal <= max) {
-                    geldig = true;
-                } else {
-                    System.out.printf("Kies een getal tussen %d en %d.%n", min, max);
+            int getal = invoer.nextInt();
+            invoer.nextLine(); //buffer leegmaken
+                 if (getal < min || getal > max) {
+                     throw new exceptions.FouteInvoerException("Dit is geen geldig getal! Je moet kiezen tussen " + min + " en " + max);
                 }
-            } else {
-                System.out.println("Fout: Voer een geldig getal in.");
-                invoer.nextLine();
+                 return getal;
+            } catch (exceptions.FouteInvoerException e) {
+                System.out.println(e.getMessage());
             }
         }
-        return getal;
     }
 
     //spel info
@@ -122,19 +117,12 @@ public class QwixxCui {
                     return;
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("Ongeldige kleur. Het moet een van deze kleuren zijn! ROOD, GEEL, GROEN, BLAUW.");
+                System.out.println("Ongeldige kleur. Het moet een van deze kleuren zijn! ROOD, GEEL, GROEN, BLAUW");
             }
         }
     }
 
     private void rijSluiten(String naam, String kleur, int som) {
-        /*if (dc.magRijSluiten(naam, kleur, som)) {
-            System.out.print("Wil je de rij " + kleur + " SLUITEN voor iedereen? J/N: ");
-            if (invoer.next().equalsIgnoreCase("j")) {
-                dc.sluitRij(utils.Kleur.valueOf(kleur));
-            }
-        }*/
-
         if (dc.rijSluitenToegestaan(naam, kleur, som)) {
             System.out.print("Je mag deze rij sluiten. Wilt u dit doen? J/N: ");
             String antwoord = invoer.next();
@@ -146,32 +134,6 @@ public class QwixxCui {
             }
         }
     }
-
-    /*private void toonHoofdMenu(){
-        boolean geldig;
-        do {
-            System.out.printf("--- Hoofdmenu ---%n\t 1. Registreer nieuwe speler%n\t 2. Start nieuw spel%n\t 3. Afsluiten%nMaak je keuze (1-2-3): ");
-            int keuze = invoer.nextInt();
-            switch (keuze) {
-                case 1 -> {
-                    geldig = false;
-                    registreerSpelers();
-                }
-                case 2 -> {
-                    geldig = false;
-                    opstartQwixx();
-                }
-                case 3 -> {
-                    geldig = false;
-                    afsluiten();
-                }
-                default -> {
-                    System.out.println("Je moet 1-2-3 kiezen!");
-                    geldig = true;
-                }
-            }
-        }while(geldig);
-    }*/
 
     private String bepaalKleurNaam(int keuze) {
         return switch (keuze) {
@@ -197,162 +159,59 @@ public class QwixxCui {
                 dc.registreerSpeler(gebrNaam, gebJaar);
                 System.out.println("\n--> Speler is geregistreerd in het systeem!\n");
 
-            } catch (Exception e) { //TODO exception bij al een bestaande speler met dezelfde gebruikersnaam
-                System.out.println("ERROR: " + e.getMessage());
+            } catch (exceptions.GebruikersnaamInGebruikException e) { //exception catchen waarbij je speler wilt aanmaken met al dezelfde gebruikersnaam (moet UNIEK zijn)
+                System.out.println(e.getMessage());
+            }catch (Exception e) { //bij andere error die we niet kennen
+                System.out.println(e.getMessage());
                 invoer.nextLine();
             }
     }
 
     private void opstartQwixx() {
-        List<String> beschikbareNamen = dc.geefGeregistreerdeSpelers();
-        gekozenSpelers = new ArrayList<>();
+        try{
+            List<String> beschikbareNamen = dc.geefGeregistreerdeSpelers();
+            gekozenSpelers = new ArrayList<>();
 
-        if (beschikbareNamen.size()<4){
-            System.out.println("ERROR: Te weining spelers geristreerd");
-            return;
-        }
-        System.out.println("\n--- Beschikbare spelers ---\n");
-        for (String naam : beschikbareNamen) {
-            int leeftijd = dc.geefLeeftijd(naam);
-            System.out.println(beschikbareNamen.indexOf(naam) + " " + naam + " ( " + leeftijd + " jaar )");
-        }
-        for (int i = 1; i <= 5; i++) {
-            try {
-                int keuzeSpeler = leesInvoer("Kies speler " + i + " : ", 0, beschikbareNamen.size() - 1);
-                String gekozenNaam = beschikbareNamen.get(keuzeSpeler);
+            if (beschikbareNamen.size()<4) {
+                throw new exceptions.TeWeinigSpelersException("Er moeten minstens 4 spelers geregistreerd zijn (nu: " + beschikbareNamen.size() + ").");
+            }
+            System.out.println("\n--- Beschikbare spelers ---\n");
+            for (String naam : beschikbareNamen) {
+                int leeftijd = dc.geefLeeftijd(naam);
+                System.out.println(beschikbareNamen.indexOf(naam) + " " + naam + " ( " + leeftijd + " jaar )");
+            }
+            for (int i = 1; i <= 5; i++) {
+                try {
+                    int keuzeSpeler = leesInvoer("Kies speler " + i + " : ", 0, beschikbareNamen.size() - 1);
+                    String gekozenNaam = beschikbareNamen.get(keuzeSpeler);
 
-                if (gekozenSpelers.contains(gekozenNaam)) {
-                    throw new exceptions.GebruikersnaamInGebruikException("Speler '" + gekozenNaam + "' is al toegevoegd aan dit spel!");
-                }
+                    if (gekozenSpelers.contains(gekozenNaam)) {
+                        throw new exceptions.SpelerAlGekozenException("Speler " + gekozenNaam + " is al toegevoegd aan dit spel!");
+                    }
+                    gekozenSpelers.add(gekozenNaam);
+                    System.out.println("--> " + gekozenNaam + " toegevoegd.");
 
-                gekozenSpelers.add(gekozenNaam);
-                System.out.println("--> " + gekozenNaam + " toegevoegd.");
-
-                if (i >= 2 && i < 5) {
-                    System.out.print("Wil je nog een speler toevoegen? J(a)/N(ee): ");
-                    if (invoer.next().equalsIgnoreCase("n")) {
+                    if (i >= 2 && i < 5) {
+                        System.out.print("Wil je nog een speler toevoegen? J(a)/N(ee): ");
+                        if (invoer.next().equalsIgnoreCase("n")) {
+                            invoer.nextLine();
+                            startSpel();
+                            return;
+                        }
                         invoer.nextLine();
-                        startSpel();
-                        return;
                     }
-                    invoer.nextLine();
+
+                } catch (exceptions.SpelerAlGekozenException e) {
+                    System.out.println(e.getMessage());
+                    i--;
                 }
-
-            } catch (exceptions.GebruikersnaamInGebruikException e) {
-                System.out.println("FOUT: " + e.getMessage());
-                i--;
             }
+        }catch (exceptions.TeWeinigSpelersException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-  /*  public void startSpel(){
-        System.out.println("\nJe spelers zijn gekozen: " + gekozenSpelers);
-        System.out.println("\nElke speler krijgt scoreblad, er zijn ook 6 dobbelstenen beschikbaar (ROOD, GEEL, GROEN, BLAUW, WIT)");
-
-        //dc.startNieuwSpel(gekozenSpelers);
-
-        gekozenSpelers.forEach(dc::voegSpelerToeAanSpel);
-        dc.startNieuwSpel();
-        List<String> speelVolgorde = dc.geefSpelersInVolgorde();
-
-        System.out.println("De speelvolgorde (volgens de DR) is:");
-        for (int i = 0; i < speelVolgorde.size(); i++) {
-            System.out.println((i + 1) + ". " + speelVolgorde.get(i));
-        }
-
-        speelBeurt();
-    }*/
-
-
-
-    /*public void speelBeurt() {
-        System.out.println("\n--- Het spel is gestart ---\n");
-        boolean isEindeSpel = false;
-
-        while(!isEindeSpel){
-            for (String actieveSpeler : gekozenSpelers) {
-                System.out.print("\n--- " + actieveSpeler + " is aan de beurt ---\n");
-
-                System.out.print(actieveSpeler + " typ 'gooi' en klik op enter om dobbelstenen te gooien: ");
-                invoer.next();
-
-                System.out.println("\n...dobbelstenen zijn gerold...\n");
-                dc.startBeurt();
-
-                List<String> geroldeDobbelstenen = dc.geefDetailsDobbelstenen();
-
-                System.out.println("\n--- Resultaat van worp ---\n");
-                for (String dobbelsteen : geroldeDobbelstenen) System.out.println("[" + dobbelsteen + "]");
-
-                rondeAndereSpelers(actieveSpeler, dc.geefWitteSom());
-                rondeActieveSpeler(actieveSpeler, dc.geefWitteSom());
-            }
-            if(dc.isEindeSpelDoorMislukteWorpen(dc.getSpelerAanDeBeurt()) || dc.isEindeSpelDoorRijDoorkruising()){
-                isEindeSpel=true;
-            }
-
-        }
-        toonResultaat();
-    }*/
-
-    private void toonResultaat() {
-        System.out.println("\n--- Einde van het spel ---");
-
-        String winnaar = "";
-        int hoogsteScore = -100;
-
-        for (String naam : gekozenSpelers) {
-            int score = dc.geefTotaleScore(naam);
-            System.out.printf("%-15s : %d punten%n", naam, score);
-
-            if (score > hoogsteScore) {
-                hoogsteScore = score;
-                winnaar = naam;
-            }
-        }
-        System.out.println("De winnaar is: " + winnaar);
-        afsluiten();
-    }
-
-    public void toonMogelijkCombinaties(){
-        List<String> combinaties = dc.geefMogelijkeCombinaties();
-
-
-        System.out.println("\n--- Mogelijke combinaties ---");
-        System.out.println("0. Mislukte worp == strafpunt");
-
-        for (int i = 0; i < combinaties.size(); i++) {
-            System.out.printf("%d. %s%n", (i+1), combinaties.get(i));
-        }
-    }
-
-    /*private void verwerkRijKeuze(String naam, int som) {
-        boolean gelukt = false;
-        while (!gelukt) {
-            System.out.print("In welke rij? (rood, geel, groen, blauw): ");
-            String kleur = invoer.next().toUpperCase();
-
-            gelukt = dc.kiesRij(naam, kleur, som);
-
-            if (gelukt) {
-                System.out.println("Kruisje gezet!");
-
-                if (dc.rijSluitenToegestaan(naam, kleur, som)) {
-                    System.out.print("Je hebt minstens 5 kruisjes en het laatste getal aangekruist. " +
-                            "Wil je de rij " + kleur + " SLUITEN voor iedereen? J(a)/N(ee): ");
-
-                    if (invoer.next().equalsIgnoreCase("j")) {
-                        dc.sluitRij(utils.Kleur.valueOf(kleur));
-                        System.out.println("De rij is nu gesloten!");
-                    }
-                }
-
-            }else{
-                System.out.println("Hier mag je geen kruis zetten! Probeer het opnieuw.");
-            }
-        }
-    }*/
-
+    //de ronde van de speler die gedobbeld heeft (witte en gekleurde combo als optie)
     private void rondeActieveSpeler(String naam, int witteSom) {
         System.out.println("\n--- Optie van de witte dobbelstenen ---"); // de witte-combinatie
         toonScoreBord(naam);
@@ -364,7 +223,6 @@ public class QwixxCui {
         System.out.println(naam + " slaat de witte som over");
     }
 
-
         toonScoreBord(naam);
 
         System.out.println("\n--- Optie van de gekleurde dobbelstenen (VERPLICHT anders strafpunt van -5) ---"); // de kleur-combinaties
@@ -374,7 +232,7 @@ public class QwixxCui {
         while (!succes) {
             int keuze = leesInvoer(naam + ", maak je keuze (1-8) of 0 voor een mislukte worp: ", 0, 8);
 
-            if (keuze == 0) {
+            if (keuze == 0) { //bij het beurt overslaan wordt er een strafpunt bijgehouden
                 dc.voegMislukteWorpToe(naam);
                 System.out.println("Mislukte worp bijgehouden (-5 punten).");
                 succes = true;
@@ -392,6 +250,21 @@ public class QwixxCui {
         }
     }
 
+    //methode om de combos te laten zien aan de dobbelende speler
+    public void toonMogelijkCombinaties(){
+        List<String> combinaties = dc.geefMogelijkeCombinaties();
+
+
+        System.out.println("\n--- Mogelijke combinaties ---");
+        System.out.println("0. Mislukte worp = strafpunt");
+
+        //met for-lus index geven (die later als optie gekozen kan worden) en de som waarde
+        for (int i = 0; i < combinaties.size(); i++) {
+            System.out.printf("%d. %s%n", (i+1), combinaties.get(i));
+        }
+    }
+
+    //ronde van al de andere spelers (alleen witte dobbelstenen als optie)
     private void rondeAndereSpelers(String actieveSpeler, int witteSom) {
         System.out.println("\n--- OPTIE: wit (ANDERE SPELERS) ---");
 
@@ -411,16 +284,18 @@ public class QwixxCui {
         }
     }
 
+    //het scoreblad per speler laten zien om te zien wat er aangeduid kan worden
     private void toonScoreBord(String naam) {
         int[][] matrix = dc.geefStatus(naam);
         String[] kleuren = {"ROOD ", "GEEL ", "GROEN", "BLAUW"};
         int mislukteWorpen = dc.geefAantalMislukteWorpen(naam);
 
         System.out.println("\nScoreblad van " + naam + ":");
-        System.out.println("------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------");
 
         for (int r = 0; r < 4; r++) {
-
+            //kleuren per rij laten zien
+            System.out.print(kleuren[r] + " | ");
             for (int v = 0; v < 12; v++) {
                 //checken of we bij laatste vakje zijn (lock)
                 if (v == 11) {
@@ -444,6 +319,7 @@ public class QwixxCui {
             System.out.println("|");
         }
 
+        //mislukte worpen laten zien
         System.out.print("Mislukte worpen (-5 ptn): ");
         for (int i = 1; i <= 4; i++) {
             if (i <= mislukteWorpen) {
@@ -453,10 +329,33 @@ public class QwixxCui {
             }
         }
 
-        System.out.println("\n------------------------------------------------------------------------");
+        System.out.println("\n--------------------------------------------------------------------------");
     }
 
+    //op het einde de afsluiter tekst weergeven winnaar en aantal punten etc
+    private void toonResultaat() {
+        System.out.println("\n--- Einde van het spel ---");
+
+        String winnaar = "";
+        int hoogsteScore = -100;
+
+        for (String naam : gekozenSpelers) {
+            int score = dc.geefTotaleScore(naam);
+            System.out.printf("%-15s : %d punten%n", naam, score);
+
+            if (score > hoogsteScore) {
+                hoogsteScore = score;
+                winnaar = naam;
+            }
+        }
+        System.out.println("De winnaar is: " + winnaar);
+        afsluiten();
+        //TODO gelijkspel?
+    }
+
+    //Methode om het bericht op het einde van het spel te laten zien bv. Mislukte worpen (-5 ptn): [ X ] [   ] [   ] [   ]
     public void afsluiten() {
         System.out.println("Dit was Qwixx! Fijne dag verder!");
     }
+
 }
