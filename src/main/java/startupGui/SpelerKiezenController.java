@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class SpelerKiezenController {
@@ -22,6 +24,9 @@ public class SpelerKiezenController {
 
     @FXML
     private Button btnAnnuleer;
+
+    @FXML
+    private Label lblFeedback;
 
     @FXML
     private Button btnStartSpel;
@@ -55,6 +60,8 @@ public class SpelerKiezenController {
             lvGekozenSpelers.getItems().add(gekozenSpeler);
             lvLijstSpelers.getItems().remove(gekozenSpeler);
             lvLijstSpelers.getSelectionModel().clearSelection();
+
+            lblFeedback.setText("");
         }
     }
 
@@ -92,6 +99,24 @@ public class SpelerKiezenController {
 
     @FXML
     void startSpel(ActionEvent event) throws Exception {
+        int aantalSpelers = lvGekozenSpelers.getItems().size();
+
+        if (aantalSpelers < 2) {
+            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+            lblFeedback.setText(bundle.getString("AlertTeWeinigSpelers"));
+            lblFeedback.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        if (aantalSpelers > 5) {
+            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+            lblFeedback.setText(bundle.getString("AlertTeVeelSpelers"));
+            lblFeedback.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        lblFeedback.setText("");
+
         boolean alternatief = rbAlternatief.isSelected();
         dc.startNieuwSpel();
         dc.setAlternatiefModus(alternatief);
