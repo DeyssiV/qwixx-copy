@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static startupGui.QwixxApplication.dc;
 
@@ -32,7 +34,13 @@ public class SpelController {
     private GridPane grpDobbelstenen;
 
     @FXML
+    private Label lblTotaleScore;
+
+    @FXML
     private Button btnStop;
+
+    @FXML
+    private GridPane grpMislukteWorpen;
 
     @FXML
     private GridPane grpScorekaart;
@@ -41,14 +49,16 @@ public class SpelController {
     private Label lblSpelerAanDeBeurt;
 
     private void updateSpelerAanDeBeurt() {
-        lblSpelerAanDeBeurt.setText("Beurt van: " + dc.getSpelerAanDeBeurt());
-    }
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+        String tekst = String.format(bundle.getString("LabelBeurtVan"), dc.getSpelerAanDeBeurt());
+
+        lblSpelerAanDeBeurt.setText(tekst);    }
 
     @FXML
     void stopSpel(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
         Stage stage = (Stage) btnStop.getScene().getWindow();
@@ -71,6 +81,31 @@ public class SpelController {
         geklikteKnop.setDisable(true);
 
 
+    }
+
+    private void updateMislukteWorpen() {
+        grpMislukteWorpen.getChildren().clear();
+        String huidigeNaam = dc.getSpelerAanDeBeurt();
+        int aantalMislukt = dc.geefAantalMislukteWorpen(huidigeNaam);
+
+        for (int i = 0; i < 4; i++) {
+            Label vakje = new Label();
+            vakje.setMinSize(40, 40);
+            vakje.setAlignment(Pos.CENTER);
+
+            if (i < aantalMislukt) {
+                vakje.setText("X");
+                vakje.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; " +
+                        "-fx-alignment: center; -fx-font-weight: bold; " +
+                        "-fx-background-radius: 5; -fx-border-color: #c0392b; -fx-border-radius: 5;");
+            } else {
+                vakje.setText("");
+                vakje.setStyle("-fx-background-color: white; -fx-border-color: #bdc3c7; " +
+                        "-fx-background-radius: 5; -fx-border-radius: 5;");
+            }
+
+            grpMislukteWorpen.add(vakje, i, 0);
+        }
     }
 
 
@@ -142,19 +177,28 @@ public class SpelController {
             String kleurNaam = kleuren[rij].toLowerCase();
             String hexKleur;
             switch (kleurNaam) {
-                case "rood":  hexKleur = "#ffcccc"; break;
-                case "geel":  hexKleur = "#ffffcc"; break;
-                case "groen": hexKleur = "#ccffcc"; break;
-                case "blauw": hexKleur = "#ccccff"; break;
-                default:      hexKleur = "#ffffff";
+                case "rood":
+                    hexKleur = "#f1948a"; // Iets donkerder rood (past bij #e74c3c)
+                    break;
+                case "geel":
+                    hexKleur = "#f7dc6f"; // Iets donkerder geel (past bij #f1c40f)
+                    break;
+                case "groen":
+                    hexKleur = "#82e0aa"; // Iets donkerder groen (past bij #27ae60)
+                    break;
+                case "blauw":
+                    hexKleur = "#85c1e9"; // Iets donkerder blauw (past bij #2980b9)
+                    break;
+                default:
+                    hexKleur = "#d5dbdb"; // Lichtgrijs
             }
 
 
             String buttonStyle = "-fx-background-color: " + hexKleur + "; " +
-                    "-fx-border-color: #888888; " +
-                    "-fx-border-radius: 4; " +
-                    "-fx-background-radius: 4;"+
-                    "-fx-font-weight: bold; "+
+                    "-fx-background-radius: 8; " + // Iets ronder staat moderner
+                    "-fx-border-color: rgba(0,0,0,0.1); " + // Subtiel randje
+                    "-fx-border-radius: 8; " +
+                    "-fx-font-weight: bold; " +
                     "-fx-font-size: 23px;";
 
 //            Label lblKleur = new Label(kleuren[rij]);
@@ -210,6 +254,8 @@ public class SpelController {
 
     @FXML
     void rolDobbelstenen(ActionEvent event) {
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+
         Button knop = (Button) event.getSource();
 
         if (!heeftGerold) {
@@ -222,22 +268,34 @@ public class SpelController {
 
             PauseTransition delay = new PauseTransition(Duration.seconds(1  ));
             delay.setOnFinished(e -> {
-                knop.setText("Sla beurt over");
+                knop.setText(bundle.getString("BeurtOverslaan"));
                 knop.setDisable(false);
             });
             delay.play();
 
         } else {
             heeftGerold = false;
-            knop.setText("Rol dobbelstenen");
+            knop.setText(bundle.getString("RolDobbelstenen"));
             grpDobbelstenen.getChildren().clear();
         }
     }
 
     @FXML
+    private void updateScore() {
+        String huidigeNaam = dc.getSpelerAanDeBeurt();
+        int score = dc.geefTotaleScore(huidigeNaam);
+        lblTotaleScore.setText(String.valueOf(score));
+    }
+
+
+    @FXML
     private void initialize() {
 
         vulScorekaart(dc.isAlternatiefModus());
+        updateSpelerAanDeBeurt();
+
+        updateMislukteWorpen();
+        updateScore();
     }
 }
 
