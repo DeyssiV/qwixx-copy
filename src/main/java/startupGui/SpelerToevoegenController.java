@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class SpelerToevoegenController {
     private final DomeinController dc = QwixxApplication.dc;
@@ -47,20 +49,22 @@ public class SpelerToevoegenController {
         lblFeedback.setText("");
         lblFeedback.setStyle("-fx-text-fill: black;");
 
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+
 
         try {
             String naam = txfNaam.getText();
             String jaar = txfGeboortejaar.getText();
 
             if (naam.isEmpty() || txfGeboortejaar.getText().isEmpty()) {
-                throw new IllegalArgumentException("Niets ingevuld!");
+                throw new IllegalArgumentException(bundle.getString("NietsIngevuld"));
             }
 
             int geboortejaar = Integer.parseInt(jaar);
 
             dc.registreerSpeler(naam, geboortejaar);
 
-            lblFeedback.setText("Speler '" + naam + "' is geregistreerd!");
+            lblFeedback.setText(bundle.getString("SpelerGeregistreerd"));
             lblFeedback.setStyle("-fx-text-fill: green;");
             txfNaam.clear();
             txfGeboortejaar.clear();
@@ -68,23 +72,16 @@ public class SpelerToevoegenController {
             lblFeedback.setText(e.getMessage());
             lblFeedback.setStyle("-fx-text-fill: red;");
         }catch (NumberFormatException e) {
-            lblFeedback.setText("Geboortejaar moet een getal zijn!");
+            lblFeedback.setText(bundle.getString("GeboortejaarFout"));
             lblFeedback.setStyle("-fx-text-fill: red;");
 
         }catch (IllegalArgumentException e){
             lblFeedback.setText(e.getMessage());
             lblFeedback.setStyle("-fx-text-fill: red;");
         }catch (Exception e) {
-        System.out.println("Gevangen exception type: " + e.getClass().getName());
-        System.out.println("Boodschap: " + e.getMessage());
-
         lblFeedback.setText(e.getMessage());
         lblFeedback.setStyle("-fx-text-fill: red;");
     }
-
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
-        Stage stage = (Stage) btnRegistreren.getScene().getWindow();
-        stage.setScene(new Scene(loader.load()));*/
 
     }
 
