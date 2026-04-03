@@ -9,7 +9,6 @@ import java.util.List;
 public class Spel {
     List<Speler> spelers;
     List<Dobbelsteen> dobbelstenen;
-    //Dobbelsteen[] dobbelstenen = new Dobbelsteen[6];
     private Dobbelsteen dobbelsteen;
     private ScoreBlad scoreBlad;
     private int aantalDoorkruisteRijen = 0;
@@ -59,22 +58,6 @@ public class Spel {
         return dobbelsteen.getKleur();
     }
 
-//    public List<Dobbelsteen> toonDobbelstenen(){
-//        int waarde = geefWaardeDobbelsteen();
-//        Kleur kleur = geefKleurDobbelsteen();
-//        for (Dobbelsteen dobbelsteen:dobbelstenen){
-//            dobbelstenen.add(dobbelsteen);
-//        }
-//        return dobbelstenen;
-//
-//    }
-
-    public void rolAlleDobbelstenen() {
-        for (Dobbelsteen d : dobbelstenen) {
-            d.rolDobbelsteen();
-        }
-    }
-
     public List<Dobbelsteen> toonDobbelstenen(int waarde, Kleur kleur) {
         if (kleur == null) {
             throw new NullPointerException("Kleur mag niet null zijn");
@@ -92,14 +75,9 @@ public class Spel {
         return this.spelers;
     }
 
-
-    public int toonSomWaardeWitteDobbelstenenEnScoreblad(){
-        return geefWaardeDobbelsteen() + scoreBlad.getScore();
-    }
-
-    public List<Integer> toonAlleMogelijkeCombinaties(){
+    /*public List<Integer> toonAlleMogelijkeCombinaties(){
         return List.of();
-    }
+    }*/
 
 
 }

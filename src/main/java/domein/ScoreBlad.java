@@ -10,8 +10,7 @@ public class ScoreBlad {
     String gebruikersnaam;
     private int score;
     private List<Rij> rijen;
-    //private Rij[] rijen = new Rij[4]
-    private static int[] scoreRij = new int[12];
+    //private static int[] scoreRij = new int[12];
 
     public ScoreBlad(String gebruikersnaam) {
 
@@ -48,7 +47,6 @@ public class ScoreBlad {
     }
 
     public int[][] getScoreBladMatrix() {
-        //TODO boolean matrix
         int[][] matrix = new int[4][12]; // 4 rijen, 12 kolommen
         for (int r = 0; r < rijen.size(); r++) {
             List<Vakje> vakjes = rijen.get(r).getVakjes();

@@ -3,7 +3,6 @@ package domein;
 public class Vakje {
     private int waarde;
     private boolean aangekruist;
-    private Rij rij;
 
     public Vakje(int waarde) {
         this.waarde = waarde;
@@ -16,10 +15,6 @@ public class Vakje {
 
     public boolean isAangekruist() {
         return aangekruist;
-    }
-
-    public Rij getRij() {
-        return rij;
     }
 
     public void setAangekruist(boolean aangekruist) {

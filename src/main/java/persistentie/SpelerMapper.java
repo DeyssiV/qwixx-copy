@@ -26,7 +26,6 @@ public class SpelerMapper {
       //throw new UnsupportedOperationException("Not yet implemented");
     } catch (SQLIntegrityConstraintViolationException ex) {
         throw new exceptions.GebruikersnaamInGebruikException("Gebruikersnaam reeds in gebruik.");
-
     }catch (SQLException ex) {
       throw new RuntimeException(ex);
     }

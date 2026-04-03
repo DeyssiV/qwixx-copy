@@ -82,6 +82,10 @@ public class SpelerKiezenController {
     void annuleer(ActionEvent event) throws Exception {
         dc.resetGekozenSpelers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
         Stage stage = (Stage) btnAnnuleer.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
@@ -93,6 +97,10 @@ public class SpelerKiezenController {
         dc.setAlternatiefModus(alternatief);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/Spel.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
         Stage stage = (Stage) btnStartSpel.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }

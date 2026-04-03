@@ -3,7 +3,6 @@ package domein;
 import utils.Kleur;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Speler implements Comparable<Speler> {
   private final String gebruikersnaam;
@@ -70,7 +69,6 @@ public class Speler implements Comparable<Speler> {
   public boolean kruisAan(Kleur kleur, int vakje){
     return scoreBlad.kruisVakje(kleur, vakje);
   }
-
 
 
   //Doordat we de interface Comparable implementeren moeten we de compareTo methode overriden

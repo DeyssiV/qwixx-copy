@@ -11,9 +11,7 @@ import static utils.Kleur.ROOD;
 public class Rij {
     private Kleur kleur;
     private boolean gesloten;
-    //private ScoreBlad scoreBlad;
     private List<Vakje> vakjes;
-    //private Vakje[] vakjes = new Vakje[11];
     private int laatsteWaarde;
 
 
@@ -22,6 +20,7 @@ public class Rij {
 
         this.vakjes = new ArrayList<>();
 
+        //TODO dit in methode plaatsen en in SCOREBLAD klasse
         if (kleur == ROOD || kleur == GEEL) {
             for (int i = 2; i <= 12; i++) vakjes.add(new Vakje(i));
             this.laatsteWaarde = 1;
@@ -48,6 +47,12 @@ public class Rij {
         this.gesloten = gesloten;
     }
 
+    /**
+     *
+     * @param waardeVak
+     * @param isRoodOfGeel
+     * @return
+     */
     public boolean registreerKruis(int waardeVak, boolean isRoodOfGeel){
         if (this.gesloten) {
             return false;
@@ -58,7 +63,9 @@ public class Rij {
                 if(v.isAangekruist()){
                     return false;
                 }
+                //TODO aanpassen zodat het ook voor de alternatieve spel
                 boolean isUitersteVakje = (isRoodOfGeel && waardeVak == 12) || (!isRoodOfGeel && waardeVak == 2);
+
                 if(isUitersteVakje && getAantalKruisjes() < 5){
                     return false;
                 }

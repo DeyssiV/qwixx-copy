@@ -33,6 +33,7 @@ public class DomeinController {
     spelerRepository = new SpelerRepository();
   }
 
+  //TODO
   public SpelDTO geefSpelDTO() {
     return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen(), spel.getDobbelsteen(), spel.getScoreBlad());
   }

@@ -47,6 +47,10 @@ public class SpelController {
     @FXML
     void stopSpel(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
         Stage stage = (Stage) btnStop.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }

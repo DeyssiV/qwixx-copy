@@ -34,6 +34,10 @@ public class SpelerToevoegenController {
     @FXML
     void annuleerRegistratie(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
         Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
@@ -42,6 +46,7 @@ public class SpelerToevoegenController {
     void startRegistratieSpeler(ActionEvent event) {
         lblFeedback.setText("");
         lblFeedback.setStyle("-fx-text-fill: black;");
+
 
         try {
             String naam = txfNaam.getText();

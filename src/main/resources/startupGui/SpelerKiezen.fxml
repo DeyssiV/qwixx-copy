@@ -16,7 +16,7 @@
    <top>
       <BorderPane>
          <left>
-            <Button fx:id="btnAnnuleer" onAction="#annuleer" text="Terug naar hoofdscherm" BorderPane.alignment="CENTER">
+            <Button fx:id="btnAnnuleer" onAction="#annuleer" text="%Terug" BorderPane.alignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
@@ -24,7 +24,7 @@
          </left>
 
          <center>
-            <Label text="Speler Kiezen" BorderPane.alignment="CENTER">
+            <Label text="%TitelSpelerKiezen" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -48,7 +48,7 @@
                <children>
                   <VBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Label text="Geregistreerde Spelers">
+                        <Label text="%LabelGeregistreerd">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -59,14 +59,14 @@
 
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Button fx:id="btnVoegSpelerToe" minWidth="150.0" onAction="#voegSpelerToe" text="Voeg Speler Toe -&gt;" />
-                        <Button fx:id="btnVerwijder" minWidth="150.0" onAction="#verwijderSpeler" text="&lt;- Verwijder Speler" />
+                        <Button fx:id="btnVoegSpelerToe" minWidth="150.0" onAction="#voegSpelerToe" text="%VoegToe" />
+                        <Button fx:id="btnVerwijder" minWidth="150.0" onAction="#verwijderSpeler" text="%Verwijder" />
                      </children>
                   </VBox>
 
                   <VBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Label text="Spelers in Spel">
+                        <Label text="%LabelInSpel">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -79,19 +79,19 @@
 
             <VBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Label text="Kies Spelversie:">
+                  <Label text="%LabelKiesVersie">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER" spacing="20.0">
                      <children>
-                        <RadioButton fx:id="rbNormaal" mnemonicParsing="false" selected="true" text="Normale Versie">
+                        <RadioButton fx:id="rbNormaal" mnemonicParsing="false" selected="true" text="%Normaal">
                            <toggleGroup>
                               <ToggleGroup fx:id="versie" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="rbAlternatief" mnemonicParsing="false" text="Alternatieve Versie" toggleGroup="$versie" />
+                        <RadioButton fx:id="rbAlternatief" mnemonicParsing="false" text="%Alternatief" toggleGroup="$versie" />
                      </children>
                   </HBox>
                </children>
@@ -106,7 +106,7 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="btnStartSpel" mnemonicParsing="false" onAction="#startSpel" prefHeight="60.0" prefWidth="180.0" text="START SPEL">
+            <Button fx:id="btnStartSpel" mnemonicParsing="false" onAction="#startSpel" prefHeight="60.0" prefWidth="180.0" text="%StartSpelGroot">
                <font>
                   <Font size="20.0" />
                </font>
