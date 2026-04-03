@@ -12,6 +12,11 @@ public class ScoreBlad {
     private List<Rij> rijen;
     //private static int[] scoreRij = new int[12];
 
+    /**
+     * Maakt een nieuw scoreblad aan voor gekozen gebruiker.
+     * Maakt 4 rijen aan ROOD, GEEL, GROEN en BLAUW
+     * @param gebruikersnaam De naam van de gekozen speler die bij deze scoreblad hoort
+     */
     public ScoreBlad(String gebruikersnaam) {
 
         this.gebruikersnaam = gebruikersnaam;
@@ -24,15 +29,31 @@ public class ScoreBlad {
         this.rijen.add(new Rij(Kleur.BLAUW));
     }
 
+    /**
+     * Geeft lijst van al de rijen van scoreblad.
+     * @return Een lijst van 4 rijen van Rij.
+     */
     public List<Rij> getRijen() {
         return rijen;
     }
 
+    /**
+     * Geeft huidige score van scoreblad terug.
+     * @return Een score in Integer.
+     */
     public int getScore() {
         return score;
     }
 
 
+    /**
+     * Kruist gekozen vakje in rij door gekozen kleur.
+     * Controleert of het oplopende vakjes zijn door de kleur.
+     * (oplopend voor rood/geel en aflopend voor groen/blauw)
+     * @param kleur De kleur van rij waarin het vakje moet aangekruist worden
+     * @param vakje Het getal van vakje dat aangekruist moet worden.
+     * @return true, false Als het aankruisen van vakje gelukt is, geeft true anders false.
+     */
     public boolean kruisVakje(Kleur kleur, int vakje){
         boolean isGeelOfRood = false;
         for (Rij rij : rijen) {
@@ -46,6 +67,11 @@ public class ScoreBlad {
         return false;
     }
 
+    /**
+     * Maakt een matrix van scoreblad voor de CUI.
+     * Elke rij heeft 12 elementen waarbij 1 voor de aangekruist staat en 0 voor open.
+     * @return 2D-array Matrix van Integers die de status van scoreblad weergeven, 4 op 12.
+     */
     public int[][] getScoreBladMatrix() {
         int[][] matrix = new int[4][12]; // 4 rijen, 12 kolommen
         for (int r = 0; r < rijen.size(); r++) {
@@ -57,6 +83,13 @@ public class ScoreBlad {
         return matrix;
     }
 
+    /**
+     * Berekent de totale score van het scoreblad door de scores per rij op te tellen
+     * en daarna de strafpunten door het aantal mislukte worpen ervan af te trekken.
+     * @param aantalMislukteWorpen Het aantal keren dat een actieve speler zijn beurt overgeslagen
+     *                             (=mislukte worp heeft gedaan)
+     * @return eindscore De berekende totale eindscore in Integer
+     */
     public int berekenTotaleScore(int aantalMislukteWorpen){
         int totScore = 0;
         for (Rij rij:rijen){
