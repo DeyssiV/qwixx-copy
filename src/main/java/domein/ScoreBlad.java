@@ -10,7 +10,6 @@ public class ScoreBlad {
     String gebruikersnaam;
     private int score;
     private List<Rij> rijen;
-    //private static int[] scoreRij = new int[12];
 
     /**
      * Maakt een nieuw scoreblad aan voor gekozen gebruiker.
@@ -97,6 +96,15 @@ public class ScoreBlad {
         }
         totScore -= (aantalMislukteWorpen*5);
         return totScore;
+    }
+
+    public boolean isRijGesloten(Kleur kleur) {
+        for (Rij rij : rijen) {
+            if (rij.getKleur() == kleur) {
+                return rij.isGesloten();
+            }
+        }
+        return false;
     }
 
 

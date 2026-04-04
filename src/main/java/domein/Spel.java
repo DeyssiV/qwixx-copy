@@ -65,6 +65,28 @@ public class Spel {
         return new ArrayList<>(dobbelstenen); // kopie van dobbelstenen
     }
 
+    public int getWitteWaarde(int getal) {
+        int teller = 1;
+        for (Dobbelsteen d : dobbelstenen) {
+            if (d.getKleur() == Kleur.WIT) {
+                if (teller == getal) {
+                    return d.getWaarde();
+                }
+                teller++;
+            }
+        }
+        return 0;
+    }
+
+    public int getGekleurdeWaarde(Kleur kleur) {
+        for (Dobbelsteen d : dobbelstenen) {
+            if (d.getKleur() == kleur) {
+                return d.getWaarde();
+            }
+        }
+        return 0;
+    }
+
     public void rolDobbelstenen() {
         for (Dobbelsteen dobbelsteen : dobbelstenen) {
             dobbelsteen.rolDobbelsteen();
@@ -75,9 +97,17 @@ public class Spel {
         return this.spelers;
     }
 
-    /*public List<Integer> toonAlleMogelijkeCombinaties(){
-        return List.of();
-    }*/
+    public List<Integer> berekenCombinaties(Kleur kleur) {
+        List<Integer> combinaties = new ArrayList<>();
+        int gekleurdeWaarde = getGekleurdeWaarde(kleur);
+
+        for (Dobbelsteen d : dobbelstenen) {
+            if (d.getKleur() == Kleur.WIT) {
+                combinaties.add(gekleurdeWaarde + d.getWaarde());
+            }
+        }
+        return combinaties;
+    }
 
 
 }

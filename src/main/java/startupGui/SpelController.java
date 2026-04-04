@@ -9,6 +9,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.Kleur;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -28,6 +31,7 @@ import static startupGui.QwixxApplication.dc;
 
 public class SpelController {
 
+    private int huidigeIndex = 0;
     private boolean heeftGerold = false;
 
     @FXML
@@ -76,11 +80,8 @@ public class SpelController {
 
         System.out.println("Geklikt op: " + kleur + " " + getal);
 
-
         geklikteKnop.setText("X");
         geklikteKnop.setDisable(true);
-
-
     }
 
     private void updateMislukteWorpen() {
@@ -152,11 +153,76 @@ public class SpelController {
         }
     }
 
-    private void vulScorekaart(boolean alternatief) {
+    private void resetScorekaartRanden() {
+        grpScorekaart.getChildren().forEach(node -> {
+            if (node instanceof Button btn) {
+                String huidigeStyle = btn.getStyle();
+                String schoneStyle = huidigeStyle.replaceAll("-fx-border-width:.*", "");
+                btn.setStyle(schoneStyle.trim());
+            }
+        });
+    }
+
+    private void omrandMogelijkeVakjes() {
+        resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
+
+        List<Dobbelsteen> dobbelstenen = dc.getDobbelstenen();
+
+        List<Integer> witteWaarden = new ArrayList<>();
+        for (Dobbelsteen dobbelsteen : dobbelstenen) {
+            if (dobbelsteen.getKleur() == Kleur.WIT) witteWaarden.add(dobbelsteen.getWaarde());
+        }
+
+        //gekleurde dobbelstenen en hun waardes verzamelen
+        for (Dobbelsteen dobbelsteen : dobbelstenen) {
+            if (dobbelsteen.getKleur() != Kleur.WIT) {
+                int gekleurdeWaarde = dobbelsteen.getWaarde();
+                //hier komt een gekleurde dobbelsteen binnen
+                //dobbelsteen = NIET WIT
+                String kleurDobbelsteenInString = dobbelsteen.getKleur().toString(); //exacte kleur vragen
+                //Verschil tsn de twee witte dobbelstenen
+                for (int witteWaarde : witteWaarden) { //de twee witte dobbelstenen overlopen
+                    int somWaarden = gekleurdeWaarde + witteWaarde;
+                    highlightButton(kleurDobbelsteenInString, somWaarden);
+                }
+            }
+        }
+
+        //aparte som van de witte dobbelstenen
+        //geldend voor elke speler in 1 beurt
+        int witteSom = dc.geefWitteSom();
+        for (String kleurDb : new String[]{"ROOD", "GEEL", "GROEN", "BLAUW"}) {
+            highlightButton(kleurDb, witteSom);
+        }
+    }
+
+    private void highlightButton(String kleur, int getal) {
+        for (Node node : grpScorekaart.getChildren()) {
+            if (node instanceof Button buttonInScoreKaart) {
+                String btnKleur = (String) buttonInScoreKaart.getProperties().get("kleur");
+                Integer btnGetal = (Integer) buttonInScoreKaart.getProperties().get("getal");
+
+                if (kleur.equals(btnKleur) && btnGetal != null && btnGetal == getal && !buttonInScoreKaart.isDisable()) {
+
+                    String donkereRandKleur;
+                    switch (kleur.toUpperCase()) {
+                        case "ROOD"  -> donkereRandKleur = "#c0392b";
+                        case "GEEL"  -> donkereRandKleur = "#f39c12";
+                        case "GROEN" -> donkereRandKleur = "#1e8449";
+                        case "BLAUW" -> donkereRandKleur = "#1a5276";
+                        default      -> donkereRandKleur = "#34495e";
+                    }
+                    buttonInScoreKaart.setStyle(buttonInScoreKaart.getStyle() + String.format("-fx-border-width: 3px; -fx-border-color: %s;", donkereRandKleur));
+                }
+            }
+        }
+    }
+
+    private void vulScorekaart(boolean isAlternatief) {
         String[] kleuren = {"ROOD", "GEEL", "GROEN", "BLAUW"};
         int[][] waarden;
 
-        if (alternatief) {
+        if (isAlternatief) {
             waarden = new int[][]{
                     {10, 6, 2, 8, 3, 4, 12, 5, 9, 7, 11},
                     {9, 12, 4, 6, 2, 5, 8, 11, 3, 10, 7},
@@ -254,8 +320,8 @@ public class SpelController {
 
     @FXML
     void rolDobbelstenen(ActionEvent event) {
+        String huidigeNaam = dc.getSpelerAanDeBeurt();
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-
         Button knop = (Button) event.getSource();
 
         if (!heeftGerold) {
@@ -263,6 +329,7 @@ public class SpelController {
 
             dc.startBeurt();
             toonDobbelstenen(dc.getDobbelstenen());
+            omrandMogelijkeVakjes();
 
             heeftGerold = true;
 
@@ -274,9 +341,13 @@ public class SpelController {
             delay.play();
 
         } else {
+            dc.voegMislukteWorpToe(huidigeNaam);
+            updateMislukteWorpen();
             heeftGerold = false;
             knop.setText(bundle.getString("RolDobbelstenen"));
             grpDobbelstenen.getChildren().clear();
+            resetScorekaartRanden();
+            updateSpelerAanDeBeurt();
         }
     }
 

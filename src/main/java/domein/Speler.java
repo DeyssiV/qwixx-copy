@@ -50,6 +50,11 @@ public class Speler implements Comparable<Speler> {
     }
   }
 
+  public int berekenLeeftijd() {
+    int huidigJaar = LocalDate.now().getYear();
+    return huidigJaar - this.geboortejaar;
+  }
+
   private void controleerGeboortejaar(int geboortejaar)
   {
     // haal de huidige datum op

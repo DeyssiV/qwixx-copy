@@ -19,13 +19,9 @@ public class DomeinController {
 
   public List<String> geefGeregistreerdeSpelers() {
     List<String> mogelijkeSpelers = new ArrayList<>();
-    int huidigJaar = LocalDate.now().getYear(); // Haal het huidige jaar op
-
     for (Speler speler : spelerRepository.geefSpelersLijst()) {
-      int leeftijd = huidigJaar - speler.getGeboortejaar();
       mogelijkeSpelers.add(speler.getGebruikersnaam());
     }
-
     return mogelijkeSpelers;
   }
 
@@ -85,8 +81,22 @@ public class DomeinController {
   }*/
 
 
+
+
   public boolean kiesCombinatie(String gebruikersnaam, int keuze){
-    List<Dobbelsteen> stenen = spel.getDobbelstenen();
+    Kleur gekozenKleur = kiesKleur(keuze);
+
+    int witteWaarde = (keuze % 2 != 0) ? spel.getWitteWaarde(1) : spel.getWitteWaarde(2);
+    int kleurWaarde = spel.getGekleurdeWaarde(gekozenKleur);
+
+    Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
+    boolean gelukt = speler.kruisAan(gekozenKleur, kleurWaarde + witteWaarde);
+
+
+    if (gelukt && speler.getScoreBlad().isRijGesloten(gekozenKleur)) sluitRij(gekozenKleur);
+    return gelukt;
+
+    /*List<Dobbelsteen> stenen = spel.getDobbelstenen();
 
     int w1 = 0, w2 = 0, rood = 0, geel = 0, groen = 0, blauw = 0;
 
@@ -196,7 +206,14 @@ public class DomeinController {
         return false; }
 
       default -> { return false; }
-    }
+    }*/
+  }
+
+  private Kleur kiesKleur(int keuze) {
+    if (keuze <= 2) return Kleur.ROOD;
+    if (keuze <= 4) return Kleur.GEEL;
+    if (keuze <= 6) return Kleur.GROEN;
+    return Kleur.BLAUW;
   }
 
   public boolean kiesRij(String gebruikersnaam, String kleurNaam, int som) {
@@ -243,9 +260,7 @@ public class DomeinController {
   }
 
   public int geefLeeftijd(String gebruikersnaam) {
-    Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
-    int huidigJaar = java.time.LocalDate.now().getYear();
-    return huidigJaar - speler.getGeboortejaar();
+    return spelerRepository.geefSpeler(gebruikersnaam).berekenLeeftijd();
   }
 
   public List<String> geefSpelersInVolgorde() {
@@ -286,6 +301,7 @@ public class DomeinController {
   public void voegMislukteWorpToe(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     s.setMislukteWorpen();
+    huidigeSpelerIndex++;
   }
 
   public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
