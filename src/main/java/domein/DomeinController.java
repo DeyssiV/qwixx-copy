@@ -4,7 +4,6 @@ import dtos.SpelDTO;
 import dtos.SpelerDTO;
 import utils.Kleur;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,17 +262,18 @@ public class DomeinController {
     return spelerRepository.geefSpeler(gebruikersnaam).berekenLeeftijd();
   }
 
-  public List<String> geefSpelersInVolgorde() {
-    List<String> spelersInVolgorde = new ArrayList<>();
+  
+  public List<String> volgordeSpelersInStringLijst() {
+    List<String> spelersStringLijst = new ArrayList<>();
 
     for (Speler speler : spel.geefSpelers()) {
-      spelersInVolgorde.add(speler.getGebruikersnaam());
+      spelersStringLijst.add(speler.getGebruikersnaam());
     }
-    return spelersInVolgorde;
+    return spelersStringLijst;
   }
 
   public String getSpelerAanDeBeurt() {
-    List<String> spelers = geefSpelersInVolgorde();
+    List<String> spelers = volgordeSpelersInStringLijst();
     return spelers.get(huidigeSpelerIndex);
   }
 

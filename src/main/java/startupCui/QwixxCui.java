@@ -83,7 +83,7 @@ public class QwixxCui {
         gekozenSpelers.forEach(dc::voegSpelerToeAanSpel);
         dc.startNieuwSpel();
 
-        List<String> speelVolgorde = dc.geefSpelersInVolgorde();
+        List<String> speelVolgorde = dc.volgordeSpelersInStringLijst();
         System.out.println("De speelvolgorde is: " + speelVolgorde);
 
         boolean isEindeSpel = false;
