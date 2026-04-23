@@ -58,6 +58,9 @@ public class StartPaginaController {
     private Button btnNieuweSpeler;
 
     @FXML
+    private Button btnToonSpelregels;
+
+    @FXML
     void nieuwSpelKnopIngedrukt(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/SpelerKiezen.fxml"));
 
@@ -76,6 +79,17 @@ public class StartPaginaController {
         loader.setResources(bundle);
 
         Stage stage = (Stage) btnNieuweSpeler.getScene().getWindow();
+        stage.setScene(new Scene(loader.load()));
+    }
+
+    @FXML
+    void toonSpelregels(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/Spelregels.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
+        Stage stage = (Stage) btnToonSpelregels.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 }

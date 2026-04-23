@@ -3,17 +3,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.StartPaginaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.StartPaginaController">
    <children>
       <HBox alignment="TOP_RIGHT" spacing="10.0">
          <children>
-            <Button fx:id="btnNL" focusTraversable="false" alignment="CENTER" onAction="#wisselNaarNederlands" text="NL" textAlignment="CENTER"/>
-            <Button fx:id="btnEN" focusTraversable="false" alignment="CENTER" onAction="#wisselNaarEngels" text="EN" textAlignment="CENTER" />
-            <Button fx:id="btnRU" focusTraversable="false" alignment="CENTER" onAction="#wisselNaarRussisch" text="RU" textAlignment="CENTER" />
+            <Button fx:id="btnNL" alignment="CENTER" focusTraversable="false" onAction="#wisselNaarNederlands" text="NL" textAlignment="CENTER" />
+            <Button fx:id="btnEN" alignment="CENTER" focusTraversable="false" onAction="#wisselNaarEngels" text="EN" textAlignment="CENTER" />
+            <Button fx:id="btnRU" alignment="CENTER" focusTraversable="false" onAction="#wisselNaarRussisch" text="RU" textAlignment="CENTER" />
          </children>
          <padding>
             <Insets right="20.0" top="20.0" />
@@ -31,7 +31,7 @@
       </Label>
 
 
-      <Button fx:id="btnNieuwSpel" focusTraversable="false" alignment="CENTER" onAction="#nieuwSpelKnopIngedrukt" text="%StartSpel" textAlignment="CENTER">
+      <Button fx:id="btnNieuwSpel" alignment="CENTER" focusTraversable="false" onAction="#nieuwSpelKnopIngedrukt" text="%StartSpel" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="25.0" />
          </font>
@@ -39,7 +39,7 @@
             <Insets bottom="10.0" top="10.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="btnNieuweSpeler" focusTraversable="false" alignment="CENTER" mnemonicParsing="false" onAction="#nieuweSpelerToevoegen" text="%SpelerToevoegen">
+      <Button fx:id="btnNieuweSpeler" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#nieuweSpelerToevoegen" text="%SpelerToevoegen">
          <font>
             <Font name="Calibri" size="25.0" />
          </font>
@@ -47,6 +47,11 @@
             <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </Button>
+         <Button fx:id="btnToonSpelregels" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#toonSpelregels" text="%ToonSpelregels">
+            <font>
+               <Font name="Calibri" size="25.0" />
+            </font>
+         </Button>
       </VBox>
    </children>
 </VBox>
