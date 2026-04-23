@@ -10,7 +10,12 @@ public class Speler implements Comparable<Speler> {
   private ScoreBlad scoreBlad;
   private int mislukteWorpen;
 
-
+  /**
+   * maakt een speler aan.
+   * maakt een scoreblad aan voor de speler.
+   * @param gebruikersnaam de naam van de speler.
+   * @param geboortejaar het geboortejaar van de speler.
+   */
   public Speler(String gebruikersnaam, int geboortejaar) {
         controleerGebruikersnaam(gebruikersnaam);
         controleerGeboortejaar(geboortejaar);
@@ -19,27 +24,45 @@ public class Speler implements Comparable<Speler> {
         this.scoreBlad = new ScoreBlad(gebruikersnaam); // Elke speler wordt eigen scoreblad aan toegewezen
   }
 
+  /**
+   * geeft het scoreblad terug.
+   * @return het scoreblad.
+   */
   public ScoreBlad getScoreBlad() {
     return scoreBlad;
   }
 
+  /**
+   * geeft de gebruikersnaam terug.
+   * @return de gebruikersnaam.
+   */
   public String getGebruikersnaam() {
     return gebruikersnaam;
   }
 
+  /**
+   * geeft het geboortejaar terug.
+   * @return het geboortejaar.
+   */
   public int getGeboortejaar() {
     return geboortejaar;
   }
 
+  /**
+   * verhoogt het aantal mislukte worpen met 1.
+   */
   public void setMislukteWorpen() {
     this.mislukteWorpen++;
   }
 
+  /**
+   * geeft het aantal mislukte worpen.
+   * @return aantal mislukte worpen.
+   */
   public int getMislukteWorpen() {
     return mislukteWorpen;
   }
 
-  //TODO: controleermethodes toevoegen
   private void controleerGebruikersnaam(String gebruikersnaam)
   {
     if (gebruikersnaam == null || gebruikersnaam.isBlank())
@@ -50,6 +73,10 @@ public class Speler implements Comparable<Speler> {
     }
   }
 
+  /**
+   * berekent de leeftijd van de speler.
+   * @return waarde van huidigJaar - geboortejaar.
+   */
   public int berekenLeeftijd() {
     int huidigJaar = LocalDate.now().getYear();
     return huidigJaar - this.geboortejaar;
@@ -66,11 +93,20 @@ public class Speler implements Comparable<Speler> {
       throw new IllegalArgumentException("Alleen mensen tussen de 8 en 100 jaar mogen dit spel spelen!");
   }
 
+  /**
+   * geeft de score van de speler.
+   * @return score van de speler.
+   */
   public int getScore(){
     return scoreBlad.berekenTotaleScore(getMislukteWorpen());
   }
 
-
+  /**
+   * kruist een vakje aan op het scoreblad.
+   * @param kleur de kleur van het vakje.
+   * @param vakje de plaats van het vakje.
+   * @return boolean of het gelukt is of niet.
+   */
   public boolean kruisAan(Kleur kleur, int vakje){
     return scoreBlad.kruisVakje(kleur, vakje);
   }
@@ -78,6 +114,12 @@ public class Speler implements Comparable<Speler> {
 
   //Doordat we de interface Comparable implementeren moeten we de compareTo methode overriden
   //Dit doen we om later makkelijk de spelers te kunnen sorteren obv de gewonnen score en zo de winnaar makkelijk aan te duiden
+
+  /**
+   * vergelijkt een speler met een andere speler.
+   * @param andereSpeler de andere speler waarmee vergeleken wordt.
+   * @return de waarde voor de sortering.
+   */
   @Override
   public int compareTo(Speler andereSpeler) {
     // sortering obv geboortejaar
