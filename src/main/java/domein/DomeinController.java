@@ -28,6 +28,10 @@ public class DomeinController {
     spelerRepository = new SpelerRepository();
   }
 
+  public int getHuidigeSpelerIndex() {
+    return huidigeSpelerIndex;
+  }
+
   //TODO
   public SpelDTO geefSpelDTO() {
     return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen(), spel.getDobbelsteen(), spel.getScoreBlad());
@@ -277,6 +281,14 @@ public class DomeinController {
     return spelers.get(huidigeSpelerIndex);
   }
 
+  public void volgendeSpeler() {
+    huidigeSpelerIndex++;
+
+    if (huidigeSpelerIndex >= spel.geefSpelers().size()) {
+      huidigeSpelerIndex = 0;
+    }
+  }
+
   public void setAlternatiefModus(boolean alternatief) {
     this.alternatiefModus = alternatief;
   }
@@ -301,7 +313,7 @@ public class DomeinController {
   public void voegMislukteWorpToe(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     s.setMislukteWorpen();
-    huidigeSpelerIndex++;
+    volgendeSpeler();
   }
 
   public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
