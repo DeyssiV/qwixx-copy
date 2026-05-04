@@ -1,6 +1,7 @@
 
 .root {
-    -fx-background-color: #f3f0ec;}
+    -fx-background-color: linear-gradient(to bottom right, #f3f0ec, #e8e4e0);
+}
 
 
 #lblTitel {
@@ -119,7 +120,7 @@
 }
 
 #btnAnnuleer {
-    -fx-background-color: #e74c3c; /* Rood */
+    -fx-background-color: #e74c3c;
     -fx-background-radius: 5em;
     -fx-min-width: 45px;
     -fx-min-height: 45px;
@@ -187,4 +188,57 @@
 
 #btnRolDobbelstenen:hover {
     -fx-background-color: #2980b9;
+}
+
+.feedback-success {
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
+
+.feedback-error {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}
+
+.input-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #bdc3c7;
+    -fx-padding: 10;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 16px;
+}
+
+#btnRegistreren {
+    -fx-min-width: 200px;
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-border-color: #bdc3c7;
+
+}
+
+.titled-pane > .title {
+    -fx-background-color: #fdfdfd;
+    -fx-border-color: #bdc3c7;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-max-width: 200px;
+}
+
+.accordion .titled-pane > .title {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15;
+}
+
+.accordion .titled-pane:expanded > .title {
+    -fx-text-fill: #27ae60;
+}
+
+.input-field:focused {
+    -fx-border-color: #3498db;
+    -fx-border-width: 2px;
+    -fx-background-color: white;
 }

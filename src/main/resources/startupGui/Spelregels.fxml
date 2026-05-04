@@ -10,35 +10,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelregelsController">
-   <top>
-      <VBox prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <BorderPane>
-               <left>
-                  <Button fx:id="btnAnnuleer" mnemonicParsing="false" onAction="#annuleer" text="%Terug" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <BorderPane.margin>
-                        <Insets left="20.0" top="20.0" />
-                     </BorderPane.margin>
-                  </Button>
-               </left>
-               <center>
-                  <Label text="%TitelSpelregels" BorderPane.alignment="TOP_CENTER">
-                     <BorderPane.margin>
-                        <Insets left="-140.0" top="20.0" />
-                     </BorderPane.margin>
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </center>
-            </BorderPane>
-         </children>
-      </VBox>
-   </top>
+<?import javafx.scene.layout.StackPane?>
+<BorderPane stylesheets="@style.css" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelregelsController">
+    <top>
+        <VBox alignment="CENTER" spacing="10.0">
+            <children>
+                <StackPane>
+                    <children>
+                        <Label fx:id="lblTitelSpelregels" id="lblTitelSub" text="%TitelSpelregels" StackPane.alignment="CENTER" />
+                        <Button fx:id="btnAnnuleer" id="btnAnnuleer" mnemonicParsing="false" onAction="#annuleer" text="←" StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin>
+                                <Insets left="20.0" />
+                            </StackPane.margin>
+                        </Button>
+                    </children>
+                </StackPane>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </top>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
