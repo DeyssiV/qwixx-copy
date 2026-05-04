@@ -1,0 +1,190 @@
+
+.root {
+    -fx-background-color: #f3f0ec;}
+
+
+#lblTitel {
+    -fx-font-size: 100px;
+    -fx-text-fill: black;
+}
+
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10 30 10 30;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 18px;
+    -fx-cursor: hand;
+    -fx-min-width: 250px;
+}
+
+.button:hover {
+    -fx-background-color: #ecf0f1;
+}
+
+#btnNieuwSpel {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#btnNieuweSpeler {
+    -fx-background-color: #25b006;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#btnToonSpelregels {
+    -fx-background-color: #1b83c4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#btnNieuwSpel:hover {
+    -fx-background-color: #d63031;
+}
+
+#btnNieuweSpeler:hover {
+    -fx-background-color: #219105;
+}
+
+#btnToonSpelregels:hover {
+    -fx-background-color: #16699c;
+}
+
+#btnNL, #btnEN, #btnRU {
+    -fx-min-width: 55px;
+    -fx-min-height: 55px;
+    -fx-max-width: 55px;
+    -fx-max-height: 55px;
+    -fx-shape: "M 0 25 a 25 25 0 1 1 50 0 a 25 25 0 1 1 -50 0";
+
+    -fx-background-radius: 55px;
+    -fx-border-radius: 55px;
+
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+
+    -fx-padding: 0;
+    -fx-text-fill: transparent;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;}
+
+#btnNL { -fx-background-image: url("vlag-NL.png"); }
+#btnEN { -fx-background-image: url("vlag-EN.png"); }
+#btnRU { -fx-background-image: url("vlag-RUS.png"); }
+
+#btnNL:hover, #btnEN:hover, #btnRU:hover {
+    -fx-background-image: none;
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+    -fx-border-color: #bdc3c7;
+}
+
+#btnVoegSpelerToe {
+    -fx-background-color: #2ecc71;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+#btnVoegSpelerToe:hover {
+    -fx-background-color: #27ae60;
+}
+
+#btnVerwijder {
+    -fx-background-color: #e74c3c;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+#btnVerwijder:hover {
+    -fx-background-color: #c0392b;
+}
+
+#btnStartSpel {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+#btnStartSpel:hover {
+    -fx-background-color: #2980b9;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #f39c12;
+}
+
+#btnAnnuleer {
+    -fx-background-color: #e74c3c; /* Rood */
+    -fx-background-radius: 5em;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+#btnAnnuleer:hover {
+    -fx-background-color: #c0392b;
+}
+
+#lblTitelSpelerKiezen {
+    -fx-font-size: 50px;
+    -fx-text-fill: black;
+}
+
+#grpScorekaart .button {
+    -fx-min-width: 0;
+    -fx-pref-width: -1;
+    -fx-padding: 5;
+    -fx-background-radius: 8;
+}
+
+#grpDobbelstenen .button {
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-max-width: 60px;
+    -fx-max-height: 60px;
+    -fx-padding: 0;
+}
+
+
+#lblTitelSub {
+    -fx-font-size: 50px;
+    -fx-text-fill: black;
+}
+
+#btnStop {
+    -fx-background-color: #e74c3c;
+    -fx-background-radius: 5em;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+}
+
+#btnStop:hover {
+    -fx-background-color: #c0392b;
+}
+
+#btnRolDobbelstenen {
+    -fx-min-width: 180px;
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+#btnRolDobbelstenen:hover {
+    -fx-background-color: #2980b9;
+}

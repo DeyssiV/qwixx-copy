@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Locale;
@@ -16,6 +18,15 @@ import java.util.ResourceBundle;
 public class StartPaginaController {
 
     private final DomeinController dc = QwixxApplication.dc;
+
+    @FXML
+    private Button btnNieuwSpel;
+
+    @FXML
+    private Button btnNieuweSpeler;
+
+    @FXML
+    private Button btnToonSpelregels;
 
     //deze methode is gekoppeld aan de knop NL, en hij roept de laadSchermMetTaal methode op
     @FXML
@@ -46,19 +57,12 @@ public class StartPaginaController {
 
         Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
 
+        Scene scene = new Scene(root);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private Button btnNieuwSpel;
-
-    @FXML
-    private Button btnNieuweSpeler;
-
-    @FXML
-    private Button btnToonSpelregels;
 
     @FXML
     void nieuwSpelKnopIngedrukt(ActionEvent event) throws Exception {
@@ -67,8 +71,11 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
+        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Scene scene = new Scene(root);
+
         Stage stage = (Stage) btnNieuwSpel.getScene().getWindow();
-        stage.setScene(new Scene(loader.load()));
+        stage.setScene(scene);
     }
 
     @FXML
@@ -78,8 +85,11 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
+        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Scene scene = new Scene(root);
+
         Stage stage = (Stage) btnNieuweSpeler.getScene().getWindow();
-        stage.setScene(new Scene(loader.load()));
+        stage.setScene(scene);
     }
 
     @FXML
@@ -89,7 +99,10 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
+        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Scene scene = new Scene(root);
+
         Stage stage = (Stage) btnToonSpelregels.getScene().getWindow();
-        stage.setScene(new Scene(loader.load()));
+        stage.setScene(scene);
     }
 }

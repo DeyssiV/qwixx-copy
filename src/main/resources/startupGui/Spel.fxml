@@ -14,34 +14,29 @@
 
 
 <?import javafx.scene.layout.HBox?>
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelController">
+<BorderPane stylesheets="@style.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelController">
    <top>
-      <GridPane prefHeight="60.0" BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox alignment="CENTER" spacing="10.0">
          <children>
-            <Button fx:id="btnStop" onAction="#stopSpel" text="%Terug" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
+            <StackPane>
+               <children>
+                  <!-- De titel (wie is aan de beurt) in het midden -->
+                  <Label fx:id="lblSpelerAanDeBeurt" id="lblTitelSub" text="Label" StackPane.alignment="CENTER">
+                  </Label>
 
-            <Label fx:id="lblSpelerAanDeBeurt" text="Label" GridPane.columnIndex="1">
-               <font>
-                  <Font name="Calibri Bold" size="24.0" />
-               </font>
-            </Label>
+                  <!-- De terug-knop (rode bol) links -->
+                  <Button fx:id="btnStop" onAction="#stopSpel" text="←" StackPane.alignment="CENTER_LEFT">
+                     <StackPane.margin>
+                        <Insets left="20.0" />
+                     </StackPane.margin>
+                  </Button>
+               </children>
+            </StackPane>
          </children>
          <padding>
-            <Insets left="20.0" right="20.0" top="15.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
          </padding>
-      </GridPane>
+      </VBox>
    </top>
    <center>
       <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0">

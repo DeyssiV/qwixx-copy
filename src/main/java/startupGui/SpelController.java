@@ -65,6 +65,8 @@ public class SpelController {
     @FXML
     private void initialize() {
 
+        grpScorekaart.setVgap(5);
+        grpScorekaart.setHgap(2);
         vulScorekaart(dc.isAlternatiefModus());
         updateSpelerAanDeBeurt();
 
@@ -116,28 +118,36 @@ public class SpelController {
         for (int rij = 0; rij < 4; rij++) {
             // Bepaal de kleur voor deze hele rij
             String kleurNaam = kleuren[rij].toLowerCase();
-            String hexKleur;
+            String hexAchtergrond;
+            String hexTekst;
+
             switch (kleurNaam) {
                 case "rood":
-                    hexKleur = "#f1948a";
+                    hexAchtergrond = "#fADBD8";
+                    hexTekst = "#C0392B";
                     break;
                 case "geel":
-                    hexKleur = "#f7dc6f";
+                    hexAchtergrond = "#FCF3CF";
+                    hexTekst = "#D4AC0D";
                     break;
                 case "groen":
-                    hexKleur = "#82e0aa";
+                    hexAchtergrond = "#D5F5E3";
+                    hexTekst = "#1E8449";
                     break;
                 case "blauw":
-                    hexKleur = "#85c1e9";
+                    hexAchtergrond = "#D6EAF8";
+                    hexTekst = "#2E86C1";
                     break;
                 default:
-                    hexKleur = "#d5dbdb";
+                    hexAchtergrond = "#E5E8E8";
+                    hexTekst = "#7F8C8D";
             }
 
 
-            String buttonStyle = "-fx-background-color: " + hexKleur + "; " +
+            String buttonStyle = "-fx-background-color: " + hexAchtergrond + "; " +
+                    "-fx-text-fill: " + hexTekst + "; " +
                     "-fx-background-radius: 8; " +
-                    "-fx-border-color: rgba(0,0,0,0.1); " +
+                    "-fx-border-color: rgba(0,0,0,0.05); " +
                     "-fx-border-radius: 8; " +
                     "-fx-font-weight: bold; " +
                     "-fx-font-size: 23px;";

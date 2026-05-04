@@ -23,7 +23,7 @@ public class Vakje {
      *
      * @return De waarde van het vakje als Integer
      */
-    public int getWaarde() {
+     int getWaarde() {
         return waarde;
     }
 

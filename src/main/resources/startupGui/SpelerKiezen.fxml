@@ -11,41 +11,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerKiezenController">
-
+<?import javafx.scene.layout.StackPane?>
+<BorderPane stylesheets="@style.css" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerKiezenController">
    <top>
       <VBox alignment="CENTER" spacing="10.0">
+      <children>
+      <StackPane>
          <children>
-            <BorderPane>
-               <left>
-                  <Button fx:id="btnAnnuleer" onAction="#annuleer" text="%Terug" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-               </left>
-               <center>
-                  <Label text="%TitelSpelerKiezen" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </center>
-               <right>
-                  <VBox prefWidth="180.0" />
-               </right>
-            </BorderPane>
-
-            <Label fx:id="lblFeedback" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
+            <Label fx:id="lblTitelSpelerKiezen" id="lblTitelSpelerKiezen" text="%TitelSpelerKiezen" StackPane.alignment="CENTER">
             </Label>
+
+            <Button fx:id="btnAnnuleer" onAction="#annuleer" text="←" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="20.0" />
+               </StackPane.margin>
+            </Button>
          </children>
+         <padding>
+            <Insets bottom="10.0" top="20.0" />
+         </padding>
+      </StackPane>
+
+         <Label fx:id="lblFeedback" textAlignment="CENTER">
+            <font>
+               <Font name="System Bold" size="16.0" />
+            </font>
+         </Label>
+      </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
+
    </top>
 
    <center>
