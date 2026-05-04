@@ -23,17 +23,16 @@
       <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
       <Label fx:id="lblTitel" id="lblTitel" alignment="CENTER" contentDisplay="CENTER" text="%titel" textAlignment="CENTER">
          <VBox.margin>
-            <Insets bottom="50.0" />
+            <Insets bottom="30.0" />
          </VBox.margin>
       </Label>
-
 
       <Button fx:id="btnNieuwSpel" alignment="CENTER" focusTraversable="false" onAction="#nieuwSpelKnopIngedrukt" text="%StartSpel" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="25.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="10.0" top="10.0" />
+            <Insets bottom="15.0" top="10.0" />
          </VBox.margin>
       </Button>
       <Button fx:id="btnNieuweSpeler" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#nieuweSpelerToevoegen" text="%SpelerToevoegen">
@@ -41,10 +40,18 @@
             <Font name="Calibri" size="25.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="15.0" top="10.0" />
          </VBox.margin>
       </Button>
          <Button fx:id="btnToonSpelregels" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#toonSpelregels" text="%ToonSpelregels">
+            <font>
+               <Font name="Calibri" size="25.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="15.0" top="10.0" />
+            </VBox.margin>
+         </Button>
+         <Button fx:id="btnStats" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#toonStats" text="%ToonStats">
             <font>
                <Font name="Calibri" size="25.0" />
             </font>

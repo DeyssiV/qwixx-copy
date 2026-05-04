@@ -28,6 +28,9 @@ public class StartPaginaController {
     @FXML
     private Button btnToonSpelregels;
 
+    @FXML
+    private Button btnStats;
+
     //deze methode is gekoppeld aan de knop NL, en hij roept de laadSchermMetTaal methode op
     @FXML
     void wisselNaarNederlands(ActionEvent event) throws Exception {
@@ -53,9 +56,9 @@ public class StartPaginaController {
         //een soort van woordenboek
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
-        loader.setResources(bundle); //hier geven de bundle mee, welke keys en hun waardes mee
+        loader.setResources(bundle); /
 
-        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Parent root = loader.load();
 
         Scene scene = new Scene(root);
 
@@ -71,7 +74,7 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Parent root = loader.load();
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) btnNieuwSpel.getScene().getWindow();
@@ -85,7 +88,7 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Parent root = loader.load();
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) btnNieuweSpeler.getScene().getWindow();
@@ -99,10 +102,24 @@ public class StartPaginaController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Parent root = loader.load(); //deze gaat nu elke % af en kijkt wat het moet worden
+        Parent root = loader.load();
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) btnToonSpelregels.getScene().getWindow();
+        stage.setScene(scene);
+    }
+
+    @FXML
+    void toonStats(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StatsPagina.fxml"));
+
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) btnStats.getScene().getWindow();
         stage.setScene(scene);
     }
 }

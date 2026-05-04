@@ -79,8 +79,6 @@ public class SpelerKiezenController {
             if (!lvLijstSpelers.getItems().contains(geselecteerde)) {
                 lvLijstSpelers.getItems().add(geselecteerde);
 
-//                // Optional: Sort the ComboBox items alphabetically so the list stays organized
-//                javafx.collections.FXCollections.sort(cmbLijstSpelers.getItems());
             }
         }
     }
@@ -121,9 +119,9 @@ public class SpelerKiezenController {
         dc.startNieuwSpel();
         dc.setAlternatiefModus(alternatief);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/Spel.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GekozenSpelersPagina.fxml"));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie", Locale.getDefault());
         loader.setResources(bundle);
 
         Stage stage = (Stage) btnStartSpel.getScene().getWindow();

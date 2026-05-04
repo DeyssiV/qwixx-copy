@@ -20,12 +20,10 @@
          <children>
             <StackPane>
                <children>
-                  <!-- De titel (wie is aan de beurt) in het midden -->
                   <Label fx:id="lblSpelerAanDeBeurt" id="lblTitelSub" text="Label" StackPane.alignment="CENTER">
                   </Label>
 
-                  <!-- De terug-knop (rode bol) links -->
-                  <Button fx:id="btnStop" onAction="#stopSpel" text="←" StackPane.alignment="CENTER_LEFT">
+                  <Button fx:id="btnStop" onAction="#stopSpel" text="X" StackPane.alignment="CENTER_LEFT">
                      <StackPane.margin>
                         <Insets left="20.0" />
                      </StackPane.margin>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.GameOverController">
+    <top>
+        <VBox alignment="CENTER" spacing="10.0">
+            <children>
+                <StackPane>
+                    <children>
+                        <Label fx:id="lblTitelGameOver" id="lblTitelGameOver" text="Game Over" StackPane.alignment="CENTER">
+                        </Label>
+                        <Button fx:id="btnStop" onAction="#handleHoofdmenu" text="X" StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin>
+                                <Insets left="20.0" />
+                            </StackPane.margin>
+                        </Button>
+                    </children>
+                </StackPane>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="BOTTOM_CENTER" spacing="15.0">
+                    <children>
+                        <VBox fx:id="podiumZilver" alignment="BOTTOM_CENTER" spacing="5.0">
+                            <children>
+                                <Label fx:id="lblNaamZilver" text="Speler 2" />
+                                <Label fx:id="lblScoreZilver" text="0" />
+                                <VBox id="podiumZilver" prefHeight="120.0" prefWidth="100.0" style="-fx-background-color: #bdc3c7; -fx-background-radius: 10 10 0 0;" />
+                            </children>
+                        </VBox>
+                        <VBox alignment="BOTTOM_CENTER" spacing="5.0">
+                            <children>
+                                <Label fx:id="lblNaamGoud" text="Winnaar" style="-fx-font-size: 20px;" />
+                                <Label fx:id="lblScoreGoud" text="0" style="-fx-font-size: 18px;" />
+                                <VBox id="podiumGoud" prefHeight="180.0" prefWidth="120.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 15 15 0 0;" />
+                            </children>
+                        </VBox>
+                        <VBox fx:id="podiumBrons" alignment="BOTTOM_CENTER" spacing="5.0">
+                            <children>
+                                <Label fx:id="lblNaamBrons" text="Speler 3" />
+                                <Label fx:id="lblScoreBrons" text="0" />
+                                <VBox id="podiumBrons" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: #cd7f32; -fx-background-radius: 10 10 0 0;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <ScrollPane fitToWidth="true" maxWidth="400.0" prefHeight="150.0" style="-fx-background-color: transparent;">
+                    <content>
+                        <VBox fx:id="vboxOverigeSpelers" alignment="TOP_CENTER" spacing="10.0" />
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="100.0" spacing="40.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnOpnieuw" onAction="#handleOpnieuw" id="btnToonSpelregels" text="Opnieuw Spelen" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

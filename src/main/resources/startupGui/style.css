@@ -233,12 +233,7 @@
     -fx-padding: 15;
 }
 
-.accordion .titled-pane:expanded > .title {
-    -fx-text-fill: #27ae60;
-}
-
-.input-field:focused {
-    -fx-border-color: #3498db;
-    -fx-border-width: 2px;
-    -fx-background-color: white;
-}
+#lblTitelGameOver {
+     -fx-font-size: 50px;
+     -fx-text-fill: black;
+ }

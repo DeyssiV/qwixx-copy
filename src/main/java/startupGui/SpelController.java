@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -251,10 +252,10 @@ public class SpelController {
 
             }else{
                 dc.voegMislukteWorpToe(actieveSpeler);
-                if (dc.isEindeSpelDoorMislukteWorpen(actieveSpeler)) {
+                if (dc.geefAantalMislukteWorpen(actieveSpeler) >= 2) {
                     controleerEindeSpel();
                 } else {
-                    ronde=1;
+                    ronde = 1;
                     volgendeBeurt(true);
                 }
             }
@@ -469,17 +470,21 @@ public class SpelController {
      */
     private void controleerEindeSpel() throws Exception {
         String huidigeNaam = dc.getSpelerAanDeBeurt();
+        int aantalFouten = dc.geefAantalMislukteWorpen(huidigeNaam);
 
-        if (dc.isEindeSpelDoorMislukteWorpen(huidigeNaam) || dc.isEindeSpelDoorRijDoorkruising()) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPaginaController.fxml"));
+        if (aantalFouten >= 2 || dc.isEindeSpelDoorRijDoorkruising()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GameOver.fxml"));
 
-                ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-                loader.setResources(bundle);
+            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+            loader.setResources(bundle);
 
-                Stage stage = (Stage) lblSpelerAanDeBeurt.getScene().getWindow();
-                stage.setScene(new Scene(loader.load()));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
 
+            Stage stage = (Stage) lblSpelerAanDeBeurt.getScene().getWindow();
+            stage.setScene(scene);
         }
+
     }
 
     /**
@@ -543,7 +548,7 @@ public class SpelController {
         String huidigeNaam = dc.getSpelerAanDeBeurt();
         int aantalMislukt = dc.geefAantalMislukteWorpen(huidigeNaam);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             Label vakje = new Label();
             vakje.setMinSize(40, 40);
             vakje.setAlignment(Pos.CENTER);
