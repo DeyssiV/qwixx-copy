@@ -24,31 +24,31 @@
 
    <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
 
-   <Label id="lblTitel" alignment="CENTER" contentDisplay="CENTER" text="%lblTitel-SP" textAlignment="CENTER">
+   <Label id="lblTitelSP" alignment="CENTER" contentDisplay="CENTER" text="%lblTitel-SP" textAlignment="CENTER">
       <VBox.margin>
          <Insets bottom="30.0"/>
       </VBox.margin>
    </Label>
 
-   <Button fx:id="btnNieuwSpel" alignment="CENTER" onAction="#nieuwSpelKnopIngedrukt" text="%btnStartSpel-SP" textAlignment="CENTER">
+   <Button fx:id="btnStartSpelSP" alignment="CENTER" onAction="#nieuwSpelKnopIngedrukt" text="%btnStartSpel-SP" textAlignment="CENTER">
       <VBox.margin>
          <Insets bottom="15.0" top="10.0"/>
       </VBox.margin>
    </Button>
 
-   <Button fx:id="btnNieuweSpeler" alignment="CENTER" onAction="#nieuweSpelerToevoegen" text="%btnSpelerToevoegen-SP">
+   <Button fx:id="btnSpelerToevoegenSP" alignment="CENTER" onAction="#nieuweSpelerToevoegen" text="%btnSpelerToevoegen-SP">
       <VBox.margin>
          <Insets bottom="15.0" top="10.0"/>
       </VBox.margin>
    </Button>
 
-      <Button fx:id="btnToonSpelregels" alignment="CENTER" onAction="#toonSpelregels" text="%btnSpelRegels-SP">
+      <Button fx:id="btnSpelRegelsSP" alignment="CENTER" onAction="#toonSpelregels" text="%btnSpelRegels-SP">
          <VBox.margin>
             <Insets bottom="15.0" top="10.0"/>
          </VBox.margin>
       </Button>
 
-      <Button fx:id="btnStats" alignment="CENTER" onAction="#toonStats" text="%btnStats-SP"/>
+      <Button fx:id="btnStatsSP" alignment="CENTER" onAction="#toonStats" text="%btnStats-SP"/>
 
    </VBox>
 </VBox>

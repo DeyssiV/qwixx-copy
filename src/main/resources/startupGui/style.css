@@ -4,7 +4,7 @@
 }
 
 
-#lblTitel {
+#lblTitelSP {
     -fx-font-size: 100px;
     -fx-text-fill: black;
 }
@@ -25,38 +25,38 @@
     -fx-background-color: #ecf0f1;
 }
 
-#btnNieuwSpel, #btnNieuweSpeler, #btnToonSpelregels, #btnStats {
+#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP {
     -fx-font-family: "Calibri";
     -fx-font-size: 25px;
 }
 
-#btnNieuwSpel {
+#btnStartSpelSP {
     -fx-background-color: #e74c3c;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-#btnNieuweSpeler {
+#btnSpelerToevoegenSP {
     -fx-background-color: #25b006;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-#btnToonSpelregels {
+#btnSpelRegelsSP {
     -fx-background-color: #1b83c4;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-#btnNieuwSpel:hover {
+#btnStartSpelSP:hover {
     -fx-background-color: #d63031;
 }
 
-#btnNieuweSpeler:hover {
+#btnSpelerToevoegenSP:hover {
     -fx-background-color: #219105;
 }
 
-#btnToonSpelregels:hover {
+#btnSpelRegelsSP:hover {
     -fx-background-color: #16699c;
 }
 

@@ -20,16 +20,16 @@ public class StartPaginaController {
     private final DomeinController dc = QwixxApplication.dc;
 
     @FXML
-    private Button btnNieuwSpel;
+    private Button btnStartSpelSP;
 
     @FXML
-    private Button btnNieuweSpeler;
+    private Button btnSpelerToevoegenSP;
 
     @FXML
-    private Button btnToonSpelregels;
+    private Button btnSpelRegelsSP;
 
     @FXML
-    private Button btnStats;
+    private Button btnStatsSP;
 
     //deze methode is gekoppeld aan de knop NL, en hij roept de laadSchermMetTaal methode op
     @FXML
@@ -77,7 +77,7 @@ public class StartPaginaController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        Stage stage = (Stage) btnNieuwSpel.getScene().getWindow();
+        Stage stage = (Stage) btnStartSpelSP.getScene().getWindow();
         stage.setScene(scene);
     }
 
@@ -91,7 +91,7 @@ public class StartPaginaController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        Stage stage = (Stage) btnNieuweSpeler.getScene().getWindow();
+        Stage stage = (Stage) btnSpelerToevoegenSP.getScene().getWindow();
         stage.setScene(scene);
     }
 
@@ -105,7 +105,7 @@ public class StartPaginaController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        Stage stage = (Stage) btnToonSpelregels.getScene().getWindow();
+        Stage stage = (Stage) btnSpelRegelsSP.getScene().getWindow();
         stage.setScene(scene);
     }
 
@@ -119,7 +119,7 @@ public class StartPaginaController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        Stage stage = (Stage) btnStats.getScene().getWindow();
+        Stage stage = (Stage) btnStatsSP.getScene().getWindow();
         stage.setScene(scene);
     }
 }
