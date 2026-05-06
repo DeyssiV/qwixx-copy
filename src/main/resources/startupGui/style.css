@@ -25,6 +25,11 @@
     -fx-background-color: #ecf0f1;
 }
 
+#btnNieuwSpel, #btnNieuweSpeler, #btnToonSpelregels, #btnStats {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 25px;
+}
+
 #btnNieuwSpel {
     -fx-background-color: #e74c3c;
     -fx-text-fill: white;

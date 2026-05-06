@@ -23,8 +23,6 @@ public class QwixxApplication extends Application {
       dc = new DomeinController();
     }
 
-
-    //
     Locale localisatie = new Locale("nl");
     Locale.setDefault(localisatie);
     ResourceBundle bundel = ResourceBundle.getBundle("localisatie", localisatie);
