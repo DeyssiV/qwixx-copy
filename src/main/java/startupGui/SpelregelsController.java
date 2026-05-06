@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class SpelregelsController
 {
     @FXML
-    private Button btnAnnuleer;
+    private Button btnAnnuleren;
 
     @FXML
     void annuleer(ActionEvent event) throws Exception {
@@ -20,7 +20,7 @@ public class SpelregelsController
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Stage stage = (Stage) btnAnnuleer.getScene().getWindow();
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 }
