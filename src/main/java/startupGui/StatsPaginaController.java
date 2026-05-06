@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,29 +25,26 @@ public class StatsPaginaController implements Initializable {
     private final DomeinController dc = QwixxApplication.dc;
 
     @FXML
-    private Button btnAnnuleer;
+    private Button btnAnnuleren;
 
     @FXML
-    private Label lblLaatsteWinnaar;
+    private TableColumn<String[], String> kolomNaamSTATP;
 
     @FXML
-    private TableColumn<String[], String> tcNaam;
+    private TableColumn<String[], Integer> kolomAantalGespeeldSTATP;
 
     @FXML
-    private TableColumn<String[], Integer> tcAantalGespeeld;
+    private TableColumn<String[], Integer> kolomAantalGewonnenSTATP;
 
     @FXML
-    private TableColumn<String[], Integer> tcAantalGewonnen;
-
-    @FXML
-    private TableView<String[]> tvSpelers;
+    private TableView<String[]> tabelSpelersSTATP;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Kolommen instellen
-        tcNaam.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
-        tcAantalGespeeld.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
-        tcAantalGewonnen.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
+        kolomNaamSTATP.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
+        kolomAantalGespeeldSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
+        kolomAantalGewonnenSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
 
         // Spelers laden vanuit database
         ObservableList<String[]> rijen = FXCollections.observableArrayList();
@@ -54,20 +52,18 @@ public class StatsPaginaController implements Initializable {
             rijen.add(new String[]{naam});
         }
 
-        tvSpelers.setItems(rijen);
-        tvSpelers.setSelectionModel(null);
+        tabelSpelersSTATP.setItems(rijen);
+        tabelSpelersSTATP.setSelectionModel(null);
     }
 
     @FXML
-    private void handleAnnuleer() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
-            java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
-            loader.setResources(bundle);
-            Stage stage = (Stage) btnAnnuleer.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void annuleer(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
+        stage.setScene(new Scene(loader.load()));
     }
 }
