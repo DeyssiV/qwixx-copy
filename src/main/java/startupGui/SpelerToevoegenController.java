@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,19 +18,13 @@ public class SpelerToevoegenController {
     private Button btnAnnuleren;
 
     @FXML
-    private Button btnRegistreren;
+    private Label lblFeedbackSTP;
 
     @FXML
-    private Label lblSpelerToevoegen;
+    private TextField txtGeboortejaarSTP;
 
     @FXML
-    private Label lblFeedback;
-
-    @FXML
-    private TextField txfGeboortejaar;
-
-    @FXML
-    private TextField txfNaam;
+    private TextField txtNaamSTP;
 
     @FXML
     void annuleerRegistratie(ActionEvent event) throws Exception {
@@ -46,17 +39,17 @@ public class SpelerToevoegenController {
 
     @FXML
     void startRegistratieSpeler(ActionEvent event) {
-        lblFeedback.setText("");
-        lblFeedback.setStyle("-fx-text-fill: black;");
+        lblFeedbackSTP.setText("");
+        lblFeedbackSTP.setStyle("-fx-text-fill: black;");
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
 
 
         try {
-            String naam = txfNaam.getText();
-            String jaar = txfGeboortejaar.getText();
+            String naam = txtNaamSTP.getText();
+            String jaar = txtGeboortejaarSTP.getText();
 
-            if (naam.isEmpty() || txfGeboortejaar.getText().isEmpty()) {
+            if (naam.isEmpty() || jaar.isEmpty()) {
                 throw new IllegalArgumentException(bundle.getString("NietsIngevuld"));
             }
 
@@ -64,23 +57,23 @@ public class SpelerToevoegenController {
 
             dc.registreerSpeler(naam, geboortejaar);
 
-            lblFeedback.setText(bundle.getString("SpelerGeregistreerd"));
-            lblFeedback.setStyle("-fx-text-fill: green;");
-            txfNaam.clear();
-            txfGeboortejaar.clear();
+            lblFeedbackSTP.setText(bundle.getString("SpelerGeregistreerd"));
+            lblFeedbackSTP.setStyle("-fx-text-fill: green;");
+            txtNaamSTP.clear();
+            txtGeboortejaarSTP.clear();
         }catch (exceptions.GebruikersnaamInGebruikException e) {
-            lblFeedback.setText(e.getMessage());
-            lblFeedback.setStyle("-fx-text-fill: red;");
+            lblFeedbackSTP.setText(e.getMessage());
+            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
         }catch (NumberFormatException e) {
-            lblFeedback.setText(bundle.getString("GeboortejaarFout"));
-            lblFeedback.setStyle("-fx-text-fill: red;");
+            lblFeedbackSTP.setText(bundle.getString("GeboortejaarFout"));
+            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
 
         }catch (IllegalArgumentException e){
-            lblFeedback.setText(e.getMessage());
-            lblFeedback.setStyle("-fx-text-fill: red;");
+            lblFeedbackSTP.setText(e.getMessage());
+            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
         }catch (Exception e) {
-        lblFeedback.setText(e.getMessage());
-        lblFeedback.setStyle("-fx-text-fill: red;");
+            lblFeedbackSTP.setText(e.getMessage());
+            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
     }
 
     }
