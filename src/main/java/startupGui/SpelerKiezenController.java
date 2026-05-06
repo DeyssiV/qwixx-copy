@@ -17,49 +17,36 @@ public class SpelerKiezenController {
     private final DomeinController dc = QwixxApplication.dc;
 
     @FXML
-    private ListView<String> lvLijstSpelers;
+    private ListView<String> lijstSpelers;
 
     @FXML
-    private ListView<String> lvGekozenSpelers;
+    private ListView<String> lijstGekozenSpelers;
 
     @FXML
-    private Button btnAnnuleer;
+    private Button btnAnnuleren;
 
     @FXML
     private Label lblFeedback;
 
     @FXML
-    private Button btnStartSpel;
+    private Button btnStartSpelSKP;
 
     @FXML
-    private RadioButton rbNormaal;
-
-    @FXML
-    private RadioButton rbAlternatief;
+    private RadioButton lblVersieAlternatiefSKP;
 
     @FXML
     private void initialize() {
-        lvLijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelers());
-    }
-
-    @FXML
-    void normaalSpel(ActionEvent event) {
-
-    }
-
-    @FXML
-    void alternatiefSpel(ActionEvent event) {
-
+        lijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelers());
     }
 
     @FXML
     void voegSpelerToe(ActionEvent event) {
-        String gekozenSpeler = lvLijstSpelers.getSelectionModel().getSelectedItem();
+        String gekozenSpeler = lijstSpelers.getSelectionModel().getSelectedItem();
         if (gekozenSpeler != null) {
             dc.voegSpelerToeAanSpel(gekozenSpeler);
-            lvGekozenSpelers.getItems().add(gekozenSpeler);
-            lvLijstSpelers.getItems().remove(gekozenSpeler);
-            lvLijstSpelers.getSelectionModel().clearSelection();
+            lijstGekozenSpelers.getItems().add(gekozenSpeler);
+            lijstSpelers.getItems().remove(gekozenSpeler);
+            lijstSpelers.getSelectionModel().clearSelection();
 
             lblFeedback.setText("");
         }
@@ -67,17 +54,17 @@ public class SpelerKiezenController {
 
     @FXML
     void verwijderSpeler(ActionEvent event) {
-        String geselecteerde = lvGekozenSpelers.getSelectionModel().getSelectedItem();
+        String geselecteerde = lijstGekozenSpelers.getSelectionModel().getSelectedItem();
         if (geselecteerde != null) {
 
-            lvGekozenSpelers.getItems().remove(geselecteerde);
+            lijstGekozenSpelers.getItems().remove(geselecteerde);
 
 
             dc.verwijderSpelerUitSpel(geselecteerde);
 
 
-            if (!lvLijstSpelers.getItems().contains(geselecteerde)) {
-                lvLijstSpelers.getItems().add(geselecteerde);
+            if (!lijstSpelers.getItems().contains(geselecteerde)) {
+                lijstSpelers.getItems().add(geselecteerde);
 
             }
         }
@@ -91,13 +78,13 @@ public class SpelerKiezenController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Stage stage = (Stage) btnAnnuleer.getScene().getWindow();
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 
     @FXML
     void startSpel(ActionEvent event) throws Exception {
-        int aantalSpelers = lvGekozenSpelers.getItems().size();
+        int aantalSpelers = lijstGekozenSpelers.getItems().size();
 
         if (aantalSpelers < 2) {
             ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
@@ -115,7 +102,7 @@ public class SpelerKiezenController {
 
         lblFeedback.setText("");
 
-        boolean alternatief = rbAlternatief.isSelected();
+        boolean alternatief = lblVersieAlternatiefSKP.isSelected();
         dc.startNieuwSpel();
         dc.setAlternatiefModus(alternatief);
 
@@ -124,7 +111,7 @@ public class SpelerKiezenController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie", Locale.getDefault());
         loader.setResources(bundle);
 
-        Stage stage = (Stage) btnStartSpel.getScene().getWindow();
+        Stage stage = (Stage) btnStartSpelSKP.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 }

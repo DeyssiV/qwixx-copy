@@ -27,7 +27,8 @@ public class SpelerToevoegenController {
     private TextField txtNaamSTP;
 
     @FXML
-    void annuleerRegistratie(ActionEvent event) throws Exception {
+    void annuleer(ActionEvent event) throws Exception {
+        dc.resetGekozenSpelers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");

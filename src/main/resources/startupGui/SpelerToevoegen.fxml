@@ -22,7 +22,7 @@
 
             <Label id="lblTitelSTP" text="%lblTitel-STP" StackPane.alignment="CENTER"/>
 
-            <Button fx:id="btnAnnuleren" id="btnAnnuleer" onAction="#annuleerRegistratie" text="←" StackPane.alignment="CENTER_LEFT">
+            <Button fx:id="btnAnnuleren" id="btnAnnuleren" onAction="#annuleer" text="←" StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets left="20.0"/>
                </StackPane.margin>

@@ -90,33 +90,45 @@
     -fx-border-color: #bdc3c7;
 }
 
-#btnVoegSpelerToe {
+#lblLijstSpelersSKP, #lblLijstGekozenSpelersSKP{
+    -fx-font-family: "System Bold";
+    -fx-font-size: 14px;
+}
+
+#lblKiesVersieSKP{
+    -fx-font-family: "System Bold";
+    -fx-font-size: 16px;
+}
+
+#btnVoegSpelerToeSKP {
     -fx-background-color: #2ecc71;
+    -fx-min-width: 150px;
     -fx-font-size: 14px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
-#btnVoegSpelerToe:hover {
+#btnVoegSpelerToeSKP:hover {
     -fx-background-color: #27ae60;
 }
 
-#btnVerwijder {
+#btnVerwijderSpelerSKP {
     -fx-background-color: #e74c3c;
+    -fx-min-width: 150px;
     -fx-font-size: 14px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
-#btnVerwijder:hover {
+#btnVerwijderSpelerSKP:hover {
     -fx-background-color: #c0392b;
 }
 
-#btnStartSpel {
+#btnStartSpelSKP {
     -fx-background-color: #3498db;
     -fx-background-radius: 20;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
-#btnStartSpel:hover {
+#btnStartSpelSKP:hover {
     -fx-background-color: #2980b9;
 }
 
@@ -124,7 +136,7 @@
     -fx-background-color: #f39c12;
 }
 
-#btnAnnuleer {
+#btnAnnuleren {
     -fx-background-color: #e74c3c;
     -fx-background-radius: 5em;
     -fx-min-width: 45px;
@@ -138,11 +150,11 @@
     -fx-cursor: hand;
 }
 
-#btnAnnuleer:hover {
+#btnAnnuleren:hover {
     -fx-background-color: #c0392b;
 }
 
-#lblTitelSpelerKiezen {
+#lblTitelSKP {
     -fx-font-size: 50px;
     -fx-text-fill: black;
 }
