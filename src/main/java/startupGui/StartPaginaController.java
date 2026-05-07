@@ -52,8 +52,7 @@ public class StartPaginaController {
         Locale.setDefault(locale); //dit zorgt ervoor dat de standaardtaal veranderd is
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", locale);
-        //dit gaat zoeken in de resources map een bestand (.properties) met de naam "localistaie" en met de taalcode
-        //een soort van woordenboek
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
         loader.setResources(bundle);

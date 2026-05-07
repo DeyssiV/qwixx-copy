@@ -45,8 +45,6 @@
             <padding>
                 <Insets bottom="30.0"/>
             </padding>
-            <Label id="lblLaatsteGewonnenSTATP" text="%lblLaatsteGewonnen-STATP"/>
-            <Label id="lblLaatsteWinnaarSTATP" text="-"/>
         </VBox>
     </bottom>
 </BorderPane>

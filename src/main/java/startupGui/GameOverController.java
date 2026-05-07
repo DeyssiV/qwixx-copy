@@ -63,6 +63,12 @@ public class GameOverController {
                 vboxOverigeSpelers.getChildren().add(extraSpeler);
             }
         }
+
+        List<String> huidigeSpelers = dc.volgordeSpelersInStringLijst();
+        dc.verhoogAantalGespeeldVoorSpelers(huidigeSpelers);
+        dc.verhoogAantalGewonnenVoorWinnaar();
+        dc.slaStatsOpInDB(huidigeSpelers);
+
     }
 
     @FXML
