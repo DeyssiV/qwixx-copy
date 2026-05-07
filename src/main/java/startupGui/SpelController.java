@@ -40,25 +40,13 @@ public class SpelController {
     private boolean heeftGerold = false;
 
     @FXML
-    private GridPane grpDobbelstenen;
+    private Label lblTotaleScore,lblTitelSPEL;
 
     @FXML
-    private Label lblTotaleScore;
+    private Button btnAnnuleren, btnRolDobbelstenen;
 
     @FXML
-    private Button btnStop;
-
-    @FXML
-    private Button btnRolDobbelstenen;
-
-    @FXML
-    private GridPane grpMislukteWorpen;
-
-    @FXML
-    private GridPane grpScorekaart;
-
-    @FXML
-    private Label lblTitelSPEL;
+    private GridPane grpMislukteWorpen, grpScorekaart, grpDobbelstenen;
 
     /**
      * Initialiseert de controller bij het laden van het scherm.
@@ -81,13 +69,13 @@ public class SpelController {
      * @throws Exception
      */
     @FXML
-    void stopSpel(ActionEvent event) throws Exception {
+    void annuleer(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
-        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
-        Stage stage = (Stage) btnStop.getScene().getWindow();
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 

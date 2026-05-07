@@ -24,7 +24,7 @@
             <Label fx:id="lblTitelSPEL" id="lblTitelSPEL" text="lblTitel-SPEL" StackPane.alignment="CENTER">
             </Label>
 
-            <Button fx:id="btnStop" onAction="#stopSpel" text="X" StackPane.alignment="CENTER_LEFT">
+            <Button fx:id="btnAnnuleren" onAction="#annuleer" text="X" StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets left="20.0"/>
                </StackPane.margin>

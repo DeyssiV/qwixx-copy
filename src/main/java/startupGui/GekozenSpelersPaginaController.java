@@ -2,6 +2,7 @@ package startupGui;
 
 import domein.DomeinController;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,32 +22,25 @@ import static startupGui.QwixxApplication.dc;
 public class GekozenSpelersPaginaController implements Initializable {
 
     @FXML
-    private Button btnAnnuleer;
+    private Button btnAnnuleren, btnStartSpel;
 
     @FXML
-    private Button btnStartSpel;
-
-    @FXML
-    private ListView<String> lvGekozenSpelers;
+    private ListView<String> lijstGekozenSpelers;
 
 
     @FXML
-    private void handleAnnuleer() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/SpelerKiezen.fxml"));
+    void annuleer(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
-            java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
-            loader.setResources(bundle);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
 
-            Stage stage = (Stage) btnAnnuleer.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
+        stage.setScene(new Scene(loader.load()));
     }
 
     @FXML
-    private void handleStartSpel() {
+    private void startSpel() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/Spel.fxml"));
 
@@ -62,11 +56,11 @@ public class GekozenSpelersPaginaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lvGekozenSpelers.setItems(FXCollections.observableArrayList(
+        lijstGekozenSpelers.setItems(FXCollections.observableArrayList(
                 dc.volgordeSpelersInStringLijst()
         ));
 
-        lvGekozenSpelers.setCellFactory(lv -> new ListCell<String>() {
+        lijstGekozenSpelers.setCellFactory(lv -> new ListCell<String>() {
             @Override
             protected void updateItem(String naam, boolean empty) {
                 super.updateItem(naam, empty);
@@ -78,6 +72,6 @@ public class GekozenSpelersPaginaController implements Initializable {
             }
         });
 
-        lvGekozenSpelers.setSelectionModel(null);
+        lijstGekozenSpelers.setSelectionModel(null);
     }
 }

@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 public class SpelerToevoegenController {
     private final DomeinController dc = QwixxApplication.dc;
+
     @FXML
     private Button btnAnnuleren;
 
@@ -21,10 +22,7 @@ public class SpelerToevoegenController {
     private Label lblFeedbackSTP;
 
     @FXML
-    private TextField txtGeboortejaarSTP;
-
-    @FXML
-    private TextField txtNaamSTP;
+    private TextField txtGeboortejaarSTP, txtNaamSTP;
 
     @FXML
     void annuleer(ActionEvent event) throws Exception {

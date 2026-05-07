@@ -31,10 +31,7 @@ public class StatsPaginaController implements Initializable {
     private TableColumn<String[], String> kolomNaamSTATP;
 
     @FXML
-    private TableColumn<String[], Integer> kolomAantalGespeeldSTATP;
-
-    @FXML
-    private TableColumn<String[], Integer> kolomAantalGewonnenSTATP;
+    private TableColumn<String[], Integer> kolomAantalGespeeldSTATP, kolomAantalGewonnenSTATP;
 
     @FXML
     private TableView<String[]> tabelSpelersSTATP;

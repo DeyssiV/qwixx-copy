@@ -1,5 +1,6 @@
 package startupGui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,12 +19,9 @@ import static startupGui.QwixxApplication.dc;
 
 public class GameOverController {
 
-    @FXML private Label lblNaamGoud, lblScoreGoud;
-    @FXML private Label lblNaamZilver, lblScoreZilver;
-    @FXML private Label lblNaamBrons, lblScoreBrons;
-    @FXML private VBox vboxOverigeSpelers;
-    @FXML private VBox podiumZilver, podiumBrons;
-    @FXML private Button btnHoofdmenu, btnOpnieuw;
+    @FXML private Label lblNaamGoud, lblScoreGoud, lblNaamZilver, lblScoreZilver, lblNaamBrons, lblScoreBrons;
+    @FXML private VBox vboxOverigeSpelers, podiumZilver, podiumBrons;
+    @FXML private Button btnAnnuleren, btnOpnieuwSpelenGOP;
 
     @FXML
     public void initialize() {
@@ -38,7 +36,7 @@ public class GameOverController {
         dataLijst.sort((a, b) -> Integer.compare(Integer.parseInt(b[1]), Integer.parseInt(a[1])));
 
 
-        if (dataLijst.size() >= 1) {
+        if (!dataLijst.isEmpty()) {
             lblNaamGoud.setText(dataLijst.get(0)[0]);
             lblScoreGoud.setText(dataLijst.get(0)[1] + " pts");
         }
@@ -68,23 +66,22 @@ public class GameOverController {
     }
 
     @FXML
-    private void handleHoofdmenu() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
-            loader.setResources(ResourceBundle.getBundle("localisatie", Locale.getDefault()));
-            Stage stage = (Stage) btnHoofdmenu.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void annuleer(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        loader.setResources(bundle);
+
+        Stage stage = (Stage) btnAnnuleren.getScene().getWindow();
+        stage.setScene(new Scene(loader.load()));
     }
 
     @FXML
-    private void handleOpnieuw() {
+    private void opnieuwSpelen() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/SpelerKiezen.fxml"));
             loader.setResources(ResourceBundle.getBundle("localisatie", Locale.getDefault()));
-            Stage stage = (Stage) btnOpnieuw.getScene().getWindow();
+            Stage stage = (Stage) btnOpnieuwSpelenGOP.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class SpelerKiezenController {
     private Label lblFeedback;
 
     @FXML
-    private Button btnStartSpelSKP;
+    private Button btnStartSpel;
 
     @FXML
     private RadioButton lblVersieAlternatiefSKP;
@@ -111,7 +111,7 @@ public class SpelerKiezenController {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie", Locale.getDefault());
         loader.setResources(bundle);
 
-        Stage stage = (Stage) btnStartSpelSKP.getScene().getWindow();
+        Stage stage = (Stage) btnStartSpel.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
     }
 }

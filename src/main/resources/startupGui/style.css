@@ -25,7 +25,7 @@
     -fx-background-color: #ecf0f1;
 }
 
-#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP {
+#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP, #lblTitelGSP {
     -fx-font-family: "Calibri";
     -fx-font-size: 25px;
 }
@@ -122,13 +122,13 @@
     -fx-background-color: #c0392b;
 }
 
-#btnStartSpelSKP {
+#btnStartSpel {
     -fx-background-color: #3498db;
     -fx-background-radius: 20;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
-#btnStartSpelSKP:hover {
+#btnStartSpel:hover {
     -fx-background-color: #2980b9;
 }
 
