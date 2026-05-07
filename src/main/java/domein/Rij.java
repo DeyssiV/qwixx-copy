@@ -19,6 +19,7 @@ public class Rij {
      * Maakt een nieuwe rij aan met specifieke kleur.
      * Volgorde van vakjes bepaald door kleur (rood/geel == oplopend en groen/blauw == aflopend).
      * @param kleur De kleur (Kleur) van rij.
+     * @param waarden de waarden die gebruikt worden om de vakjes in de rij aan te maken
      */
     public Rij(Kleur kleur, int[] waarden) {
         this.kleur = kleur;
@@ -131,6 +132,13 @@ public class Rij {
         return teller;
     }
 
+    /**
+     * Zoekt de index van een vakje met de opgegeven waarde.
+     *
+     * @param waarde de waarde waarvan de index gezocht wordt
+     * @return de index van het vakje met de opgegeven waarde,
+     *         of -1 als de waarde niet gevonden werd
+     */
     private int zoekIndexVanWaarde(int waarde) {
         for (int i = 0; i < vakjes.size(); i++) {
             if (vakjes.get(i).getWaarde() == waarde) {

@@ -116,6 +116,12 @@ public class ScoreBlad {
         return totScore;
     }
 
+    /**
+     * Controleert of de rij met de opgegeven kleur gesloten is.
+     *
+     * @param kleur de kleur van de rij die gecontroleerd moet worden
+     * @return true als de rij gesloten is, anders false
+     */
     public boolean isRijGesloten(Kleur kleur) {
         for (Rij rij : rijen) {
             if (rij.getKleur() == kleur) {

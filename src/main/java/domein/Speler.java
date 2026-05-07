@@ -168,6 +168,11 @@ public class Speler implements Comparable<Speler> {
     //return Integer.compare(andereSpeler.getScore(), this.getScore());
   }
 
+  /**
+   * Maakt een nieuw scoreblad aan voor de huidige gebruiker.
+   *
+   * @param alternatiefModus bepaalt of het scoreblad in alternatieve modus wordt aangemaakt
+   */
   public void maakNieuwScoreBlad(boolean alternatiefModus) {
     this.scoreBlad = new ScoreBlad(gebruikersnaam, alternatiefModus);
   }
