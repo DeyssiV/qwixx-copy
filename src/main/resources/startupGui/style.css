@@ -31,7 +31,7 @@
 }
 
 #btnStartSpelSP {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #1b83c4;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
@@ -43,13 +43,13 @@
 }
 
 #btnSpelRegelsSP {
-    -fx-background-color: #1b83c4;
-    -fx-text-fill: white;
+    -fx-background-color: #eec23b;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
 }
 
 #btnStartSpelSP:hover {
-    -fx-background-color: #d63031;
+    -fx-background-color: #16699c;
 }
 
 #btnSpelerToevoegenSP:hover {
@@ -57,7 +57,7 @@
 }
 
 #btnSpelRegelsSP:hover {
-    -fx-background-color: #16699c;
+    -fx-background-color: #c7a53d;
 }
 
 #btnNL, #btnEN, #btnRU {
@@ -152,7 +152,7 @@
 }
 
 #btnAnnuleren {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: grey;
     -fx-background-radius: 5em;
     -fx-min-width: 45px;
     -fx-min-height: 45px;
@@ -166,7 +166,7 @@
 }
 
 #btnAnnuleren:hover {
-    -fx-background-color: #c0392b;
+    -fx-background-color: #595959;
 }
 
 #lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL {
