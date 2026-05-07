@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBlad {
-    private Speler speler;
     String gebruikersnaam;
     private int score;
     private List<Rij> rijen;
@@ -62,6 +61,9 @@ public class ScoreBlad {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     /**
      * Kruist gekozen vakje in rij door gekozen kleur.

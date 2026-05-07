@@ -11,7 +11,7 @@ import java.util.List;
  * Beheert de dobbelstenen, spelers en de spellogica.
  */
 public class Spel {
-    List<Speler> spelers;
+    private List<Speler> spelers;
     List<Dobbelsteen> dobbelstenen;
     private Dobbelsteen dobbelsteen;
     private ScoreBlad scoreBlad;
@@ -97,14 +97,6 @@ public class Spel {
         return dobbelsteen.getWaarde();
     }
 
-    /**
-     * Geeft de kleur van de huidige actieve dobbelsteen terug.
-     *
-     * @return De kleur van de dobbelsteen als Kleur
-     */
-    public Kleur geefKleurDobbelsteen(){
-        return dobbelsteen.getKleur();
-    }
 
     /**
      * Geeft een kopie van alle dobbelstenen terug gefilterd op waarde en kleur.
@@ -163,15 +155,6 @@ public class Spel {
         for (Dobbelsteen dobbelsteen : dobbelstenen) {
             dobbelsteen.rolDobbelsteen();
         }
-    }
-
-    /**
-     * Geeft de lijst van alle spelers in het spel terug.
-     *
-     * @return Een lijst van Speler-objecten
-     */
-    public List<Speler> geefSpelers(){
-        return this.spelers;
     }
 
     /**

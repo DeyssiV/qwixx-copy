@@ -60,8 +60,12 @@ public class Speler implements Comparable<Speler> {
   /**
    * verhoogt het aantal mislukte worpen met 1.
    */
-  public void setMislukteWorpen() {
+  public void verhoogMislukteWorpen() {
     this.mislukteWorpen++;
+  }
+
+  public void setMislukteWorpen(int mislukteWorpen) {
+    this.mislukteWorpen = mislukteWorpen;
   }
 
   /**
@@ -129,7 +133,7 @@ public class Speler implements Comparable<Speler> {
    * geeft de score van de speler.
    * @return score van de speler.
    */
-  public int getScore(){
+  public int geefTotaleScore(){
     return scoreBlad.berekenTotaleScore(getMislukteWorpen());
   }
 

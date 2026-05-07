@@ -15,15 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import utils.Kleur;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +31,6 @@ import static startupGui.QwixxApplication.dc;
 public class SpelController {
 
     private int ronde = 1; //wit = 1; gekleurd = 2
-    private int huidigeSpelerIndex = 0; //de speler van wie de scoreblad getoond wordt
     private String actieveSpeler; //speler die dobbelstenen gerold heeft
 
     private boolean heeftGerold = false;
@@ -66,10 +62,11 @@ public class SpelController {
     /**
      * Keert terug naar de startpagina van de applicatie.
      * @param event Klikken van de knop zorgt voor event -> naar startpagina teruggaan.
-     * @throws Exception
      */
     @FXML
     void annuleer(ActionEvent event) throws Exception {
+        //TODO reset scoreblad, mislukte worp, score
+        dc.resetSpel();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
@@ -90,10 +87,10 @@ public class SpelController {
 
         if (isAlternatief) {
             waarden = new int[][]{
-                    {10, 6, 2, 8, 3, 4, 12, 5, 9, 7, 11},
-                    {9, 12, 4, 6, 2, 5, 8, 11, 3, 10, 7},
-                    {8, 2, 10, 12, 6, 9, 7, 4, 5, 11, 3},
-                    {5, 7, 11, 9, 12, 3, 8, 10, 2, 6, 4}
+                    {10,6,2,8,3,4,12,5,9,7,11},
+                    {9,12,4,6,2,5,8,11,3,10,7},
+                    {8,2,10,12,6,9,7,4,5,11,3},
+                    {5,7,11,9,12,3,8,10,2,6,4}
             };
         } else {
             waarden = new int[][]{
@@ -108,29 +105,28 @@ public class SpelController {
             // Bepaal de kleur voor deze hele rij
             String kleurNaam = kleuren[rij].toLowerCase();
             String hexAchtergrond;
-            String hexTekst;
-
-            switch (kleurNaam) {
-                case "rood":
+            String hexTekst = switch (kleurNaam) {
+                case "rood" -> {
                     hexAchtergrond = "#fADBD8";
-                    hexTekst = "#C0392B";
-                    break;
-                case "geel":
+                    yield "#C0392B";
+                }
+                case "geel" -> {
                     hexAchtergrond = "#FCF3CF";
-                    hexTekst = "#D4AC0D";
-                    break;
-                case "groen":
+                    yield "#D4AC0D";
+                }
+                case "groen" -> {
                     hexAchtergrond = "#D5F5E3";
-                    hexTekst = "#1E8449";
-                    break;
-                case "blauw":
+                    yield "#1E8449";
+                }
+                case "blauw" -> {
                     hexAchtergrond = "#D6EAF8";
-                    hexTekst = "#2E86C1";
-                    break;
-                default:
+                    yield "#2E86C1";
+                }
+                default -> {
                     hexAchtergrond = "#E5E8E8";
-                    hexTekst = "#7F8C8D";
-            }
+                    yield "#7F8C8D";
+                }
+            };
 
 
             String buttonStyle = "-fx-background-color: " + hexAchtergrond + "; " +
@@ -200,7 +196,6 @@ public class SpelController {
     /**
      * Behandelt het rollen van de dobbelstenen of het overslaan van de huidige beurt.
      * @param event Klikken van de knop zorgt voor event -> dobbelstenen rollen.
-     * @throws Exception
      */
     @FXML
     void rolDobbelstenen(ActionEvent event) throws Exception {
@@ -209,7 +204,7 @@ public class SpelController {
 
         if (!heeftGerold) {
             actieveSpeler = dc.getSpelerAanDeBeurt();
-            huidigeSpelerIndex = dc.getHuidigeSpelerIndex();
+            //de speler van wie het scoreblad getoond wordt
             ronde = 1;
 
             knop.setDisable(true);
@@ -275,7 +270,7 @@ public class SpelController {
                 case "groen":  achtergrondKleur = "#27ae60"; break;
                 case "blauw":  achtergrondKleur = "#2980b9"; break;
                 case "wit":    achtergrondKleur = "#ffffff"; tekstKleur = "black"; break;
-                default:       achtergrondKleur = "#ecf0f1"; tekstKleur = "black"; // Backup grijs
+                default:       achtergrondKleur = "#ecf0f1"; tekstKleur = "black";
             }
 
             dbsteen.setStyle(
@@ -454,7 +449,6 @@ public class SpelController {
 
     /**
      * Controleert of het spel beëindigd moet worden en navigeert naar de GameOver pagina.
-     * @throws Exception
      */
     private void controleerEindeSpel() throws Exception {
         String huidigeNaam = dc.getSpelerAanDeBeurt();

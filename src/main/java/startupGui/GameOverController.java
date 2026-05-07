@@ -71,6 +71,8 @@ public class GameOverController {
 
     @FXML
     void annuleer(ActionEvent event) throws Exception {
+        //TODO reset scoreblad, mislukte worp, score
+        dc.resetSpel();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");

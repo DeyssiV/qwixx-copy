@@ -29,10 +29,6 @@ public class DomeinController {
     spelerRepository = new SpelerRepository();
   }
 
-  public int getHuidigeSpelerIndex() {
-    return huidigeSpelerIndex;
-  }
-
   //TODO
   public SpelDTO geefSpelDTO() {
     return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen(), spel.getDobbelsteen(), spel.getScoreBlad());
@@ -40,7 +36,14 @@ public class DomeinController {
 
   public SpelerDTO geefSpelerDTO()
   {
-    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
+    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.geefTotaleScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
+  }
+
+  public void resetSpel(){
+    for (Speler speler:spel.getSpelers()){
+      speler.setMislukteWorpen(0);
+      speler.getScoreBlad().setScore(0);
+    }
   }
 
   public void registreerSpeler(String gebruikersnaam, int geboortejaar) {
@@ -79,18 +82,6 @@ public class DomeinController {
     return spel.getDobbelstenen();
   }
 
-  /*public int geefWitteSom() {
-    return spel.getSomWitteDobbelstenen();
-  }*/
-
-    /*int waarde = spel.geefWaardeDobbelsteen();
-    Kleur kleur = spel.geefKleurDobbelsteen();
-    System.out.println(spel.dobbelstenen);
-  }*/
-
-
-
-
   public boolean kiesCombinatie(String gebruikersnaam, int keuze){
     Kleur gekozenKleur = kiesKleur(keuze);
 
@@ -103,118 +94,6 @@ public class DomeinController {
 
     if (gelukt && speler.getScoreBlad().isRijGesloten(gekozenKleur)) sluitRij(gekozenKleur);
     return gelukt;
-
-    /*List<Dobbelsteen> stenen = spel.getDobbelstenen();
-
-    int w1 = 0, w2 = 0, rood = 0, geel = 0, groen = 0, blauw = 0;
-
-    int witTeller = 1;
-    for (Dobbelsteen d : stenen) {
-      if (d.getKleur() == Kleur.WIT) {
-        if (witTeller == 1) { w1 = d.getWaarde(); witTeller++; }
-        else w2 = d.getWaarde();
-      } else if (d.getKleur() == Kleur.ROOD) rood = d.getWaarde();
-      else if (d.getKleur() == Kleur.GEEL) geel = d.getWaarde();
-      else if (d.getKleur() == Kleur.GROEN) groen = d.getWaarde();
-      else if (d.getKleur() == Kleur.BLAUW) blauw = d.getWaarde();
-    }
-
-    Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
-
-    //TODO de switch cases verkorten mbv een hulpmethode
-    switch (keuze){
-      case 1 -> {
-        boolean gelukt = speler.kruisAan(Kleur.ROOD, rood + w1);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.ROOD && r.isGesloten()) {
-              sluitRij(Kleur.ROOD);
-            }
-          }
-          return true;
-        }
-        return false;
-        }
-      case 2 -> {
-        boolean gelukt = speler.kruisAan(Kleur.ROOD, rood + w2);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.ROOD && r.isGesloten()) {
-              sluitRij(Kleur.ROOD);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 3 -> {
-        boolean gelukt = speler.kruisAan(Kleur.GEEL, geel + w1);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.GEEL && r.isGesloten()) {
-              sluitRij(Kleur.GEEL);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 4 -> {
-        boolean gelukt = speler.kruisAan(Kleur.GEEL, geel + w2);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.GEEL && r.isGesloten()) {
-              sluitRij(Kleur.GEEL);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 5 -> {
-        boolean gelukt = speler.kruisAan(Kleur.GROEN, groen + w1);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.GROEN && r.isGesloten()) {
-              sluitRij(Kleur.GROEN);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 6 -> {
-        boolean gelukt = speler.kruisAan(Kleur.GROEN, groen + w2);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.GROEN && r.isGesloten()) {
-              sluitRij(Kleur.GROEN);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 7 -> {
-        boolean gelukt = speler.kruisAan(Kleur.BLAUW, blauw + w1);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.BLAUW && r.isGesloten()) {
-              sluitRij(Kleur.BLAUW);
-            }
-          }
-          return true;
-        }
-        return false; }
-      case 8 -> {
-        boolean gelukt = speler.kruisAan(Kleur.BLAUW, blauw + w2);
-        if (gelukt) {
-          for (Rij r : speler.getScoreBlad().getRijen()) {
-            if (r.getKleur() == Kleur.BLAUW && r.isGesloten()) {
-              sluitRij(Kleur.BLAUW);
-            }
-          }
-          return true;
-        }
-        return false; }
-
-      default -> { return false; }
-    }*/
   }
 
   private Kleur kiesKleur(int keuze) {
@@ -275,7 +154,7 @@ public class DomeinController {
   public List<String> volgordeSpelersInStringLijst() {
     List<String> spelersStringLijst = new ArrayList<>();
 
-    for (Speler speler : spel.geefSpelers()) {
+    for (Speler speler : spel.getSpelers()) {
       spelersStringLijst.add(speler.getGebruikersnaam());
     }
     return spelersStringLijst;
@@ -289,7 +168,7 @@ public class DomeinController {
   public void volgendeSpeler() {
     huidigeSpelerIndex++;
 
-    if (huidigeSpelerIndex >= spel.geefSpelers().size()) {
+    if (huidigeSpelerIndex >= spel.getSpelers().size()) {
       huidigeSpelerIndex = 0;
     }
   }
@@ -312,7 +191,7 @@ public class DomeinController {
     Speler winnaar = spelerRepository.geefSpelersLijst()
             .stream()
             .filter(s -> volgordeSpelersInStringLijst().contains(s.getGebruikersnaam())) // enkel huidige spelers
-            .max(Comparator.comparingInt(Speler::getScore))
+            .max(Comparator.comparingInt(Speler::geefTotaleScore))
             .orElse(null);
 
     if (winnaar != null) {
@@ -352,7 +231,7 @@ public class DomeinController {
 
   public void voegMislukteWorpToe(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
-    s.setMislukteWorpen();
+    s.verhoogMislukteWorpen();
     volgendeSpeler();
   }
 
@@ -367,7 +246,7 @@ public class DomeinController {
 
   public int geefTotaleScore(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
-    return s.getScore();
+    return s.geefTotaleScore();
   }
 
   public boolean rijSluitenToegestaan(String gebruikersnaam, String kleurNaam, int waardeVak) {
@@ -385,7 +264,7 @@ public class DomeinController {
   }
 
   public void sluitRij(Kleur kleur) {
-    for (Speler s : spel.geefSpelers()) {
+    for (Speler s : spel.getSpelers()) {
       for (Rij rij : s.getScoreBlad().getRijen()) {
         if (rij.getKleur() == kleur) {
           rij.setGesloten(true);

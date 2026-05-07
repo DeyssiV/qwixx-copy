@@ -17,19 +17,13 @@ public class SpelerKiezenController {
     private final DomeinController dc = QwixxApplication.dc;
 
     @FXML
-    private ListView<String> lijstSpelers;
+    private ListView<String> lijstSpelers, lijstGekozenSpelers;
 
     @FXML
-    private ListView<String> lijstGekozenSpelers;
-
-    @FXML
-    private Button btnAnnuleren;
+    private Button btnAnnuleren, btnStartSpel;
 
     @FXML
     private Label lblFeedback;
-
-    @FXML
-    private Button btnStartSpel;
 
     @FXML
     private RadioButton lblVersieAlternatiefSKP;
