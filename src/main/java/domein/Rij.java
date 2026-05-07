@@ -70,7 +70,6 @@ public class Rij {
      * of voldoet aan de volgorde van aankruising en of het laatste vakje aangekruist mag worden.
      * @param waardeVak De waarde in Integer van het vakje dat overeenstemt met het nummer op vakje
      *                  in scoreblad die aangekruist mag worden.
-     //* @param isRoodOfGeel Geeft aan of de rij oplopend of aflopend is obv de kleur van de rij.
      * @return true, false Als het kruisje gezet is true, anders false.
      */
     public boolean registreerKruis(int waardeVak){
