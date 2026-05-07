@@ -15,7 +15,7 @@ public class SpelerMapper {
     private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar, aantalGespeeld, aantalGewonnen FROM speler";
 
     // Nieuw: voor updaten na een spel
-    private static final String UPDATE_STATS = "UPDATE G85.speler SET aantalGespeeld = ?, aantalGewonnen = ? WHERE gebruikersnaam = ?";
+    private static final String UPDATE_STATS = "UPDATE g85.speler SET aantalGespeeld = ?, aantalGewonnen = ? WHERE gebruikersnaam = ?";
 //  // TODO: PreparedStatement Query invullen (Tip: kijk in het voorbeeldproject dobbelsteen)
 //  private static final String INSERT_SPELER = "INSERT INTO G85.speler (gebruikersnaam, geboortejaar) VALUES (?, ?)";
 //

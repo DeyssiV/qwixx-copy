@@ -44,8 +44,6 @@ public class GameOverController {
         if (dataLijst.size() >= 2) {
             lblNaamZilver.setText(dataLijst.get(1)[0]);
             lblScoreZilver.setText(dataLijst.get(1)[1] + " pts");
-        } else {
-            podiumZilver.setVisible(false); // Verberg podium als speler er niet is
         }
 
         if (dataLijst.size() >= 3) {
