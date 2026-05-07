@@ -255,8 +255,8 @@ public class DomeinController {
 
     for(Rij rij:s.getScoreBlad().getRijen()){
       if(rij.getKleur() == k){
-        boolean isUiterste = (waardeVak == 12 && (k == Kleur.ROOD || k == Kleur.GEEL)) ||
-                (waardeVak == 2 && (k == Kleur.GROEN || k == Kleur.BLAUW));
+        boolean isUiterste = (waardeVak == 11 && (k == Kleur.ROOD || k == Kleur.GEEL)) ||
+                (waardeVak == 1 && (k == Kleur.GROEN || k == Kleur.BLAUW));
         return isUiterste && rij.getAantalKruisjes() >= 6;
       }
     }

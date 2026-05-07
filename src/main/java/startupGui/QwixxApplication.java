@@ -3,10 +3,8 @@ package startupGui;
 import domein.DomeinController;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import java.util.Properties;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
