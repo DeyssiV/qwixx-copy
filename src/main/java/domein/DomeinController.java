@@ -5,6 +5,7 @@ import dtos.SpelerDTO;
 import utils.Kleur;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class DomeinController {
@@ -39,7 +40,7 @@ public class DomeinController {
 
   public SpelerDTO geefSpelerDTO()
   {
-    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore());
+    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.getScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
   }
 
   public void registreerSpeler(String gebruikersnaam, int geboortejaar) {
@@ -59,6 +60,10 @@ public class DomeinController {
 
   public void startBeurt() {
     spel.rolDobbelstenen();
+  }
+
+  public void herlaadSpelers() {
+    spelerRepository.herlaadSpelers();
   }
 
 
@@ -266,7 +271,7 @@ public class DomeinController {
     return spelerRepository.geefSpeler(gebruikersnaam).berekenLeeftijd();
   }
 
-  
+
   public List<String> volgordeSpelersInStringLijst() {
     List<String> spelersStringLijst = new ArrayList<>();
 
@@ -288,6 +293,41 @@ public class DomeinController {
       huidigeSpelerIndex = 0;
     }
   }
+
+  public void slaStatsOpInDB(List<String> namen) {
+    for (String naam : namen) {
+      Speler s = spelerRepository.geefSpeler(naam);
+      spelerRepository.updateStats(s);
+    }
+  }
+
+
+  public void verhoogAantalGespeeldVoorSpelers(List<String> namen) {
+    for (String naam : namen) {
+      spelerRepository.geefSpeler(naam).verhoogAantalGespeeld();
+    }
+  }
+
+  public void verhoogAantalGewonnenVoorWinnaar() {
+    Speler winnaar = spelerRepository.geefSpelersLijst()
+            .stream()
+            .filter(s -> volgordeSpelersInStringLijst().contains(s.getGebruikersnaam())) // enkel huidige spelers
+            .max(Comparator.comparingInt(Speler::getScore))
+            .orElse(null);
+
+    if (winnaar != null) {
+      winnaar.verhoogAantalGewonnen();
+    }
+  }
+
+  public int geefAantalGespeeld(String gebruikersnaam) {
+    return spelerRepository.geefSpeler(gebruikersnaam).getAantalGespeeld();
+  }
+
+  public int geefAantalGewonnen(String gebruikersnaam) {
+    return spelerRepository.geefSpeler(gebruikersnaam).getAantalGewonnen();
+  }
+
 
   public void setAlternatiefModus(boolean alternatief) {
     this.alternatiefModus = alternatief;

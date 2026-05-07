@@ -9,6 +9,9 @@ public class Speler implements Comparable<Speler> {
   private final int geboortejaar;
   private ScoreBlad scoreBlad;
   private int mislukteWorpen;
+  private int aantalGespeeld;
+  private int aantalGewonnen;
+  private boolean alternatiefModus;
 
   /**
    * maakt een speler aan.
@@ -17,11 +20,17 @@ public class Speler implements Comparable<Speler> {
    * @param geboortejaar het geboortejaar van de speler.
    */
   public Speler(String gebruikersnaam, int geboortejaar) {
-        controleerGebruikersnaam(gebruikersnaam);
-        controleerGeboortejaar(geboortejaar);
-        this.gebruikersnaam = gebruikersnaam;
-        this.geboortejaar = geboortejaar;
+    controleerGebruikersnaam(gebruikersnaam);
+    controleerGeboortejaar(geboortejaar);
+    this.gebruikersnaam = gebruikersnaam;
+    this.geboortejaar = geboortejaar;
 //        this.scoreBlad = new ScoreBlad(gebruikersnaam, ScoreBlad.alternatiefmodus); // Elke speler wordt eigen scoreblad aan toegewezen
+  }
+
+  public Speler(String gebruikersnaam, int geboortejaar, int aantalGespeeld, int aantalGewonnen) {
+    this(gebruikersnaam, geboortejaar); // roept bestaande constructor aan
+    this.aantalGespeeld = aantalGespeeld;
+    this.aantalGewonnen = aantalGewonnen;
   }
 
   /**
@@ -63,20 +72,43 @@ public class Speler implements Comparable<Speler> {
     return mislukteWorpen;
   }
 
+  //TODO: controleermethodes toevoegen
   private void controleerGebruikersnaam(String gebruikersnaam)
   {
     if (gebruikersnaam == null || gebruikersnaam.isBlank())
-        throw new IllegalArgumentException("Gebruikersnaam moet ingevuld zijn!");
+      throw new IllegalArgumentException("Gebruikersnaam moet ingevuld zijn!");
     else if (gebruikersnaam.length() < 5)
     {
       throw new IllegalArgumentException("Gebruikersnaam moet minstens 5 karakters hebben!");
     }
   }
 
+  //TODO: java doc
+  public void resetSpeler() {
+    this.mislukteWorpen = 0;
+    this.scoreBlad = new ScoreBlad(this.gebruikersnaam, this.alternatiefModus);
+  }
+  //TODO java doc
+
+  public int getAantalGespeeld() { return aantalGespeeld; }
+
+  public int getAantalGewonnen() { return aantalGewonnen; }
+
+  public void verhoogAantalGespeeld() { this.aantalGespeeld++; }
+
+  public void verhoogAantalGewonnen() { this.aantalGewonnen++; }
+
+
+  public void setAlternatiefModus(boolean alternatiefModus) {
+    this.alternatiefModus = alternatiefModus;
+  }
+
   /**
    * berekent de leeftijd van de speler.
    * @return waarde van huidigJaar - geboortejaar.
    */
+
+
   public int berekenLeeftijd() {
     int huidigJaar = LocalDate.now().getYear();
     return huidigJaar - this.geboortejaar;

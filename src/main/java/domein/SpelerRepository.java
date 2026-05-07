@@ -35,6 +35,16 @@ public class SpelerRepository {
     //return mapper.geefSpeler(gebruikersnaam);
   }
 
+  //TODO java doc
+  public void updateStats(Speler speler) {
+    mapper.updateStats(speler);
+  }
+
+  public void herlaadSpelers() {
+    spelers.clear();
+    spelers.addAll(mapper.geefAlleSpelers());
+  }
+
   /**
    * geeft een lijst van spelers.
    * @return een lijst van spelers.

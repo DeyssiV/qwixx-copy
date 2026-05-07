@@ -43,13 +43,18 @@ public class StatsPaginaController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Kolommen instellen
         kolomNaamSTATP.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
-        kolomAantalGespeeldSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
-        kolomAantalGewonnenSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(0).asObject()); // nog leeg
+        kolomAantalGespeeldSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(
+                Integer.parseInt(data.getValue()[1])).asObject());
+        kolomAantalGewonnenSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(
+                Integer.parseInt(data.getValue()[2])).asObject());
 
-        // Spelers laden vanuit database
+        dc.herlaadSpelers();
+
         ObservableList<String[]> rijen = FXCollections.observableArrayList();
         for (String naam : dc.geefGeregistreerdeSpelers()) {
-            rijen.add(new String[]{naam});
+            int gespeeld = dc.geefAantalGespeeld(naam);
+            int gewonnen = dc.geefAantalGewonnen(naam);
+            rijen.add(new String[]{naam, String.valueOf(gespeeld), String.valueOf(gewonnen)}); // 3 elementen!
         }
 
         tabelSpelersSTATP.setItems(rijen);
