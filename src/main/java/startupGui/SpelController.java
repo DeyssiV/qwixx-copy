@@ -58,7 +58,7 @@ public class SpelController {
     private GridPane grpScorekaart;
 
     @FXML
-    private Label lblSpelerAanDeBeurt;
+    private Label lblTitelSPEL;
 
     /**
      * Initialiseert de controller bij het laden van het scherm.
@@ -204,7 +204,7 @@ public class SpelController {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         String tekst = String.format(bundle.getString("LabelBeurtVan"), dc.getSpelerAanDeBeurt());
 
-        lblSpelerAanDeBeurt.setText(tekst);
+        lblTitelSPEL.setText(tekst);
     }
 
 
@@ -319,12 +319,12 @@ public class SpelController {
         resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
         List<Dobbelsteen> dobbelstenen = dc.getDobbelstenen();
 
-        int witteSom = dc.geefWitteSom();
-        for (String kleurDb : new String[]{"ROOD", "GEEL", "GROEN", "BLAUW"}) {
-            highlightButton(kleurDb, witteSom);
-        }
-
-        if (type.equals("G")) {
+        if (type.equals("W")) {
+            int witteSom = dc.geefWitteSom();
+            for (String kleurDb : new String[]{"ROOD", "GEEL", "GROEN", "BLAUW"}) {
+                highlightButton(kleurDb, witteSom);
+            }
+        } else if (type.equals("G")) {
             List<Integer> witteWaarden = new ArrayList<>();
             for (Dobbelsteen ds : dobbelstenen) {
                 if (ds.getKleur() == Kleur.WIT) witteWaarden.add(ds.getWaarde());
@@ -481,7 +481,7 @@ public class SpelController {
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
-            Stage stage = (Stage) lblSpelerAanDeBeurt.getScene().getWindow();
+            Stage stage = (Stage) lblTitelSPEL.getScene().getWindow();
             stage.setScene(scene);
         }
 

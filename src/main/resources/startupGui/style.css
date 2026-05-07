@@ -169,7 +169,7 @@
     -fx-background-color: #c0392b;
 }
 
-#lblTitelSKP, #lblTitelSRP, #lblToonStatsSTATP {
+#lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL {
     -fx-font-size: 50px;
     -fx-text-fill: black;
 }

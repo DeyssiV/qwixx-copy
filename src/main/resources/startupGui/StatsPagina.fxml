@@ -16,7 +16,7 @@
                 <Insets bottom="10.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
             <StackPane>
-                <Label id="lblToonStatsSTATP" text="%lblToonStats-STATP" StackPane.alignment="CENTER"/>
+                <Label id="lblTitelSTATP" text="%lblTitel-STATP" StackPane.alignment="CENTER"/>
 
                 <Button fx:id="btnAnnuleren" id="btnAnnuleren" onAction="#annuleer" text="←" StackPane.alignment="CENTER_LEFT">
                     <StackPane.margin>
