@@ -10,22 +10,40 @@ public class ScoreBlad {
     String gebruikersnaam;
     private int score;
     private List<Rij> rijen;
+    private boolean alternatiefModus;
+    private static final int[][] STANDAARD_MATRIX = {
+            {2,3,4,5,6,7,8,9,10,11,12,0},
+            {2,3,4,5,6,7,8,9,10,11,12,0},
+            {12,11,10,9,8,7,6,5,4,3,2,0},
+            {12,11,10,9,8,7,6,5,4,3,2,0}
+    };
+    private static final int[][] ALTERNATIEVE_MATRIX = {
+            {10,6,2,5,6,7,8,9,10,11,12,0},
+            {2,3,4,5,6,7,8,9,10,11,12,0},
+            {12,11,10,9,8,7,6,5,4,3,2,0},
+            {12,11,10,9,8,7,6,5,4,3,2,0}
+    };
 
     /**
      * Maakt een nieuw scoreblad aan voor gekozen gebruiker.
      * Maakt 4 rijen aan ROOD, GEEL, GROEN en BLAUW
      * @param gebruikersnaam De naam van de gekozen speler die bij deze scoreblad hoort
      */
-    public ScoreBlad(String gebruikersnaam) {
-
+    public ScoreBlad(String gebruikersnaam, boolean alternatiefModus) {
         this.gebruikersnaam = gebruikersnaam;
+        this.alternatiefModus = alternatiefModus;
         this.score = 0;
 
+        int[][] matrix = alternatiefModus
+                ? ALTERNATIEVE_MATRIX
+                : STANDAARD_MATRIX;
+
         this.rijen = new ArrayList<>();
-        this.rijen.add(new Rij(Kleur.ROOD));
-        this.rijen.add(new Rij(Kleur.GEEL));
-        this.rijen.add(new Rij(Kleur.GROEN));
-        this.rijen.add(new Rij(Kleur.BLAUW));
+
+        this.rijen.add(new Rij(Kleur.ROOD, matrix[0]));
+        this.rijen.add(new Rij(Kleur.GEEL, matrix[1]));
+        this.rijen.add(new Rij(Kleur.GROEN, matrix[2]));
+        this.rijen.add(new Rij(Kleur.BLAUW, matrix[3]));
     }
 
     /**
@@ -60,7 +78,7 @@ public class ScoreBlad {
                 if (kleur.equals(Kleur.ROOD) || kleur.equals(Kleur.GEEL)){
                     isGeelOfRood = true;
                 }
-                return rij.registreerKruis(vakje, isGeelOfRood);
+                return rij.registreerKruis(vakje);
             }
         }
         return false;

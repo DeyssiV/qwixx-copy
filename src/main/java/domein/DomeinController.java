@@ -53,7 +53,7 @@ public class DomeinController {
       Speler speler = spelerRepository.geefSpeler(naam);
       geselecteerdeSpelers.add(speler);
     }
-    this.spel = new Spel(geselecteerdeSpelers);
+    this.spel = new Spel(geselecteerdeSpelers, alternatiefModus);
     gekozenNamen.clear();
   }
 
@@ -372,5 +372,20 @@ public class DomeinController {
     return s.getMislukteWorpen();
   }
 
+  public int[][] geefVakWaarden(String gebruikersnaam) {
+    Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
+
+    int[][] waarden = new int[4][12];
+
+    for (int r = 0; r < speler.getScoreBlad().getRijen().size(); r++) {
+      List<Vakje> vakjes = speler.getScoreBlad().getRijen().get(r).getVakjes();
+
+      for (int v = 0; v < vakjes.size(); v++) {
+        waarden[r][v] = vakjes.get(v).getWaarde();
+      }
+    }
+
+    return waarden;
+  }
 
 }

@@ -56,7 +56,7 @@ public class StartPaginaController {
         //een soort van woordenboek
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
-        loader.setResources(bundle); /
+        loader.setResources(bundle);
 
         Parent root = loader.load();
 

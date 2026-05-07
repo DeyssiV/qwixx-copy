@@ -16,6 +16,7 @@ public class Spel {
     private Dobbelsteen dobbelsteen;
     private ScoreBlad scoreBlad;
     private int aantalDoorkruisteRijen = 0;
+    private boolean alternatiefModus;
 
     /**
      * Maakt een nieuw spel aan met de gegeven spelers en initialiseert
@@ -23,9 +24,10 @@ public class Spel {
      * De spelers worden gesorteerd bij aanmaak.
      * @param spelers De lijst van spelers die deelnemen aan het spel
      */
-    public Spel(List<Speler> spelers) {
+    public Spel(List<Speler> spelers, boolean alternatiefModus) {
         this.spelers = new ArrayList<>(spelers);
         java.util.Collections.sort(this.spelers);
+        this.alternatiefModus = alternatiefModus;
         this.dobbelstenen = new ArrayList<>();
 
         //de 6 dobbelstenen volgens spelregels QWIXX toevoegen
@@ -35,6 +37,10 @@ public class Spel {
         dobbelstenen.add(new Dobbelsteen(Kleur.GEEL));
         dobbelstenen.add(new Dobbelsteen(Kleur.GROEN));
         dobbelstenen.add(new Dobbelsteen(Kleur.BLAUW));
+
+        for (Speler speler : spelers) {
+            speler.maakNieuwScoreBlad(alternatiefModus);
+        }
     }
 
     /**

@@ -208,6 +208,14 @@ public class QwixxCui {
 
                     if (i >= 2 && i < 5) {
                         if (!leesJaNee("Wil je nog een speler toevoegen? J(a)/N(ee): ")) {
+                            System.out.println("\n--- Kies spelmodus ---");
+                            System.out.println("1. Standaard");
+                            System.out.println("2. Alternatief");
+
+                            int keuzeModus = leesInvoer("Maak je keuze: ", 1, 2);
+
+                            dc.setAlternatiefModus(keuzeModus == 2);
+
                             startSpel();
                             return;
                         }
@@ -297,6 +305,7 @@ public class QwixxCui {
     //het scoreblad per speler laten zien om te zien wat er aangeduid kan worden
     private void toonScoreBord(String naam) {
         int[][] matrix = dc.geefStatus(naam);
+        int[][] waarden = dc.geefVakWaarden(naam);
         String[] kleuren = {"ROOD ", "GEEL ", "GROEN", "BLAUW"};
         int mislukteWorpen = dc.geefAantalMislukteWorpen(naam);
 
@@ -317,7 +326,7 @@ public class QwixxCui {
                     }
                 } else {
                     //welke getal begin (bij rood-geel eerst 2-12....)
-                    int getal = (r < 2) ? (v + 2) : (12 - v);
+                    int getal = waarden[r][v];
                     if (matrix[r][v] == 1) {
                         System.out.print("[ X ] ");
                     } else {

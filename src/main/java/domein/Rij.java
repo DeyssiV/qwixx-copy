@@ -12,7 +12,7 @@ public class Rij {
     private Kleur kleur;
     private boolean gesloten;
     private List<Vakje> vakjes;
-    private int laatsteWaarde;
+    private int laatsteIndex = -1;
 
 
     /**
@@ -20,19 +20,15 @@ public class Rij {
      * Volgorde van vakjes bepaald door kleur (rood/geel == oplopend en groen/blauw == aflopend).
      * @param kleur De kleur (Kleur) van rij.
      */
-    public Rij(Kleur kleur) {
+    public Rij(Kleur kleur, int[] waarden) {
         this.kleur = kleur;
 
         this.vakjes = new ArrayList<>();
 
-        //TODO dit in methode plaatsen en in SCOREBLAD klasse
-        if (kleur == ROOD || kleur == GEEL) {
-            for (int i = 2; i <= 12; i++) vakjes.add(new Vakje(i));
-            this.laatsteWaarde = 1;
-        } else {
-            for (int i = 12; i >= 2; i--) vakjes.add(new Vakje(i));
-            this.laatsteWaarde = 13;
+        for (int waarde : waarden) {
+            vakjes.add(new Vakje(waarde));
         }
+
 
     }
 
@@ -74,36 +70,41 @@ public class Rij {
      * of voldoet aan de volgorde van aankruising en of het laatste vakje aangekruist mag worden.
      * @param waardeVak De waarde in Integer van het vakje dat overeenstemt met het nummer op vakje
      *                  in scoreblad die aangekruist mag worden.
-     * @param isRoodOfGeel Geeft aan of de rij oplopend of aflopend is obv de kleur van de rij.
+     //* @param isRoodOfGeel Geeft aan of de rij oplopend of aflopend is obv de kleur van de rij.
      * @return true, false Als het kruisje gezet is true, anders false.
      */
-    public boolean registreerKruis(int waardeVak, boolean isRoodOfGeel){
+    public boolean registreerKruis(int waardeVak){
         if (this.gesloten) {
             return false;
         }
 
-        for (Vakje v : vakjes) {
-            if (v.getWaarde() == waardeVak) {
-                if(v.isAangekruist()){
-                    return false;
-                }
-                //TODO aanpassen zodat het ook voor de alternatieve spel
-                boolean isUitersteVakje = (isRoodOfGeel && waardeVak == 12) || (!isRoodOfGeel && waardeVak == 2);
+        int gekozenIndex = zoekIndexVanWaarde(waardeVak);
 
-                if(isUitersteVakje && getAantalKruisjes() < 5){
-                    return false;
-                }
-                boolean kruisZetten = false;
-                if (isRoodOfGeel) {if (waardeVak > laatsteWaarde) {kruisZetten = true;}}
-                else if (waardeVak < laatsteWaarde) {kruisZetten = true;}
-                if (kruisZetten) {
-                    v.setAangekruist(true);
-                    this.laatsteWaarde = waardeVak;
-                    return true;
-                }
-            }
+        if (gekozenIndex == -1) {
+            return false;
         }
-        return false;
+
+        Vakje gekozenVakje = vakjes.get(gekozenIndex);
+
+        if (gekozenVakje.isAangekruist()) {
+            return false;
+        }
+
+        boolean isUitersteVakje = gekozenIndex == vakjes.size() - 2;
+
+        if (isUitersteVakje && getAantalKruisjes() < 5) {
+            return false;
+        }
+
+        // enkel rechts van vorige kruisjes mogen gekozen worden
+        if (gekozenIndex <= laatsteIndex) {
+            return false;
+        }
+
+        gekozenVakje.setAangekruist(true);
+        laatsteIndex = gekozenIndex;
+
+        return true;
     }
 
     /**
@@ -129,5 +130,14 @@ public class Rij {
         }
         if (this.gesloten) teller++;
         return teller;
+    }
+
+    private int zoekIndexVanWaarde(int waarde) {
+        for (int i = 0; i < vakjes.size(); i++) {
+            if (vakjes.get(i).getWaarde() == waarde) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

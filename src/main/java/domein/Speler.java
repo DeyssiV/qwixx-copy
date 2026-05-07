@@ -21,7 +21,7 @@ public class Speler implements Comparable<Speler> {
         controleerGeboortejaar(geboortejaar);
         this.gebruikersnaam = gebruikersnaam;
         this.geboortejaar = geboortejaar;
-        this.scoreBlad = new ScoreBlad(gebruikersnaam); // Elke speler wordt eigen scoreblad aan toegewezen
+//        this.scoreBlad = new ScoreBlad(gebruikersnaam, ScoreBlad.alternatiefmodus); // Elke speler wordt eigen scoreblad aan toegewezen
   }
 
   /**
@@ -134,5 +134,9 @@ public class Speler implements Comparable<Speler> {
     return this.gebruikersnaam.compareToIgnoreCase(andereSpeler.gebruikersnaam);
 
     //return Integer.compare(andereSpeler.getScore(), this.getScore());
+  }
+
+  public void maakNieuwScoreBlad(boolean alternatiefModus) {
+    this.scoreBlad = new ScoreBlad(gebruikersnaam, alternatiefModus);
   }
 }
