@@ -23,7 +23,6 @@ public class Speler implements Comparable<Speler> {
     controleerGeboortejaar(geboortejaar);
     this.gebruikersnaam = gebruikersnaam;
     this.geboortejaar = geboortejaar;
-//        this.scoreBlad = new ScoreBlad(gebruikersnaam, ScoreBlad.alternatiefmodus); // Elke speler wordt eigen scoreblad aan toegewezen
   }
 
   public Speler(String gebruikersnaam, int geboortejaar, int aantalGespeeld, int aantalGewonnen) {
@@ -71,7 +70,6 @@ public class Speler implements Comparable<Speler> {
     return mislukteWorpen;
   }
 
-  //TODO: controleermethodes toevoegen
   private void controleerGebruikersnaam(String gebruikersnaam)
   {
     if (gebruikersnaam == null || gebruikersnaam.isBlank())
@@ -156,8 +154,6 @@ public class Speler implements Comparable<Speler> {
     }
     // sortering obv alfabetische volgorde
     return this.gebruikersnaam.compareToIgnoreCase(andereSpeler.gebruikersnaam);
-
-    //return Integer.compare(andereSpeler.getScore(), this.getScore());
   }
 
   /**

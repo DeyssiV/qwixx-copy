@@ -114,37 +114,16 @@ public class ScoreBlad {
         return totScore;
     }
 
-    //TODO OPLOSSEN
-    /**
-     * Controleert of de rij met de opgegeven kleur gesloten is.
-     *
-     * @param kleur de kleur van de rij die gecontroleerd moet worden
-     * @return true als de rij gesloten is, anders false
-     */
-    public boolean isRijGesloten(Kleur kleur) {
+    private Rij isRijVan(Kleur kleur) {
         for (Rij rij : rijen) {
-            if (rij.getKleur() == kleur) {
-                return rij.isGesloten();
-            }
+            if (rij.getKleur() == kleur) return rij;
         }
-        return false;
+        return null;
     }
 
-    public boolean rijMagGeslotenWorden(Kleur kleur) {
-        for (Rij rij : rijen) {
-            if (rij.getKleur() == kleur) {
-                return rij.magSluiten();
-            }
-        }
-        return false;
-    }
-
-    public int getAantalKruisjes(Kleur kleur) {
-        for (Rij rij : rijen) {
-            if (rij.getKleur() == kleur) return rij.getAantalKruisjes();
-        }
-        return 0;
-    }
+    public boolean isRijGesloten(Kleur kleur)        { return isRijVan(kleur) != null && isRijVan(kleur).isGesloten(); }
+    public boolean rijMagGeslotenWorden(Kleur kleur) { Rij r = isRijVan(kleur); return r != null && r.magSluiten(); }
+    public int getAantalKruisjes(Kleur kleur)        { Rij r = isRijVan(kleur); return r == null ? 0 : r.getAantalKruisjes(); }
 
     public int[][] getWaardenMatrix() {
         int[][] matrix = alternatiefModus ? ALTERNATIEVE_MATRIX : STANDAARD_MATRIX;

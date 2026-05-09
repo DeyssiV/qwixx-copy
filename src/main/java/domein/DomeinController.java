@@ -312,16 +312,11 @@ public class DomeinController {
             .toList();
   }
 
-  public int[][] geefScoreBladWaarden(String gebruikersnaam) {
-    return spelerRepository.geefSpeler(gebruikersnaam).getScoreBlad().getWaardenMatrix();
-  }
-
   public int geefAantalKruisjesInRij(String gebruikersnaam, String kleurNaam) {
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
     return s.getScoreBlad().getAantalKruisjes(k);
   }
-
 
 
   public List<Dobbelsteen> geefDobbelstenen() {

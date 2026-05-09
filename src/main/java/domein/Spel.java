@@ -114,25 +114,6 @@ public class Spel {
         }
     }
 
-    /**
-     * Berekent alle mogelijke combinaties van de gekleurde dobbelsteen
-     * met elk van de twee witte dobbelstenen voor de opgegeven kleur.
-     *
-     * @param kleur De kleur van de dobbelsteen waarmee gecombineerd wordt
-     * @return Een lijst van Integer-waarden met alle mogelijke combinaties
-     */
-    public List<Integer> berekenCombinaties(Kleur kleur) {
-        List<Integer> combinaties = new ArrayList<>();
-        int gekleurdeWaarde = getGekleurdeWaarde(kleur);
-
-        for (Dobbelsteen d : dobbelstenen) {
-            if (d.getKleur() == Kleur.WIT) {
-                combinaties.add(gekleurdeWaarde + d.getWaarde());
-            }
-        }
-        return combinaties;
-    }
-
     public void verhoogAantalDoorkruisteRijen() {
         aantalDoorkruisteRijen++;
     }

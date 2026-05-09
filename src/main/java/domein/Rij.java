@@ -5,8 +5,6 @@ import utils.Kleur;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.Kleur.GEEL;
-import static utils.Kleur.ROOD;
 
 public class Rij {
     private Kleur kleur;
