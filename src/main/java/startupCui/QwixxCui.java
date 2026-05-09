@@ -231,7 +231,6 @@ public class QwixxCui {
         toonScoreBord(naam);
         if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
             verwerkRijKeuze(naam, witteSom);
-            System.out.println("Kruisje gezet!");
         } else {
             System.out.println(naam + " slaat de witte som over");
         }
@@ -292,7 +291,6 @@ public class QwixxCui {
 
                 if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
                     verwerkRijKeuze(naam, witteSom);
-                    System.out.println("Kruisje gezet!");
                 } else {
                     System.out.println(naam + " slaat beurt over");
                 }
