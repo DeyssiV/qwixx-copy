@@ -136,7 +136,8 @@ public class QwixxCui {
                     rijSluiten(naam, keuze);
                 } else {
                     System.out.println("Hier mag je geen kruis zetten! (Check de volgorde of de witte som).");
-                    return;
+                    // scoreblad opnieuw tonen
+                    toonScoreBord(naam);
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("Ongeldige kleur. Het moet een van deze kleuren zijn! ROOD, GEEL, GROEN, BLAUW");
