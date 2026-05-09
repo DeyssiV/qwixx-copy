@@ -7,7 +7,7 @@ import java.util.Random;
 public class Dobbelsteen {
     private final Kleur kleur;
     private int waarde;
-    Random r = new Random();
+    private static final Random r = new Random();
 
     /**
      * Maakt een nieuwe dobbelsteen aan.
@@ -15,6 +15,7 @@ public class Dobbelsteen {
      */
     public Dobbelsteen(Kleur kleur) {
         this.kleur = kleur;
+        rolDobbelsteen();
     }
 
     /**

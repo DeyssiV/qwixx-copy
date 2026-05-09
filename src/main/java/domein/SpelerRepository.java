@@ -66,8 +66,10 @@ public class SpelerRepository {
   }
 
   private boolean bestaatSpeler(String gebruikersnaam) {
-    for (Speler speler : spelers)
-      return gebruikersnaam.equals(speler.getGebruikersnaam());
+    for (Speler speler : spelers) {
+      if (gebruikersnaam.equalsIgnoreCase(speler.getGebruikersnaam()))
+        return true;
+    }
     return false;
   }
 }

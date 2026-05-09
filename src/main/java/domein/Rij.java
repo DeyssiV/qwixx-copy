@@ -74,46 +74,43 @@ public class Rij {
      * @return true, false Als het kruisje gezet is true, anders false.
      */
     public boolean registreerKruis(int waardeVak){
+        Vakje gekozenVakje;
         if (this.gesloten) {
             return false;
         }
-
         int gekozenIndex = zoekIndexVanWaarde(waardeVak);
-
         if (gekozenIndex == -1) {
             return false;
         }
-
-        Vakje gekozenVakje = vakjes.get(gekozenIndex);
-
+        gekozenVakje = vakjes.get(gekozenIndex);
         if (gekozenVakje.isAangekruist()) {
             return false;
         }
-
-        boolean isUitersteVakje = gekozenIndex == vakjes.size() - 2;
-
-        if (isUitersteVakje && getAantalKruisjes() < 5) {
+        boolean isUitersteVakje = gekozenIndex == vakjes.size() - 1;
+        if (isUitersteVakje && getAantalKruisjes() < 6) {
             return false;
         }
-
         // enkel rechts van vorige kruisjes mogen gekozen worden
         if (gekozenIndex <= laatsteIndex) {
             return false;
         }
-
         gekozenVakje.setAangekruist(true);
         laatsteIndex = gekozenIndex;
 
+        if (isUitersteVakje){
+            this.gesloten = true;
+        }
         return true;
+
     }
 
     /**
      * Berekent de score voor gekozen rij o.b.v. aantal gezette kruisjes.
      * Hiervoor wordt een array met de score gebruikt.
-     * @param aantal Het totaal aantal kruisjes dat gezet werden in die rij (incl. slot).
      * @return score Behaalde score in de rij in Integer.
      */
-    public int berekenScoreRij(int aantal){
+    public int berekenScoreRij(){
+        int aantal = getAantalKruisjes();
         if (aantal<=0) return 0;
         int [] scoreRij = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78};
         return scoreRij[aantal-1];
@@ -146,5 +143,10 @@ public class Rij {
             }
         }
         return -1;
+    }
+
+    public boolean magSluiten() {
+        Vakje laatste = vakjes.get(vakjes.size() - 1);
+        return !gesloten && !laatste.isAangekruist() && getAantalKruisjes() >= 6;
     }
 }

@@ -130,7 +130,7 @@ public class QwixxCui {
 
                 if (gelukt) {
                     System.out.println("Kruisje gezet!");
-                    rijSluiten(naam, keuze, som);
+                    rijSluiten(naam, keuze);
                 } else {
                     System.out.println("Hier mag je geen kruis zetten! (Check de volgorde of de witte som).");
                     return;
@@ -141,23 +141,13 @@ public class QwixxCui {
         }
     }
 
-    private void rijSluiten(String naam, String kleur, int som) {
-        if (dc.rijSluitenToegestaan(naam, kleur, som)) {
+    private void rijSluiten(String naam, String kleur) {
+        if (dc.rijSluitenToegestaan(naam, kleur)) {
             if (leesJaNee("Je mag deze rij sluiten. Wilt u dit doen? J(a)/N(ee): ")) {
                 dc.sluitRij(utils.Kleur.valueOf(kleur.toUpperCase()));
                 System.out.println("De rij " + kleur + " is nu gesloten voor iedereen!");
             }
         }
-    }
-
-    private String bepaalKleurNaam(int keuze) {
-        return switch (keuze) {
-            case 1, 2 -> "ROOD";
-            case 3, 4 -> "GEEL";
-            case 5, 6 -> "GROEN";
-            case 7, 8 -> "BLAUW";
-            default -> "";
-        };
     }
 
     private void registreerSpelers() {
@@ -259,8 +249,8 @@ public class QwixxCui {
                 boolean gelukt = dc.kiesCombinatie(naam, keuze);
                 if (gelukt) {
                     System.out.println("Kruisje gezet!");
-                    String kleurNaam = bepaalKleurNaam(keuze);
-                    rijSluiten(naam, kleurNaam, 0);
+                    String kleurNaam = dc.geefKleurVanKeuze(keuze);
+                    rijSluiten(naam, kleurNaam);
                     succes = true;
                 } else {
                     System.out.println("Deze combinatie is ongeldig. Kies een andere optie.");
@@ -354,22 +344,16 @@ public class QwixxCui {
     //op het einde de afsluiter tekst weergeven winnaar en aantal punten etc
     private void toonResultaat() {
         System.out.println("\n--- Einde van het spel ---");
-
-        String winnaar = "";
-        int hoogsteScore = -100;
-
         for (String naam : gekozenSpelers) {
-            int score = dc.geefTotaleScore(naam);
-            System.out.printf("%-15s : %d punten%n", naam, score);
-
-            if (score > hoogsteScore) {
-                hoogsteScore = score;
-                winnaar = naam;
-            }
+            System.out.printf("%-15s : %d punten%n", naam, dc.geefTotaleScore(naam));
         }
-        System.out.println("De winnaar is: " + winnaar);
+        List<String> winnaars = dc.geefWinnaars();
+        if (winnaars.size() == 1) {
+            System.out.println("De winnaar is: " + winnaars.get(0));
+        } else {
+            System.out.println("Gelijkspel! De winnaars zijn: " + String.join(", ", winnaars));
+        }
         afsluiten();
-        //TODO gelijkspel?
     }
 
     //Methode om het bericht op het einde van het spel te laten zien bv. Mislukte worpen (-5 ptn): [ X ] [   ] [   ] [   ]

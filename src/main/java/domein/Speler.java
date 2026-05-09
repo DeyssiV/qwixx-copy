@@ -11,7 +11,6 @@ public class Speler implements Comparable<Speler> {
   private int mislukteWorpen;
   private int aantalGespeeld;
   private int aantalGewonnen;
-  private boolean alternatiefModus;
 
   /**
    * maakt een speler aan.
@@ -64,10 +63,6 @@ public class Speler implements Comparable<Speler> {
     this.mislukteWorpen++;
   }
 
-  public void setMislukteWorpen(int mislukteWorpen) {
-    this.mislukteWorpen = mislukteWorpen;
-  }
-
   /**
    * geeft het aantal mislukte worpen.
    * @return aantal mislukte worpen.
@@ -88,9 +83,9 @@ public class Speler implements Comparable<Speler> {
   }
 
   //TODO: java doc
-  public void resetSpeler() {
+  public void resetSpeler(boolean alternatiefModus) {
     this.mislukteWorpen = 0;
-    this.scoreBlad = new ScoreBlad(this.gebruikersnaam, this.alternatiefModus);
+    maakNieuwScoreBlad(alternatiefModus);
   }
   //TODO java doc
 
@@ -102,17 +97,10 @@ public class Speler implements Comparable<Speler> {
 
   public void verhoogAantalGewonnen() { this.aantalGewonnen++; }
 
-
-  public void setAlternatiefModus(boolean alternatiefModus) {
-    this.alternatiefModus = alternatiefModus;
-  }
-
   /**
    * berekent de leeftijd van de speler.
    * @return waarde van huidigJaar - geboortejaar.
    */
-
-
   public int berekenLeeftijd() {
     int huidigJaar = LocalDate.now().getYear();
     return huidigJaar - this.geboortejaar;

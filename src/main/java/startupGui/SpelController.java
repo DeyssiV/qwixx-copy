@@ -138,7 +138,7 @@ public class SpelController {
                     "-fx-font-size: 23px;";
 
 
-            for (int kolom = 0; kolom < 11; kolom++) {
+            for (int kolom = 0; kolom < waarden[rij].length; kolom++) {
                 int getal = waarden[rij][kolom];
                 String kleur = kleuren[rij];
 
@@ -172,7 +172,7 @@ public class SpelController {
 
             lock.setMaxWidth(Double.MAX_VALUE);
             lock.setMaxHeight(Double.MAX_VALUE);
-            grpScorekaart.add(lock, 11, rij);
+            grpScorekaart.add(lock, waarden[rij].length, rij);
 
             GridPane.setHalignment(lock, HPos.CENTER);
             GridPane.setValignment(lock, VPos.CENTER);
@@ -186,7 +186,7 @@ public class SpelController {
      */
     private void updateSpelerAanDeBeurt() {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-        String tekst = String.format(bundle.getString("LabelBeurtVan"), dc.getSpelerAanDeBeurt());
+        String tekst = String.format(bundle.getString("LabelBeurtVan"), dc.geefSpelerAanDeBeurt());
 
         lblTitelSPEL.setText(tekst);
     }
@@ -203,13 +203,13 @@ public class SpelController {
         Button knop = (Button) event.getSource();
 
         if (!heeftGerold) {
-            actieveSpeler = dc.getSpelerAanDeBeurt();
+            actieveSpeler = dc.geefSpelerAanDeBeurt();
             //de speler van wie het scoreblad getoond wordt
             ronde = 1;
 
             knop.setDisable(true);
             dc.startBeurt();
-            toonDobbelstenen(dc.getDobbelstenen());
+            toonDobbelstenen(dc.geefDobbelsteenInfo());
             heeftGerold = true;
             omrandMogelijkeVakjes("W");
 
@@ -222,9 +222,9 @@ public class SpelController {
 
         } else {
             if(ronde==1){
-                dc.volgendeSpeler();
+                dc.toonVolgendeSpeler();
 
-                if (dc.getSpelerAanDeBeurt().equals(actieveSpeler)) {
+                if (dc.geefSpelerAanDeBeurt().equals(actieveSpeler)) {
                     ronde = 2;
                     volgendeBeurt(false);
                     omrandMogelijkeVakjes("G");
@@ -235,7 +235,7 @@ public class SpelController {
 
             }else{
                 dc.voegMislukteWorpToe(actieveSpeler);
-                if (dc.geefAantalMislukteWorpen(actieveSpeler) >= 2) {
+                if (dc.isEindeSpelDoorMislukteWorpen(actieveSpeler)) {
                     controleerEindeSpel();
                 } else {
                     ronde = 1;
@@ -300,7 +300,7 @@ public class SpelController {
      */
     private void omrandMogelijkeVakjes(String type) {
         resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
-        List<Dobbelsteen> dobbelstenen = dc.getDobbelstenen();
+        List<Dobbelsteen> dobbelstenen = dc.ge;
 
         if (type.equals("W")) {
             int witteSom = dc.geefWitteSom();
@@ -451,10 +451,10 @@ public class SpelController {
      * Controleert of het spel beëindigd moet worden en navigeert naar de GameOver pagina.
      */
     private void controleerEindeSpel() throws Exception {
-        String huidigeNaam = dc.getSpelerAanDeBeurt();
+        String huidigeNaam = dc.geefSpelerAanDeBeurt();
         int aantalFouten = dc.geefAantalMislukteWorpen(huidigeNaam);
 
-        if (aantalFouten >= 2 || dc.isEindeSpelDoorRijDoorkruising()) {
+        if (dc.isEindeSpelDoorMislukteWorpen(huidigeNaam) || dc.isEindeSpelDoorRijDoorkruising()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GameOver.fxml"));
 
             ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
@@ -474,7 +474,7 @@ public class SpelController {
      * Zet kruisjes en blokkeert vakjes die niet meer te kiezen zijn.
      */
     private void updateScorekaartVisueel() {
-        String huidigeSpeler = dc.getSpelerAanDeBeurt();
+        String huidigeSpeler = dc.geefSpelerAanDeBeurt();
         int[][] status = dc.geefStatus(huidigeSpeler);
 
         for (Node node : grpScorekaart.getChildren()) {
@@ -527,7 +527,7 @@ public class SpelController {
      */
     private void updateMislukteWorpen() {
         grpMislukteWorpen.getChildren().clear();
-        String huidigeNaam = dc.getSpelerAanDeBeurt();
+        String huidigeNaam = dc.geefSpelerAanDeBeurt();
         int aantalMislukt = dc.geefAantalMislukteWorpen(huidigeNaam);
 
         for (int i = 0; i < 2; i++) {
@@ -556,7 +556,7 @@ public class SpelController {
      */
     @FXML
     private void updateScore() {
-        String huidigeNaam = dc.getSpelerAanDeBeurt();
+        String huidigeNaam = dc.geefSpelerAanDeBeurt();
         int score = dc.geefTotaleScore(huidigeNaam);
         lblTotaleScore.setText(String.valueOf(score));
     }

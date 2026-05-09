@@ -1,7 +1,6 @@
 package domein;
 
 import dtos.SpelDTO;
-import dtos.SpelerDTO;
 import utils.Kleur;
 
 import java.util.ArrayList;
@@ -9,13 +8,26 @@ import java.util.Comparator;
 import java.util.List;
 
 public class DomeinController {
+
+  //klasse-attributen
   private final SpelerRepository spelerRepository;
-  private Speler speler;
   private Spel spel;
   private boolean alternatiefModus = false;
-  private int huidigeSpelerIndex = 0;
-
   private List<String> gekozenNamen = new ArrayList<>();
+
+  //constructor
+  public DomeinController() {
+    spelerRepository = new SpelerRepository();
+  }
+
+  //TODO
+  //public SpelDTO geefSpelDTO() {
+    //return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen());
+  //}
+
+  /*public SpelerDTO geefSpelerDTO() {
+    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.geefTotaleScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
+  }*/
 
   public List<String> geefGeregistreerdeSpelers() {
     List<String> mogelijkeSpelers = new ArrayList<>();
@@ -25,24 +37,9 @@ public class DomeinController {
     return mogelijkeSpelers;
   }
 
-  public DomeinController() {
-    spelerRepository = new SpelerRepository();
-  }
-
-  //TODO
-  public SpelDTO geefSpelDTO() {
-    return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen(), spel.getDobbelsteen(), spel.getScoreBlad());
-  }
-
-  public SpelerDTO geefSpelerDTO()
-  {
-    return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.geefTotaleScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
-  }
-
   public void resetSpel(){
     for (Speler speler:spel.getSpelers()){
-      speler.setMislukteWorpen(0);
-      speler.getScoreBlad().setScore(0);
+      speler.resetSpeler(isAlternatiefModus());
     }
   }
 
@@ -69,17 +66,12 @@ public class DomeinController {
     spelerRepository.herlaadSpelers();
   }
 
-
   public List<String> geefDetailsDobbelstenen() {
     List<String> resultaat = new ArrayList<>();
     for (Dobbelsteen dobbelsteen : spel.getDobbelstenen()) {
       resultaat.add(String.format("%s %d", dobbelsteen.getKleur(), dobbelsteen.getWaarde()));
     }
     return resultaat;
-  }
-
-  public List<Dobbelsteen> getDobbelstenen() {
-    return spel.getDobbelstenen();
   }
 
   public boolean kiesCombinatie(String gebruikersnaam, int keuze){
@@ -96,11 +88,16 @@ public class DomeinController {
     return gelukt;
   }
 
+  //TODO deze methode moet in SPEL staan
   private Kleur kiesKleur(int keuze) {
     if (keuze <= 2) return Kleur.ROOD;
     if (keuze <= 4) return Kleur.GEEL;
     if (keuze <= 6) return Kleur.GROEN;
     return Kleur.BLAUW;
+  }
+
+  public String geefKleurVanKeuze(int keuze) {
+    return kiesKleur(keuze).toString();
   }
 
   public boolean kiesRij(String gebruikersnaam, String kleurNaam, int som) {
@@ -109,7 +106,7 @@ public class DomeinController {
     return speler.kruisAan(gekozenKleur, som);
   }
 
-
+  //TODO deze methode moet in SCOREBLAD staan
   public int[][] geefStatus(String gebruikersnaam) {
     Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
     return speler.getScoreBlad().getScoreBladMatrix();
@@ -150,7 +147,6 @@ public class DomeinController {
     return spelerRepository.geefSpeler(gebruikersnaam).berekenLeeftijd();
   }
 
-
   public List<String> volgordeSpelersInStringLijst() {
     List<String> spelersStringLijst = new ArrayList<>();
 
@@ -160,17 +156,12 @@ public class DomeinController {
     return spelersStringLijst;
   }
 
-  public String getSpelerAanDeBeurt() {
-    List<String> spelers = volgordeSpelersInStringLijst();
-    return spelers.get(huidigeSpelerIndex);
+  public String geefSpelerAanDeBeurt() {
+    return spel.getSpelerAanDeBeurt();
   }
 
-  public void volgendeSpeler() {
-    huidigeSpelerIndex++;
-
-    if (huidigeSpelerIndex >= spel.getSpelers().size()) {
-      huidigeSpelerIndex = 0;
-    }
+  public void toonVolgendeSpeler() {
+    spel.zetVolgendeSpeler();
   }
 
   public void slaStatsOpInDB(List<String> namen) {
@@ -179,7 +170,6 @@ public class DomeinController {
       spelerRepository.updateStats(s);
     }
   }
-
 
   public void verhoogAantalGespeeldVoorSpelers(List<String> namen) {
     for (String naam : namen) {
@@ -207,7 +197,6 @@ public class DomeinController {
     return spelerRepository.geefSpeler(gebruikersnaam).getAantalGewonnen();
   }
 
-
   public void setAlternatiefModus(boolean alternatief) {
     this.alternatiefModus = alternatief;
   }
@@ -215,7 +204,6 @@ public class DomeinController {
   public boolean isAlternatiefModus() {
     return alternatiefModus;
   }
-
 
   public void voegSpelerToeAanSpel(String naam) {
     gekozenNamen.add(naam);
@@ -232,7 +220,7 @@ public class DomeinController {
   public void voegMislukteWorpToe(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     s.verhoogMislukteWorpen();
-    volgendeSpeler();
+    toonVolgendeSpeler();
   }
 
   public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
@@ -249,18 +237,10 @@ public class DomeinController {
     return s.geefTotaleScore();
   }
 
-  public boolean rijSluitenToegestaan(String gebruikersnaam, String kleurNaam, int waardeVak) {
+  public boolean rijSluitenToegestaan(String gebruikersnaam, String kleurNaam) {
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
-
-    for(Rij rij:s.getScoreBlad().getRijen()){
-      if(rij.getKleur() == k){
-        boolean isUiterste = (waardeVak == 11 && (k == Kleur.ROOD || k == Kleur.GEEL)) ||
-                (waardeVak == 1 && (k == Kleur.GROEN || k == Kleur.BLAUW));
-        return isUiterste && rij.getAantalKruisjes() >= 6;
-      }
-    }
-    return false;
+    return s.getScoreBlad().rijMagGeslotenWorden(k);
   }
 
   public void sluitRij(Kleur kleur) {
@@ -271,6 +251,8 @@ public class DomeinController {
         }
       }
     }
+
+    spel.verhoogAantalDoorkruisteRijen();
 
     Dobbelsteen teVerwijderenDS = null;
 
@@ -291,6 +273,7 @@ public class DomeinController {
     return s.getMislukteWorpen();
   }
 
+  //TODO deze methode moet in SCOREBLAD
   public int[][] geefVakWaarden(String gebruikersnaam) {
     Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
 
@@ -305,6 +288,30 @@ public class DomeinController {
     }
 
     return waarden;
+  }
+
+  public List<String> geefWinnaars() {
+    int hoogsteScore = spel.getSpelers().stream()
+            .mapToInt(Speler::geefTotaleScore)
+            .max()
+            .orElse(0);
+
+    return spel.getSpelers().stream()
+            .filter(s -> s.geefTotaleScore() == hoogsteScore)
+            .map(Speler::getGebruikersnaam)
+            .toList();
+  }
+
+  public int[][] geefScoreBladWaarden(String gebruikersnaam) {
+    return spelerRepository.geefSpeler(gebruikersnaam).getScoreBlad().getWaardenMatrix();
+  }
+
+  public List<String> geefDobbelsteenInfo() {
+    List<String> info = new ArrayList<>();
+    for (Dobbelsteen d : spel.getDobbelstenen()) {
+      info.add(d.getKleur().toString() + ":" + d.getWaarde());
+    }
+    return info;
   }
 
 }

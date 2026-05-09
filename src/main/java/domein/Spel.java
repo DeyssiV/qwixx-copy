@@ -1,6 +1,5 @@
 package domein;
 
-import dtos.SpelDTO;
 import utils.Kleur;
 
 import java.util.ArrayList;
@@ -13,10 +12,9 @@ import java.util.List;
 public class Spel {
     private List<Speler> spelers;
     List<Dobbelsteen> dobbelstenen;
-    private Dobbelsteen dobbelsteen;
-    private ScoreBlad scoreBlad;
     private int aantalDoorkruisteRijen = 0;
     private boolean alternatiefModus;
+    private int huidigeSpelerIndex = 0;
 
     /**
      * Maakt een nieuw spel aan met de gegeven spelers en initialiseert
@@ -25,6 +23,9 @@ public class Spel {
      * @param spelers De lijst van spelers die deelnemen aan het spel
      */
     public Spel(List<Speler> spelers, boolean alternatiefModus) {
+        if(spelers.size() < 2 || spelers.size() > 5){
+            throw new IllegalArgumentException("Een Qwixx-spel vereist min 2 en max 5 spelers.");
+        }
         this.spelers = new ArrayList<>(spelers);
         java.util.Collections.sort(this.spelers);
         this.alternatiefModus = alternatiefModus;
@@ -67,50 +68,6 @@ public class Spel {
     public List<Dobbelsteen> getDobbelstenen()
     {
         return dobbelstenen;
-    }
-
-    /**
-     * Geeft de huidige actieve dobbelsteen terug.
-     *
-     * @return De actieve Dobbelsteen
-     */
-    public Dobbelsteen getDobbelsteen() {
-        return dobbelsteen;
-    }
-
-    /**
-     * Geeft het scoreblad van het huidige spel terug.
-     *
-     * @return Het ScoreBlad-object van dit spel
-     */
-    public ScoreBlad getScoreBlad()
-    {
-        return scoreBlad;
-    }
-
-    /**
-     * Geeft de waarde van de huidige actieve dobbelsteen terug.
-     *
-     * @return De waarde van de dobbelsteen als Integer
-     */
-    public int geefWaardeDobbelsteen(){
-        return dobbelsteen.getWaarde();
-    }
-
-
-    /**
-     * Geeft een kopie van alle dobbelstenen terug gefilterd op waarde en kleur.
-     *
-     * @param waarde De waarde waarop gefilterd wordt
-     * @param kleur  De kleur waarop gefilterd wordt, mag niet null zijn
-     * @return Een lijst van Dobbelsteen-objecten
-     * @throws NullPointerException Als de opgegeven kleur null is
-     */
-    public List<Dobbelsteen> toonDobbelstenen(int waarde, Kleur kleur) {
-        if (kleur == null) {
-            throw new NullPointerException("Kleur mag niet null zijn");
-        }
-        return new ArrayList<>(dobbelstenen); // kopie van dobbelstenen
     }
 
     /**
@@ -176,5 +133,19 @@ public class Spel {
         return combinaties;
     }
 
+    public void verhoogAantalDoorkruisteRijen() {
+        aantalDoorkruisteRijen++;
+    }
 
+
+    public void zetVolgendeSpeler() {
+        huidigeSpelerIndex++;
+        if (huidigeSpelerIndex >= spelers.size()) {
+            huidigeSpelerIndex = 0;
+        }
+    }
+
+    public String getSpelerAanDeBeurt() {
+        return spelers.get(huidigeSpelerIndex).getGebruikersnaam();
+    }
 }

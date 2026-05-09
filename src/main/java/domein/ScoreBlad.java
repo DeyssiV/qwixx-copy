@@ -74,12 +74,8 @@ public class ScoreBlad {
      * @return true, false Als het aankruisen van vakje gelukt is, geeft true anders false.
      */
     public boolean kruisVakje(Kleur kleur, int vakje){
-        boolean isGeelOfRood = false;
         for (Rij rij : rijen) {
             if (rij.getKleur() == kleur) {
-                if (kleur.equals(Kleur.ROOD) || kleur.equals(Kleur.GEEL)){
-                    isGeelOfRood = true;
-                }
                 return rij.registreerKruis(vakje);
             }
         }
@@ -112,12 +108,13 @@ public class ScoreBlad {
     public int berekenTotaleScore(int aantalMislukteWorpen){
         int totScore = 0;
         for (Rij rij:rijen){
-            totScore += rij.berekenScoreRij(rij.getAantalKruisjes());
+            totScore += rij.berekenScoreRij();
         }
         totScore -= (aantalMislukteWorpen*5);
         return totScore;
     }
 
+    //TODO OPLOSSEN
     /**
      * Controleert of de rij met de opgegeven kleur gesloten is.
      *
@@ -133,6 +130,26 @@ public class ScoreBlad {
         return false;
     }
 
+    public boolean rijMagGeslotenWorden(Kleur kleur) {
+        for (Rij rij : rijen) {
+            if (rij.getKleur() == kleur) {
+                return rij.magSluiten();
+            }
+        }
+        return false;
+    }
+
+    public int[][] getWaardenMatrix() {
+        int[][] matrix = alternatiefModus ? ALTERNATIEVE_MATRIX : STANDAARD_MATRIX;
+        // laatste kolom (sluitvakje = 0) niet meegeven aan GUI
+        int[][] resultaat = new int[4][matrix[0].length - 1];
+        for (int r = 0; r < 4; r++) {
+            for (int k = 0; k < matrix[0].length - 1; k++) {
+                resultaat[r][k] = matrix[r][k];
+            }
+        }
+        return resultaat;
+    }
 
 
 }
