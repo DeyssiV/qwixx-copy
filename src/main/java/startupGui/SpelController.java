@@ -209,7 +209,7 @@ public class SpelController {
 
             knop.setDisable(true);
             dc.startBeurt();
-            toonDobbelstenen(dc.geefDobbelsteenInfo());
+            toonDobbelstenen(dc.geefDobbelstenen());
             heeftGerold = true;
             omrandMogelijkeVakjes("W");
 
@@ -236,8 +236,9 @@ public class SpelController {
             }else{
                 dc.voegMislukteWorpToe(actieveSpeler);
                 if (dc.isEindeSpelDoorMislukteWorpen(actieveSpeler)) {
-                    controleerEindeSpel();
+                    controleerEindeSpel(actieveSpeler);
                 } else {
+                    dc.toonVolgendeSpeler();
                     ronde = 1;
                     volgendeBeurt(true);
                 }
@@ -300,7 +301,7 @@ public class SpelController {
      */
     private void omrandMogelijkeVakjes(String type) {
         resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
-        List<Dobbelsteen> dobbelstenen = dc.ge;
+        List<Dobbelsteen> dobbelstenen = dc.geefDobbelstenen();
 
         if (type.equals("W")) {
             int witteSom = dc.geefWitteSom();
@@ -371,7 +372,7 @@ public class SpelController {
         String kleur = (String) geklikteKnop.getProperties().get("kleur");
         int getal = (Integer) geklikteKnop.getProperties().get("getal");
 
-        dc.kiesRij(dc.getSpelerAanDeBeurt(), kleur, getal);
+        dc.kiesRij(dc.geefSpelerAanDeBeurt(), kleur, getal);
 
         geklikteKnop.setText("X");
         geklikteKnop.setDisable(true);
@@ -399,8 +400,8 @@ public class SpelController {
         delay.setOnFinished(e -> {
                 try {
                     if (ronde == 1) {
-                        dc.volgendeSpeler();
-                        if (dc.getSpelerAanDeBeurt().equals(actieveSpeler)) {
+                        dc.toonVolgendeSpeler();
+                        if (dc.geefSpelerAanDeBeurt().equals(actieveSpeler)) {
                             ronde = 2;
                             volgendeBeurt(false);
                             omrandMogelijkeVakjes("G");
@@ -410,9 +411,9 @@ public class SpelController {
                         }
                     } else {
                         if (dc.isEindeSpelDoorRijDoorkruising()) {
-                            controleerEindeSpel();
+                            controleerEindeSpel(actieveSpeler);
                         } else {
-                            dc.volgendeSpeler();
+                            dc.toonVolgendeSpeler();
                             heeftGerold = false;
                             volgendeBeurt(true);
                         }
@@ -450,13 +451,9 @@ public class SpelController {
     /**
      * Controleert of het spel beëindigd moet worden en navigeert naar de GameOver pagina.
      */
-    private void controleerEindeSpel() throws Exception {
-        String huidigeNaam = dc.geefSpelerAanDeBeurt();
-        int aantalFouten = dc.geefAantalMislukteWorpen(huidigeNaam);
-
-        if (dc.isEindeSpelDoorMislukteWorpen(huidigeNaam) || dc.isEindeSpelDoorRijDoorkruising()) {
+    private void controleerEindeSpel(String actieveSpeler) throws Exception {
+        if (dc.isEindeSpelDoorMislukteWorpen(actieveSpeler) || dc.isEindeSpelDoorRijDoorkruising()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GameOver.fxml"));
-
             ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
             loader.setResources(bundle);
 

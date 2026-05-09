@@ -14,11 +14,15 @@ public class DomeinController {
   private Spel spel;
   private boolean alternatiefModus = false;
   private List<String> gekozenNamen = new ArrayList<>();
+  public static final int MAX_MISLUKTE_WORPEN = 2;
+  public static final int MAX_DOORKRUISTE_RIJEN = 2;
+
 
   //constructor
   public DomeinController() {
     spelerRepository = new SpelerRepository();
   }
+
 
   //TODO
   //public SpelDTO geefSpelDTO() {
@@ -220,16 +224,15 @@ public class DomeinController {
   public void voegMislukteWorpToe(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
     s.verhoogMislukteWorpen();
-    toonVolgendeSpeler();
   }
 
   public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
     Speler s = spelerRepository.geefSpeler(gebruikersnaam);
-    return s.getMislukteWorpen() >= 4;
+    return s.getMislukteWorpen() >= MAX_MISLUKTE_WORPEN;
   }
 
   public boolean isEindeSpelDoorRijDoorkruising(){
-    return spel.getAantalDoorkruisteRijen() >= 2;
+    return spel.getAantalDoorkruisteRijen() >= MAX_DOORKRUISTE_RIJEN;
   }
 
   public int geefTotaleScore(String gebruikersnaam){
@@ -306,12 +309,8 @@ public class DomeinController {
     return spelerRepository.geefSpeler(gebruikersnaam).getScoreBlad().getWaardenMatrix();
   }
 
-  public List<String> geefDobbelsteenInfo() {
-    List<String> info = new ArrayList<>();
-    for (Dobbelsteen d : spel.getDobbelstenen()) {
-      info.add(d.getKleur().toString() + ":" + d.getWaarde());
-    }
-    return info;
-  }
 
+  public List<Dobbelsteen> geefDobbelstenen() {
+    return spel.getDobbelstenen();
+  }
 }
