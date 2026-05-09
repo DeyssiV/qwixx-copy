@@ -32,11 +32,12 @@ public class SpelController {
 
     private int ronde = 1; //wit = 1; gekleurd = 2
     private String actieveSpeler; //speler die dobbelstenen gerold heeft
-
+    private boolean wachtOpVolgendeBeurt = false; //melding laten zien voor volgende beurt
     private boolean heeftGerold = false;
 
+
     @FXML
-    private Label lblTotaleScore,lblTitelSPEL;
+    private Label lblTotaleScore,lblTitelSPEL, lblFeedback5kruisjes;
 
     @FXML
     private Button btnAnnuleren, btnRolDobbelstenen;
@@ -168,7 +169,7 @@ public class SpelController {
             lock.setStyle(buttonStyle);
             lock.getProperties().put("type", "LOCK");
             lock.getProperties().put("kleur", kleuren[rij]);
-            lock.setOnAction(this::handleScoreClick);
+            lock.setOnAction(this::handleLockClick);
 
             lock.setMaxWidth(Double.MAX_VALUE);
             lock.setMaxHeight(Double.MAX_VALUE);
@@ -192,6 +193,27 @@ public class SpelController {
     }
 
 
+    private void gaNaarVolgendeBeurt() throws Exception {
+        if (ronde == 1) {
+            dc.toonVolgendeSpeler();
+            if (dc.geefSpelerAanDeBeurt().equals(actieveSpeler)) {
+                ronde = 2;
+                volgendeBeurt(false);
+                omrandMogelijkeVakjes("G");
+            } else {
+                volgendeBeurt(false);
+                omrandMogelijkeVakjes("W");
+            }
+        } else {
+            if (dc.isEindeSpelDoorRijDoorkruising()) {
+                controleerEindeSpel(actieveSpeler);
+            } else {
+                dc.toonVolgendeSpeler();
+                heeftGerold = false;
+                volgendeBeurt(true);
+            }
+        }
+    }
 
     /**
      * Behandelt het rollen van de dobbelstenen of het overslaan van de huidige beurt.
@@ -201,6 +223,13 @@ public class SpelController {
     void rolDobbelstenen(ActionEvent event) throws Exception {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         Button knop = (Button) event.getSource();
+
+        if (wachtOpVolgendeBeurt) {
+            wachtOpVolgendeBeurt = false;
+            lblFeedback5kruisjes.setText("");
+            gaNaarVolgendeBeurt();
+            return;
+        }
 
         if (!heeftGerold) {
             actieveSpeler = dc.geefSpelerAanDeBeurt();
@@ -325,6 +354,8 @@ public class SpelController {
                 }
             }
         }
+
+        omrandMogelijkLockKnoppen();
     }
 
     /**
@@ -365,6 +396,9 @@ public class SpelController {
 
         Button geklikteKnop = (Button) event.getSource();
 
+        if ("LOCK".equals(geklikteKnop.getProperties().get("type"))) return;
+
+
         if (!heeftGerold || !geklikteKnop.getStyle().contains("-fx-border-width: 3px")) {
             return;
         }
@@ -394,9 +428,22 @@ public class SpelController {
         }
 
         resetScorekaartRanden();
+        omrandMogelijkLockKnoppen();
         updateScore();
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+        int aantalInRij = dc.geefAantalKruisjesInRij(dc.geefSpelerAanDeBeurt(), kleur);
+        if (aantalInRij == 5) {
+            lblFeedback5kruisjes.setText(bundle.getString("lblFeedback5kruisjes"));
+            lblFeedback5kruisjes.setStyle("-fx-text-fill: green;");
+        } else {
+            lblFeedback5kruisjes.setText("");
+        }
+        wachtOpVolgendeBeurt = true;
+        btnRolDobbelstenen.setText(bundle.getString("VolgendeBeurt"));
+        btnRolDobbelstenen.setDisable(false);
+
+        /*PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(e -> {
                 try {
                     if (ronde == 1) {
@@ -422,7 +469,7 @@ public class SpelController {
                     throw new RuntimeException(ex);
                 }
         });
-        delay.play();
+        delay.play();*/
     }
 
 
@@ -432,11 +479,13 @@ public class SpelController {
      */
     private void volgendeBeurt(boolean isEindeBeurt) {
 
+        lblFeedback5kruisjes.setText("");
         resetScorekaartRanden();
         updateSpelerAanDeBeurt();
         updateMislukteWorpen();
         updateScore();
         updateScorekaartVisueel();
+        omrandMogelijkLockKnoppen();
 
         if (isEindeBeurt){
             heeftGerold = false;
@@ -558,6 +607,57 @@ public class SpelController {
         lblTotaleScore.setText(String.valueOf(score));
     }
 
+    @FXML
+    private void handleLockClick(ActionEvent event) {
+        Button btn = (Button) event.getSource();
+        String kleurNaam = (String) btn.getProperties().get("kleur");
+        String speler = dc.geefSpelerAanDeBeurt();
+        // ENIGE voorwaarde: heeft deze speler ≥5 kruisjes in deze rij?
+        if (!dc.magRijSluitenViaLockKnop(speler, kleurNaam)) return;
+        Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+        dc.sluitRij(k);
+        btn.setText("X");
+        btn.setDisable(true);
+        btn.setOpacity(1.0);
+        updateScorekaartVisueel();
+        updateScore();
+        omrandMogelijkLockKnoppen();
+        lblFeedback5kruisjes.setText("");
+        if (dc.isEindeSpelDoorRijDoorkruising()) {
+            try {
+                controleerEindeSpel(actieveSpeler);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            return;
+        }
+        if (wachtOpVolgendeBeurt) {
+            wachtOpVolgendeBeurt = false;
+            try { gaNaarVolgendeBeurt(); }
+            catch (Exception ex) { throw new RuntimeException(ex); }
+        }
+    }
+
+    private void omrandMogelijkLockKnoppen() {
+        String speler = dc.geefSpelerAanDeBeurt();
+        for (Node node : grpScorekaart.getChildren()) {
+            if (!(node instanceof Button btn)) continue;
+            if (!"LOCK".equals(btn.getProperties().get("type"))) continue;
+            if (btn.isDisable()) continue;
+            String kleurNaam = (String) btn.getProperties().get("kleur");
+            if (dc.magRijSluitenViaLockKnop(speler, kleurNaam)) {
+                String donker = switch (kleurNaam.toUpperCase()) {
+                    case "ROOD"  -> "#c0392b";
+                    case "GEEL"  -> "#f39c12";
+                    case "GROEN" -> "#1e8449";
+                    case "BLAUW" -> "#1a5276";
+                    default      -> "#34495e";
+                };
+                btn.setStyle(btn.getStyle()
+                        + String.format("-fx-border-width: 3px; -fx-border-color: %s;", donker));
+            }
+        }
+    }
 
 
 }

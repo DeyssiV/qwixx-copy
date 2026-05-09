@@ -246,6 +246,13 @@ public class DomeinController {
     return s.getScoreBlad().rijMagGeslotenWorden(k);
   }
 
+  public boolean magRijSluitenViaLockKnop(String gebruikersnaam, String kleurNaam) {
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+    return !s.getScoreBlad().isRijGesloten(k)
+            && s.getScoreBlad().getAantalKruisjes(k) >= 5;
+  }
+
   public void sluitRij(Kleur kleur) {
     for (Speler s : spel.getSpelers()) {
       for (Rij rij : s.getScoreBlad().getRijen()) {
@@ -308,6 +315,13 @@ public class DomeinController {
   public int[][] geefScoreBladWaarden(String gebruikersnaam) {
     return spelerRepository.geefSpeler(gebruikersnaam).getScoreBlad().getWaardenMatrix();
   }
+
+  public int geefAantalKruisjesInRij(String gebruikersnaam, String kleurNaam) {
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+    return s.getScoreBlad().getAantalKruisjes(k);
+  }
+
 
 
   public List<Dobbelsteen> geefDobbelstenen() {

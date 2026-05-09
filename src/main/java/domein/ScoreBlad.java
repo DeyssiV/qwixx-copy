@@ -139,6 +139,13 @@ public class ScoreBlad {
         return false;
     }
 
+    public int getAantalKruisjes(Kleur kleur) {
+        for (Rij rij : rijen) {
+            if (rij.getKleur() == kleur) return rij.getAantalKruisjes();
+        }
+        return 0;
+    }
+
     public int[][] getWaardenMatrix() {
         int[][] matrix = alternatiefModus ? ALTERNATIEVE_MATRIX : STANDAARD_MATRIX;
         // laatste kolom (sluitvakje = 0) niet meegeven aan GUI
