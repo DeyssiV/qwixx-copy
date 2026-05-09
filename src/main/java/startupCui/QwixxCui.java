@@ -105,8 +105,11 @@ public class QwixxCui {
         dc.startBeurt();
         toonWorp();
 
+
+        rondeActieveSpelerWit(actieveSpeler, dc.geefWitteSom());
         rondeAndereSpelers(actieveSpeler, dc.geefWitteSom());
-        rondeActieveSpeler(actieveSpeler, dc.geefWitteSom());
+        rondeActieveSpelerGekleurd(actieveSpeler);
+
 
         return dc.isEindeSpelDoorMislukteWorpen(actieveSpeler) || dc.isEindeSpelDoorRijDoorkruising();
     }
@@ -222,7 +225,7 @@ public class QwixxCui {
     }
 
     //de ronde van de speler die gedobbeld heeft (witte en gekleurde combo als optie)
-    private void rondeActieveSpeler(String naam, int witteSom) {
+    private void rondeActieveSpelerWit(String naam, int witteSom) {
         System.out.println("\n--- Optie van de witte dobbelstenen ---"); // de witte-combinatie
         toonScoreBord(naam);
         if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
@@ -232,6 +235,10 @@ public class QwixxCui {
             System.out.println(naam + " slaat de witte som over");
         }
 
+
+    }
+
+    private void rondeActieveSpelerGekleurd(String naam) {
         toonScoreBord(naam);
 
         System.out.println("\n--- Optie van de gekleurde dobbelstenen (VERPLICHT anders strafpunt van -5) ---"); // de kleur-combinaties
