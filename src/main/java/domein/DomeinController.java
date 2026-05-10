@@ -138,6 +138,14 @@ public class DomeinController {
     return combinaties;
   }
 
+    public boolean geefIsRijGesloten(String gebruikersnaam, String kleurNaam) {
+        Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+        Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+        return s.getScoreBlad().isRijGesloten(k);
+    }
+
+
+
   public int geefWitteSom() {
     List<Dobbelsteen> stenen = spel.getDobbelstenen();
     int som = 0;
