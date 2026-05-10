@@ -31,6 +31,7 @@ public class SpelerKiezenController {
     @FXML
     private void initialize() {
         lijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelers());
+        zetFeedback("", false);
     }
 
     @FXML
@@ -42,7 +43,7 @@ public class SpelerKiezenController {
             lijstSpelers.getItems().remove(gekozenSpeler);
             lijstSpelers.getSelectionModel().clearSelection();
 
-            lblFeedback.setText("");
+            zetFeedback("", false);
         }
     }
 
@@ -78,34 +79,40 @@ public class SpelerKiezenController {
 
     @FXML
     void startSpel(ActionEvent event) throws Exception {
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         int aantalSpelers = lijstGekozenSpelers.getItems().size();
 
         if (aantalSpelers < 2) {
-            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-            lblFeedback.setText(bundle.getString("AlertTeWeinigSpelers"));
-            lblFeedback.setStyle("-fx-text-fill: red;");
+            zetFeedback(bundle.getString("AlertTeWeinigSpelers"), false);
             return;
         }
 
         if (aantalSpelers > 5) {
-            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-            lblFeedback.setText(bundle.getString("AlertTeVeelSpelers"));
-            lblFeedback.setStyle("-fx-text-fill: red;");
+            zetFeedback(bundle.getString("AlertTeVeelSpelers"), false);
             return;
         }
 
-        lblFeedback.setText("");
+        zetFeedback("", false);
 
         boolean alternatief = lblVersieAlternatiefSKP.isSelected();
         dc.startNieuwSpel();
         dc.setAlternatiefModus(alternatief);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GekozenSpelersPagina.fxml"));
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie", Locale.getDefault());
         loader.setResources(bundle);
 
         Stage stage = (Stage) btnStartSpel.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
+    }
+
+    private void zetFeedback(String tekst, boolean success) {
+        boolean leeg = (tekst == null || tekst.isBlank());
+        lblFeedback.setText(tekst);
+        lblFeedback.setVisible(!leeg);
+        lblFeedback.setManaged(!leeg);
+        lblFeedback.getStyleClass().removeAll("feedbackSuccess", "feedbackError");
+        if (!leeg) {
+            lblFeedback.getStyleClass().add(success ? "feedbackSuccess" : "feedbackError");
+        }
     }
 }
