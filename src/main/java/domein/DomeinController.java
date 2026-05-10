@@ -17,6 +17,7 @@
     private List<String> gekozenNamen = new ArrayList<>();
     public static final int MAX_MISLUKTE_WORPEN = 2;
     public static final int MAX_DOORKRUISTE_RIJEN = 2;
+    public static final int MIN_KRUISJES_VOOR_LOCK = 2;
 
 
     /**
@@ -464,7 +465,7 @@
       Speler s = spelerRepository.geefSpeler(gebruikersnaam);
       Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
       return !s.getScoreBlad().isRijGesloten(k)
-              && s.getScoreBlad().getAantalKruisjes(k) >= 5;
+              && s.getScoreBlad().getAantalKruisjes(k) >= MIN_KRUISJES_VOOR_LOCK;
     }
 
     /**

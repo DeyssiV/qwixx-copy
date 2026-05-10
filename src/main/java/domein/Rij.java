@@ -150,7 +150,7 @@ public class Rij {
      * <ul>
      *   <li>De rij niet al eerder gesloten is.</li>
      *   <li>Het laatste vakje in de rij nog niet is aangekruist.</li>
-     *   <li>Er minimaal 6 kruisjes in de rij staan.</li>
+     *   <li>Er minimaal 5 kruisjes in de rij staan.</li>
      * </ul>
      * @return {@code true} als aan alle voorwaarden is voldaan, anders {@code false}.
      */

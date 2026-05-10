@@ -433,7 +433,7 @@ public class SpelController {
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         int aantalInRij = dc.geefAantalKruisjesInRij(dc.geefSpelerAanDeBeurt(), kleur);
-        if (aantalInRij == 5) {
+        if (aantalInRij == dc.MIN_KRUISJES_VOOR_LOCK) {
             zetFeedback5(bundle.getString("lblFeedback5kruisjes"), true);
         } else {
             zetFeedback5("", true);
