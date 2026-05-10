@@ -200,11 +200,23 @@ public class QwixxCui {
                     gekozenSpelers.add(gekozenNaam);
                     System.out.println("--> " + gekozenNaam + " toegevoegd.");
 
-                    if (i >= 2 && i < 5) {
+                    if (i >= 2 && i <= 5) {
+                        if (i == 5) {
+                            System.out.println("\n--- Kies spelmodus ---");
+                            System.out.println("1. Standaard");
+                            System.out.println("2. Alternatief");
+                            int keuzeModus = leesInvoer("Maak je keuze: ", 1, 2);
+
+                            dc.setAlternatiefModus(keuzeModus == 2);
+
+                            startSpel();
+                            return;
+                        }
                         if (!leesJaNee("Wil je nog een speler toevoegen? J(a)/N(ee): ")) {
                             System.out.println("\n--- Kies spelmodus ---");
                             System.out.println("1. Standaard");
                             System.out.println("2. Alternatief");
+
 
                             int keuzeModus = leesInvoer("Maak je keuze: ", 1, 2);
 
@@ -213,6 +225,7 @@ public class QwixxCui {
                             startSpel();
                             return;
                         }
+
                     }
 
                 } catch (exceptions.SpelerAlGekozenException e) {
