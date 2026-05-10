@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -18,6 +19,10 @@ import java.util.ResourceBundle;
 public class StartPaginaController {
 
     private final DomeinController dc = QwixxApplication.dc;
+    private static final int MIN_SPELERS_GEREGISTREERD = 3;
+
+    @FXML
+    private Label lblFeedbackSP;
 
     @FXML
     private Button btnStartSpelSP;
@@ -30,6 +35,29 @@ public class StartPaginaController {
 
     @FXML
     private Button btnStatsSP;
+
+    @FXML
+    private void initialize() {
+        int aantal = dc.geefGeregistreerdeSpelers().size();
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
+        if (aantal < MIN_SPELERS_GEREGISTREERD) {
+            zetFeedback(bundle.getString("lblTeWeinigSpeler"), false);
+            btnStartSpelSP.setDisable(true);
+        } else {
+            zetFeedback("", false);
+            btnStartSpelSP.setDisable(false);
+        }
+    }
+    private void zetFeedback(String tekst, boolean success) {
+        boolean leeg = (tekst == null || tekst.isBlank());
+        lblFeedbackSP.setText(tekst);
+        lblFeedbackSP.setVisible(!leeg);
+        lblFeedbackSP.setManaged(!leeg);
+        lblFeedbackSP.getStyleClass().removeAll("feedbackSuccess", "feedbackError");
+        if (!leeg) {
+            lblFeedbackSP.getStyleClass().add(success ? "feedbackSuccess" : "feedbackError");
+        }
+    }
 
     //deze methode is gekoppeld aan de knop NL, en hij roept de laadSchermMetTaal methode op
     @FXML
@@ -70,7 +98,7 @@ public class StartPaginaController {
     void nieuwSpelKnopIngedrukt(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/SpelerKiezen.fxml"));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
         Parent root = loader.load();
@@ -84,7 +112,7 @@ public class StartPaginaController {
     void nieuweSpelerToevoegen(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/SpelerToevoegen.fxml"));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
         Parent root = loader.load();
@@ -98,7 +126,7 @@ public class StartPaginaController {
     void toonSpelregels(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/Spelregels.fxml"));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("localisatie");
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie");
         loader.setResources(bundle);
 
         Parent root = loader.load();

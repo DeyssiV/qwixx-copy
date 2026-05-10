@@ -27,8 +27,9 @@
          <Insets bottom="30.0"/>
       </VBox.margin>
    </Label>
+      <Label fx:id="lblFeedbackSP" id="lblFeedbackSP" textAlignment="CENTER"/>
 
-   <Button fx:id="btnStartSpelSP" alignment="CENTER" onAction="#nieuwSpelKnopIngedrukt" text="%btnStartSpel-SP" textAlignment="CENTER">
+      <Button fx:id="btnStartSpelSP" alignment="CENTER" onAction="#nieuwSpelKnopIngedrukt" text="%btnStartSpel-SP" textAlignment="CENTER">
       <VBox.margin>
          <Insets bottom="15.0" top="10.0"/>
       </VBox.margin>

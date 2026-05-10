@@ -230,7 +230,7 @@
     -fx-background-color: #2980b9;
 }
 
-#lblFeedbackSTP, #lblFeedback, #lblFeedback5kruisjes{
+#lblFeedbackSTP, #lblFeedback, #lblFeedback5kruisjes, #lblFeedbackSP{
     -fx-font-weight: bold;
     -fx-font-size: 18px;
     -fx-background-radius: 6;
