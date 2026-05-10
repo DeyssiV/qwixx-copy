@@ -32,6 +32,8 @@ public class SpelerKiezenController {
     private void initialize() {
         lijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelers());
         zetFeedback("", false);
+
+
     }
 
     @FXML
