@@ -35,11 +35,19 @@ public class SpelerRepository {
     //return mapper.geefSpeler(gebruikersnaam);
   }
 
-  //TODO java doc
+  /**
+   * Werkt de statistieken van de opgegeven speler bij in de database.
+   *
+   * @param speler de speler waarvan de statistieken gesynchroniseerd moeten worden.
+   */
   public void updateStats(Speler speler) {
     mapper.updateStats(speler);
   }
 
+  /**
+   * Herlaadt de interne lijst van spelers door de huidige data te wissen
+   * en de meest recente gegevens uit de mapper op te halen.
+   */
   public void herlaadSpelers() {
     spelers.clear();
     spelers.addAll(mapper.geefAlleSpelers());
@@ -65,6 +73,13 @@ public class SpelerRepository {
     spelers.add(speler);
   }
 
+  /**
+   * Controleert of er een speler bestaat met de opgegeven gebruikersnaam,
+   * ongeacht of er hoofdletters of kleine letters worden gebruikt.
+   *
+   * @param gebruikersnaam de naam van de speler die gecontroleerd moet worden.
+   * @return {@code true} als de speler in de lijst voorkomt, anders {@code false}.
+   */
   private boolean bestaatSpeler(String gebruikersnaam) {
     for (Speler speler : spelers) {
       if (gebruikersnaam.equalsIgnoreCase(speler.getGebruikersnaam()))

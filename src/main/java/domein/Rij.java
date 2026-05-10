@@ -143,6 +143,16 @@ public class Rij {
         return -1;
     }
 
+    /**
+     * Controleert of de rij momenteel mag worden afgesloten.
+     * Een rij mag alleen worden gesloten als:
+     * <ul>
+     *   <li>De rij niet al eerder gesloten is.</li>
+     *   <li>Het laatste vakje in de rij nog niet is aangekruist.</li>
+     *   <li>Er minimaal 6 kruisjes in de rij staan.</li>
+     * </ul>
+     * @return {@code true} als aan alle voorwaarden is voldaan, anders {@code false}.
+     */
     public boolean magSluiten() {
         Vakje laatste = vakjes.get(vakjes.size() - 1);
         return !gesloten && !laatste.isAangekruist() && getAantalKruisjes() >= 6;

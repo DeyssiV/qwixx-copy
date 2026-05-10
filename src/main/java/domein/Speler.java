@@ -25,6 +25,17 @@ public class Speler implements Comparable<Speler> {
     this.geboortejaar = geboortejaar;
   }
 
+
+  /**
+   * Maakt een nieuwe speler aan met de opgegeven statistieken.
+   *
+   * @param gebruikersnaam  de unieke naam van de speler.
+   * @param geboortejaar    het jaar waarin de speler geboren is.
+   * @param aantalGespeeld  het totaal aantal gespeelde spellen.
+   * @param aantalGewonnen  het totaal aantal gewonnen spellen.
+   * @throws IllegalArgumentException als de gebruikersnaam of het geboortejaar
+   *                                  niet aan de validatievoorwaarden voldoen.
+   */
   public Speler(String gebruikersnaam, int geboortejaar, int aantalGespeeld, int aantalGewonnen) {
     this(gebruikersnaam, geboortejaar); // roept bestaande constructor aan
     this.aantalGespeeld = aantalGespeeld;
@@ -70,6 +81,13 @@ public class Speler implements Comparable<Speler> {
     return mislukteWorpen;
   }
 
+  /**
+   * Controleert of de gebruikersnaam voldoet aan de eisen: niet leeg en
+   * minimaal 5 karakters lang.
+   *
+   * @param gebruikersnaam de te controleren naam.
+   * @throws IllegalArgumentException als de naam leeg is of te kort.
+   */
   private void controleerGebruikersnaam(String gebruikersnaam)
   {
     if (gebruikersnaam == null || gebruikersnaam.isBlank())
@@ -80,19 +98,33 @@ public class Speler implements Comparable<Speler> {
     }
   }
 
-  //TODO: java doc
+  /**
+   * Reset de status van de speler voor een nieuw spel. De mislukte worpen worden
+   * op nul gezet en er wordt een nieuw scoreblad aangemaakt.
+   *
+   * @param alternatiefModus {@code true} als het scoreblad de alternatieve regels
+   *                         moet gebruiken, anders {@code false}.
+   */
   public void resetSpeler(boolean alternatiefModus) {
     this.mislukteWorpen = 0;
     maakNieuwScoreBlad(alternatiefModus);
   }
-  //TODO java doc
 
+  /**
+   * @return het totaal aantal spellen dat deze speler heeft gespeeld.
+   */
   public int getAantalGespeeld() { return aantalGespeeld; }
-
+  /**
+   * @return het totaal aantal spellen dat deze speler heeft gewonnen.
+   */
   public int getAantalGewonnen() { return aantalGewonnen; }
-
+  /**
+   * Verhoogt de teller van het aantal gespeelde spellen met één.
+   */
   public void verhoogAantalGespeeld() { this.aantalGespeeld++; }
-
+  /**
+   * Verhoogt de teller van het aantal gewonnen spellen met één.
+   */
   public void verhoogAantalGewonnen() { this.aantalGewonnen++; }
 
   /**
@@ -104,6 +136,12 @@ public class Speler implements Comparable<Speler> {
     return huidigJaar - this.geboortejaar;
   }
 
+  /**
+   * Controleert of de speler een geldige leeftijd heeft (tussen 8 en 100 jaar).
+   *
+   * @param geboortejaar het geboortejaar van de speler.
+   * @throws IllegalArgumentException als de speler te jong of te oud is.
+   */
   private void controleerGeboortejaar(int geboortejaar)
   {
     // haal de huidige datum op
