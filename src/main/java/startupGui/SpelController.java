@@ -478,7 +478,7 @@ public class SpelController {
      * @param isEindeBeurt Toont aan of de beurt van speler gedaan is om de dobbelstenen te vernieuwen.
      */
     private void volgendeBeurt(boolean isEindeBeurt) {
-
+        ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         lblFeedback5kruisjes.setText("");
         resetScorekaartRanden();
         updateSpelerAanDeBeurt();
@@ -490,9 +490,9 @@ public class SpelController {
         if (isEindeBeurt){
             heeftGerold = false;
             grpDobbelstenen.getChildren().clear();
-
-            ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
             btnRolDobbelstenen.setText(bundle.getString("RolDobbelstenen"));
+        }else{
+            btnRolDobbelstenen.setText(bundle.getString("BeurtOverslaan"));
         }
 
     }

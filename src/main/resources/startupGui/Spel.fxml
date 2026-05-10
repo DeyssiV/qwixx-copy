@@ -123,19 +123,13 @@
                </font>
             </Label>
 
-            <Label fx:id="lblTotaleScore" text="0">
+            <Label fx:id="lblTotaleScore" id="lblTotaleScore" text="0">
                <font>
                   <Font name="Calibri Bold" size="20.0"/>
                </font>
                <padding>
                   <Insets left="10.0" right="10.0"/>
                </padding>
-               <style>
-                  -fx-background-color: #ecf0f1;
-                  -fx-background-radius: 5;
-                  -fx-border-color: #bdc3c7;
-                  -fx-border-radius: 5;
-               </style>
             </Label>
          </HBox>
       </VBox>

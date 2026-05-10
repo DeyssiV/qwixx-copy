@@ -58,7 +58,7 @@ public class SpelerToevoegenController {
         }catch (exceptions.GebruikersnaamInGebruikException e) {
             zetFeedback(e.getMessage(), false);
         }catch (NumberFormatException e) {
-            zetFeedback(bundle.getString("GeboorteJaarFout"), false);
+            zetFeedback(bundle.getString("GeboortejaarFout"), false);
         }catch (IllegalArgumentException e) {
             zetFeedback(e.getMessage(), false);
         } catch (Exception e) {

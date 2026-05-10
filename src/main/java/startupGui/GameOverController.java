@@ -20,7 +20,7 @@ import static startupGui.QwixxApplication.dc;
 public class GameOverController {
 
     @FXML private Label lblNaamGoud, lblScoreGoud, lblNaamZilver, lblScoreZilver, lblNaamBrons, lblScoreBrons;
-    @FXML private VBox vboxOverigeSpelers, podiumZilver, podiumBrons;
+    @FXML private VBox vboxOverigeSpelers, brons;
     @FXML private Button btnAnnuleren, btnOpnieuwSpelenGOP;
 
     @FXML
@@ -50,7 +50,7 @@ public class GameOverController {
             lblNaamBrons.setText(dataLijst.get(2)[0]);
             lblScoreBrons.setText(dataLijst.get(2)[1] + " pts");
         } else {
-            podiumBrons.setVisible(false);
+            brons.setVisible(false);
         }
 
         if (dataLijst.size() > 3) {

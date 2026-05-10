@@ -31,28 +31,24 @@
     <center>
         <VBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
             <HBox alignment="BOTTOM_CENTER" spacing="15.0">
-                <VBox fx:id="podiumZilver" alignment="BOTTOM_CENTER" spacing="5.0">
+                <VBox alignment="BOTTOM_CENTER" spacing="5.0">
                     <Label fx:id="lblNaamZilver" text="Speler 2"/>
                     <Label fx:id="lblScoreZilver" text="0"/>
-                    <VBox id="podiumZilver" prefHeight="120.0" prefWidth="100.0"
-                          style="-fx-background-color: #bdc3c7; -fx-background-radius: 10 10 0 0;"/>
+                    <VBox id="podiumZilver" prefHeight="120.0" prefWidth="100.0"/>
                 </VBox>
                 <VBox alignment="BOTTOM_CENTER" spacing="5.0">
-                    <Label fx:id="lblNaamGoud" text="Winnaar" style="-fx-font-size: 20px;"/>
-                    <Label fx:id="lblScoreGoud" text="0" style="-fx-font-size: 18px;"/>
-                    <VBox id="podiumGoud" prefHeight="180.0" prefWidth="120.0"
-                          style="-fx-background-color: #f1c40f; -fx-background-radius: 15 15 0 0;"/>
+                    <Label fx:id="lblNaamGoud" text="Winnaar"/>
+                    <Label fx:id="lblScoreGoud" text="Speler 1"/>
+                    <VBox id="podiumGoud" prefHeight="180.0" prefWidth="120.0"/>
                 </VBox>
-                <VBox fx:id="podiumBrons" alignment="BOTTOM_CENTER" spacing="5.0">
+                <VBox fx:id="brons" alignment="BOTTOM_CENTER" spacing="5.0">
                     <Label fx:id="lblNaamBrons" text="Speler 3"/>
                     <Label fx:id="lblScoreBrons" text="0"/>
-                    <VBox id="podiumBrons" prefHeight="80.0" prefWidth="100.0"
-                          style="-fx-background-color: #cd7f32; -fx-background-radius: 10 10 0 0;"/>
+                    <VBox id="podiumBrons" prefHeight="80.0" prefWidth="100.0"/>
                 </VBox>
             </HBox>
 
-            <ScrollPane fitToWidth="true" maxWidth="400.0" prefHeight="150.0"
-                        style="-fx-background-color: transparent;">
+            <ScrollPane fitToWidth="true" maxWidth="400.0" prefHeight="150.0" styleClass="transparant-scrollpane">
                 <VBox fx:id="vboxOverigeSpelers" alignment="TOP_CENTER" spacing="10.0"/>
             </ScrollPane>
         </VBox>

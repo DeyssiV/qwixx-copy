@@ -25,7 +25,7 @@
     -fx-background-color: #ecf0f1;
 }
 
-#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP, #lblTitelGSP {
+#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP{
     -fx-font-family: "Calibri";
     -fx-font-size: 25px;
 }
@@ -169,7 +169,7 @@
     -fx-background-color: #595959;
 }
 
-#lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL {
+#lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL, #lblTitelGSP {
     -fx-font-size: 50px;
     -fx-text-fill: black;
 }
@@ -287,3 +287,32 @@
      -fx-font-size: 50px;
      -fx-text-fill: black;
  }
+
+#lblTotaleScore {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 5;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5;
+}
+
+#podiumZilver {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 10 10 0 0;
+}
+#podiumGoud {
+    -fx-background-color: #f1c40f;
+    -fx-background-radius: 15 15 0 0;
+}
+#podiumBrons {
+    -fx-background-color: #cd7f32;
+    -fx-background-radius: 10 10 0 0;
+}
+#lblNaamGoud {
+    -fx-font-size: 20px;
+}
+#lblScoreGoud {
+    -fx-font-size: 18px;
+}
+.transparant-scrollpane {
+    -fx-background-color: transparent;
+}
