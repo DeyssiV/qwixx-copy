@@ -88,7 +88,7 @@ public class QwixxCui {
 
         boolean isEindeSpel = false;
         while (!isEindeSpel) {
-            for (String actieveSpeler : gekozenSpelers) {
+            for (String actieveSpeler : speelVolgorde) {
                 isEindeSpel = speelBeurt(actieveSpeler);
                 if (isEindeSpel) break;
             }
