@@ -1,6 +1,7 @@
   package domein;
 
   import dtos.SpelDTO;
+  import dtos.SpelerDTO;
   import utils.Kleur;
 
   import java.util.ArrayList;
@@ -229,7 +230,6 @@
         return s.getScoreBlad().isRijGesloten(k);
     }
 
-
     /**
      * Berekent de som van de twee witte dobbelstenen.
      *
@@ -266,6 +266,14 @@
         spelersStringLijst.add(speler.getGebruikersnaam());
       }
       return spelersStringLijst;
+    }
+
+    public List<SpelerDTO> geefGeregistreerdeSpelerDTOs() {
+      List<SpelerDTO> spelerdto = new ArrayList<>();
+      for (Speler s : spelerRepository.geefSpelersLijst()) {
+        spelerdto.add(new SpelerDTO(s.getGebruikersnaam(), s.getGeboortejaar(), s.berekenLeeftijd(), s.geefTotaleScore(), s.getAantalGespeeld(), s.getAantalGewonnen()));
+      }
+      return spelerdto;
     }
 
     /**

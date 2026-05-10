@@ -1,12 +1,14 @@
 package startupGui;
 
 import domein.DomeinController;
+import dtos.SpelerDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,7 +19,7 @@ public class SpelerKiezenController {
     private final DomeinController dc = QwixxApplication.dc;
 
     @FXML
-    private ListView<String> lijstSpelers, lijstGekozenSpelers;
+    private ListView<SpelerDTO> lijstSpelers, lijstGekozenSpelers;
 
     @FXML
     private Button btnAnnuleren, btnStartSpel;
@@ -30,38 +32,44 @@ public class SpelerKiezenController {
 
     @FXML
     private void initialize() {
-        lijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelers());
+        lijstSpelers.getItems().addAll(dc.geefGeregistreerdeSpelerDTOs());
         zetFeedback("", false);
-
+        Callback<ListView<SpelerDTO>, ListCell<SpelerDTO>> cellFactory = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(SpelerDTO dto, boolean empty) {
+                super.updateItem(dto, empty);
+                if (empty || dto == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%s (%d jaar)", dto.gebruikersnaam(), dto.leeftijd()));
+                }
+            }
+        };
+        lijstSpelers.setCellFactory(cellFactory);
+        lijstGekozenSpelers.setCellFactory(cellFactory);
 
     }
 
     @FXML
     void voegSpelerToe(ActionEvent event) {
-        String gekozenSpeler = lijstSpelers.getSelectionModel().getSelectedItem();
+        SpelerDTO gekozenSpeler = lijstSpelers.getSelectionModel().getSelectedItem();
         if (gekozenSpeler != null) {
-            dc.voegSpelerToeAanSpel(gekozenSpeler);
+            dc.voegSpelerToeAanSpel(gekozenSpeler.gebruikersnaam());
             lijstGekozenSpelers.getItems().add(gekozenSpeler);
             lijstSpelers.getItems().remove(gekozenSpeler);
             lijstSpelers.getSelectionModel().clearSelection();
-
             zetFeedback("", false);
         }
     }
 
     @FXML
     void verwijderSpeler(ActionEvent event) {
-        String geselecteerde = lijstGekozenSpelers.getSelectionModel().getSelectedItem();
-        if (geselecteerde != null) {
-
-            lijstGekozenSpelers.getItems().remove(geselecteerde);
-
-
-            dc.verwijderSpelerUitSpel(geselecteerde);
-
-
-            if (!lijstSpelers.getItems().contains(geselecteerde)) {
-                lijstSpelers.getItems().add(geselecteerde);
+        SpelerDTO gekozenSpeler = lijstGekozenSpelers.getSelectionModel().getSelectedItem();
+        if (gekozenSpeler != null) {
+            lijstGekozenSpelers.getItems().remove(gekozenSpeler);
+            dc.verwijderSpelerUitSpel(gekozenSpeler.gebruikersnaam());
+            if (!lijstSpelers.getItems().contains(gekozenSpeler)) {
+                lijstSpelers.getItems().add(gekozenSpeler);
 
             }
         }

@@ -158,6 +158,7 @@ public class Speler implements Comparable<Speler> {
    * @return score van de speler.
    */
   public int geefTotaleScore(){
+    if (scoreBlad == null) return 0;
     return scoreBlad.berekenTotaleScore(getMislukteWorpen());
   }
 
