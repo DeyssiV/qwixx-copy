@@ -92,6 +92,12 @@ public class DomeinController {
     return gelukt;
   }
 
+  public boolean geefIsRijGesloten(String gebruikersnaam, String kleurNaam) {
+    Speler s = spelerRepository.geefSpeler(gebruikersnaam);
+    Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
+    return s.getScoreBlad().isRijGesloten(k);
+  }
+
   //TODO deze methode moet in SPEL staan
   private Kleur kiesKleur(int keuze) {
     if (keuze <= 2) return Kleur.ROOD;

@@ -522,6 +522,7 @@ public class SpelController {
     private void updateScorekaartVisueel() {
         String huidigeSpeler = dc.geefSpelerAanDeBeurt();
         int[][] status = dc.geefStatus(huidigeSpeler);
+        String[] kleuren = {"ROOD", "GEEL", "GROEN", "BLAUW"};
 
         for (Node node : grpScorekaart.getChildren()) {
             if (node instanceof Button btn) {
@@ -529,23 +530,44 @@ public class SpelController {
                 Integer k = GridPane.getColumnIndex(node);
 
                 if (r != null && k != null && k < 11) {
-                    if (status[r][k] == 1) {
-                        btn.setText("X");
-                        btn.setDisable(true);
-                        btn.setOpacity(1.0);
-                    } else {
-                        btn.setText(String.valueOf(btn.getProperties().get("getal")));
+                    boolean rijGesloten = dc.geefIsRijGesloten(huidigeSpeler, kleuren[r]);
 
-                        boolean geblokkeerdDoorRechts = false;
-                        for (int i = k + 1; i < 11; i++) {
-                            if (status[r][i] == 1) {
-                                geblokkeerdDoorRechts = true;
-                                break;
-                            }
+                    if (k == 11) {
+                        if (rijGesloten) {
+                            btn.setText("X");
+                            btn.setDisable(true);
+                            btn.setOpacity(1.0);
                         }
+                    }else if(rijGesloten){
+                        if (status[r][k] == 1) {
+                            btn.setText("X");
+                            btn.setOpacity(1.0);
+                        }else {
+                            btn.setText(String.valueOf(btn.getProperties().get("getal")));
+                            btn.setOpacity(0.3);
+                        }
+                        btn.setDisable(true);
+                    }else{
+                        if (status[r][k] == 1) {
+                            btn.setText("X");
+                            btn.setDisable(true);
+                            btn.setOpacity(1.0);
+                        } else {
+                            btn.setText(String.valueOf(btn.getProperties().get("getal")));
 
-                        btn.setDisable(geblokkeerdDoorRechts);
-                        btn.setOpacity(geblokkeerdDoorRechts ? 0.3 : 1.0);
+                            boolean geblokkeerdDoorRechts = false;
+                            for (int i = k + 1; i < 11; i++) {
+                                if (status[r][i] == 1) {
+                                    geblokkeerdDoorRechts = true;
+                                    break;
+                                }
+                            }
+
+                            btn.setDisable(geblokkeerdDoorRechts);
+                            btn.setOpacity(geblokkeerdDoorRechts ? 0.3 : 1.0);
+
+                    }
+
                     }
                 }
             }
