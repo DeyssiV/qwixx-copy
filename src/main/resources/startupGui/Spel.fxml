@@ -30,9 +30,7 @@
                </StackPane.margin>
             </Button>
          </StackPane>
-         <Label fx:id="lblFeedback5kruisjes" text=" ">
-            <font><Font name="Calibri Bold" size="16.0"/></font>
-         </Label>
+         <Label fx:id="lblFeedback5kruisjes" id="lblFeedback5kruisjes" text=" "/>
       </VBox>
    </top>
    <center>

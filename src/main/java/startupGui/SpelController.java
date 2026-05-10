@@ -55,9 +55,9 @@ public class SpelController {
         grpScorekaart.setHgap(2);
         vulScorekaart(dc.isAlternatiefModus());
         updateSpelerAanDeBeurt();
-
         updateMislukteWorpen();
         updateScore();
+        zetFeedback5("", true);
     }
 
     /**
@@ -434,10 +434,10 @@ public class SpelController {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         int aantalInRij = dc.geefAantalKruisjesInRij(dc.geefSpelerAanDeBeurt(), kleur);
         if (aantalInRij == 5) {
-            lblFeedback5kruisjes.setText(bundle.getString("lblFeedback5kruisjes"));
-            lblFeedback5kruisjes.setStyle("-fx-text-fill: green;");
+            zetFeedback5(bundle.getString("lblFeedback5kruisjes"), true);
         } else {
-            lblFeedback5kruisjes.setText("");
+            zetFeedback5("", true);
+
         }
         wachtOpVolgendeBeurt = true;
         btnRolDobbelstenen.setText(bundle.getString("VolgendeBeurt"));
@@ -678,6 +678,17 @@ public class SpelController {
                 btn.setStyle(btn.getStyle()
                         + String.format("-fx-border-width: 3px; -fx-border-color: %s;", donker));
             }
+        }
+    }
+
+    private void zetFeedback5(String tekst, boolean success) {
+        boolean leeg = (tekst == null || tekst.isBlank());
+        lblFeedback5kruisjes.setText(tekst);
+        lblFeedback5kruisjes.setVisible(!leeg);
+        lblFeedback5kruisjes.setManaged(!leeg);
+        lblFeedback5kruisjes.getStyleClass().removeAll("feedbackSuccess", "feedbackError");
+        if (!leeg) {
+            lblFeedback5kruisjes.getStyleClass().add(success ? "feedbackSuccess" : "feedbackError");
         }
     }
 
