@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public class StartPaginaController {
 
     private final DomeinController dc = QwixxApplication.dc;
-    private static final int MIN_SPELERS_GEREGISTREERD = 3;
+    private static final int MIN_SPELERS_GEREGISTREERD = 2;
 
     @FXML
     private Label lblFeedbackSP;
