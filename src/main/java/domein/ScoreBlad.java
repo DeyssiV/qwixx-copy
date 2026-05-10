@@ -114,6 +114,11 @@ public class ScoreBlad {
         return totScore;
     }
 
+    /**
+     * Zoekt de rij op die bij de opgegeven kleur hoort.
+     * @param kleur de kleur van de gezochte rij.
+     * @return de {@link Rij} met de overeenkomstige kleur, of {@code null} als deze niet gevonden wordt.
+     */
     private Rij isRijVan(Kleur kleur) {
         for (Rij rij : rijen) {
             if (rij.getKleur() == kleur) return rij;
@@ -121,21 +126,28 @@ public class ScoreBlad {
         return null;
     }
 
+    /**
+     * Controleert of de rij van de opgegeven kleur gesloten is.
+     * @param kleur de kleur van de te controleren rij.
+     * @return {@code true} als de rij bestaat en gesloten is, anders {@code false}.
+     */
     public boolean isRijGesloten(Kleur kleur)        { return isRijVan(kleur) != null && isRijVan(kleur).isGesloten(); }
+
+    /**
+     * Controleert of de rij van de opgegeven kleur op dit moment mag worden gesloten
+     * volgens de spelregels.
+     * @param kleur de kleur van de betreffende rij.
+     * @return {@code true} als de rij mag sluiten, anders {@code false}.
+     */
     public boolean rijMagGeslotenWorden(Kleur kleur) { Rij r = isRijVan(kleur); return r != null && r.magSluiten(); }
+
+    /**
+     * Geeft het aantal aangekruiste vakjes terug voor de rij van de opgegeven kleur.
+     * @param kleur de kleur van de rij.
+     * @return het aantal kruisjes in de rij, of {@code 0} als de rij niet bestaat.
+     */
     public int getAantalKruisjes(Kleur kleur)        { Rij r = isRijVan(kleur); return r == null ? 0 : r.getAantalKruisjes(); }
 
-    public int[][] getWaardenMatrix() {
-        int[][] matrix = alternatiefModus ? ALTERNATIEVE_MATRIX : STANDAARD_MATRIX;
-        // laatste kolom (sluitvakje = 0) niet meegeven aan GUI
-        int[][] resultaat = new int[4][matrix[0].length - 1];
-        for (int r = 0; r < 4; r++) {
-            for (int k = 0; k < matrix[0].length - 1; k++) {
-                resultaat[r][k] = matrix[r][k];
-            }
-        }
-        return resultaat;
-    }
 
 
 }

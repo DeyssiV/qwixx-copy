@@ -114,11 +114,18 @@ public class Spel {
         }
     }
 
+    /**
+     * Verhoogt het totaal aantal volledig doorkruiste rijen met één.
+     */
     public void verhoogAantalDoorkruisteRijen() {
         aantalDoorkruisteRijen++;
     }
 
-
+    /**
+     * Past de beurt aan naar de volgende speler in de lijst.
+     * Indien de laatste speler in de lijst aan de beurt was, wordt de beurt
+     * teruggegeven aan de eerste speler (index 0).
+     */
     public void zetVolgendeSpeler() {
         huidigeSpelerIndex++;
         if (huidigeSpelerIndex >= spelers.size()) {
@@ -126,6 +133,11 @@ public class Spel {
         }
     }
 
+    /**
+     * Geeft de gebruikersnaam terug van de speler die momenteel aan de beurt is.
+     *
+     * @return de gebruikersnaam van de huidige speler.
+     */
     public String getSpelerAanDeBeurt() {
         return spelers.get(huidigeSpelerIndex).getGebruikersnaam();
     }
