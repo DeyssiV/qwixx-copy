@@ -443,33 +443,6 @@ public class SpelController {
         btnRolDobbelstenen.setText(bundle.getString("VolgendeBeurt"));
         btnRolDobbelstenen.setDisable(false);
 
-        /*PauseTransition delay = new PauseTransition(Duration.seconds(1));
-        delay.setOnFinished(e -> {
-                try {
-                    if (ronde == 1) {
-                        dc.toonVolgendeSpeler();
-                        if (dc.geefSpelerAanDeBeurt().equals(actieveSpeler)) {
-                            ronde = 2;
-                            volgendeBeurt(false);
-                            omrandMogelijkeVakjes("G");
-                        } else {
-                            volgendeBeurt(false);
-                            omrandMogelijkeVakjes("W");
-                        }
-                    } else {
-                        if (dc.isEindeSpelDoorRijDoorkruising()) {
-                            controleerEindeSpel(actieveSpeler);
-                        } else {
-                            dc.toonVolgendeSpeler();
-                            heeftGerold = false;
-                            volgendeBeurt(true);
-                        }
-                    }
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-        });
-        delay.play();*/
     }
 
 
