@@ -181,8 +181,8 @@ public class QwixxCui {
             List<String> beschikbareNamen = dc.geefGeregistreerdeSpelers();
             gekozenSpelers = new ArrayList<>();
 
-            if (beschikbareNamen.size()<4) {
-                throw new exceptions.TeWeinigSpelersException("Er moeten minstens 4 spelers geregistreerd zijn (nu: " + beschikbareNamen.size() + ").");
+            if (beschikbareNamen.size()<2) {
+                throw new exceptions.TeWeinigSpelersException("Er moeten minstens 2 spelers geregistreerd zijn (nu: " + beschikbareNamen.size() + ").");
             }
             System.out.println("\n--- Beschikbare spelers ---\n");
             for (String naam : beschikbareNamen) {
