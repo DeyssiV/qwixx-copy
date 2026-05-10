@@ -38,11 +38,7 @@ public class SpelerToevoegenController {
 
     @FXML
     void startRegistratieSpeler(ActionEvent event) {
-        lblFeedbackSTP.setText("");
-        lblFeedbackSTP.setStyle("-fx-text-fill: black;");
-
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-
 
         try {
             String naam = txtNaamSTP.getText();
@@ -53,28 +49,33 @@ public class SpelerToevoegenController {
             }
 
             int geboortejaar = Integer.parseInt(jaar);
-
             dc.registreerSpeler(naam, geboortejaar);
 
-            lblFeedbackSTP.setText(bundle.getString("SpelerGeregistreerd"));
-            lblFeedbackSTP.setStyle("-fx-text-fill: green;");
+            zetFeedback(bundle.getString("SpelerGeregistreerd"), true);
             txtNaamSTP.clear();
             txtGeboortejaarSTP.clear();
-        }catch (exceptions.GebruikersnaamInGebruikException e) {
-            lblFeedbackSTP.setText(e.getMessage());
-            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
-        }catch (NumberFormatException e) {
-            lblFeedbackSTP.setText(bundle.getString("GeboortejaarFout"));
-            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
 
-        }catch (IllegalArgumentException e){
-            lblFeedbackSTP.setText(e.getMessage());
-            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
-        }catch (Exception e) {
-            lblFeedbackSTP.setText(e.getMessage());
-            lblFeedbackSTP.setStyle("-fx-text-fill: red;");
+        }catch (exceptions.GebruikersnaamInGebruikException e) {
+            zetFeedback(e.getMessage(), false);
+        }catch (NumberFormatException e) {
+            zetFeedback(bundle.getString("GeboorteJaarFout"), false);
+        }catch (IllegalArgumentException e) {
+            zetFeedback(e.getMessage(), false);
+        } catch (Exception e) {
+            zetFeedback(e.getMessage(), false);
+        }
+
     }
 
+    private void zetFeedback(String tekst, boolean success) {
+        boolean leeg = (tekst == null || tekst.isBlank());
+        lblFeedbackSTP.setText(tekst);
+        lblFeedbackSTP.setVisible(!leeg);
+        lblFeedbackSTP.setManaged(!leeg);
+        lblFeedbackSTP.getStyleClass().removeAll("feedbackSuccess", "feedbackError");
+        if (!leeg) {
+            lblFeedbackSTP.getStyleClass().add(success ? "feedbackSuccess" : "feedbackError");
+        }
     }
 
 }

@@ -14,7 +14,7 @@
 
 
 <?import javafx.scene.layout.HBox?>
-<BorderPane stylesheets="@style.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelController">
+<BorderPane stylesheets="@style.css" prefHeight="900" prefWidth="1000" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelController">
    <top>
       <VBox alignment="CENTER" spacing="10.0">
          <padding>
@@ -36,10 +36,10 @@
       </VBox>
    </top>
    <center>
-      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="800.0">
          <GridPane fx:id="grpScorekaart" translateY="-40.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity"/>
+               <ColumnConstraints hgrow="ALWAYS"/>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0"/>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0"/>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.33" prefWidth="100.0"/>
@@ -61,17 +61,10 @@
             <padding>
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
-                       GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
-                       GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                       GridPane.valignment="CENTER"/>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
-                       GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                       GridPane.valignment="CENTER"/>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
-                       GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                       GridPane.valignment="CENTER"/>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
          </GridPane>
 
          <HBox alignment="CENTER_LEFT" spacing="20.0">

@@ -230,16 +230,20 @@
     -fx-background-color: #2980b9;
 }
 
-.feedback-success {
-    -fx-text-fill: #27ae60;
+#lblFeedbackSTP, #lblFeedback {
     -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-background-radius: 6;
+    -fx-padding: 8 16 8 16;
 }
-
-.feedback-error {
-    -fx-text-fill: #e74c3c;
-    -fx-font-weight: bold;
+.feedbackSuccess {
+    -fx-text-fill: #1e8449;
+    -fx-background-color: #d4efdf;
 }
-
+.feedbackError {
+    -fx-text-fill: #922b21;
+    -fx-background-color: #fadbd8;
+}
 .input-field {
     -fx-background-radius: 10;
     -fx-border-radius: 10;
@@ -247,6 +251,12 @@
     -fx-padding: 10;
     -fx-font-family: "Segoe UI";
     -fx-font-size: 16px;
+}
+
+.text-field {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 50px;
+    -fx-font-size: 18px;
 }
 
 #btnRegistrerenSTP {

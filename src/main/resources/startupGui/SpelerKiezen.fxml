@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.StackPane?>
-<BorderPane stylesheets="@style.css" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerKiezenController">
+<BorderPane stylesheets="@style.css" prefHeight="900" prefWidth="1000" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerKiezenController">
    <top>
       <VBox alignment="CENTER" spacing="10.0">
          <padding>
@@ -31,7 +31,7 @@
             </Button>
          </StackPane>
 
-         <Label fx:id="lblFeedback" textAlignment="CENTER"/>
+         <Label fx:id="lblFeedback" id="lblFeedback" textAlignment="CENTER"/>
       </VBox>
 
    </top>

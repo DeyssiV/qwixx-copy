@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane stylesheets="@style.css" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerToevoegenController">
+<BorderPane stylesheets="@style.css" prefHeight="900" prefWidth="1000" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="startupGui.SpelerToevoegenController">
 
    <top>
       <VBox alignment="CENTER" spacing="10.0">
@@ -30,7 +30,7 @@
 
          </StackPane>
 
-         <Label fx:id="lblFeedbackSTP" textAlignment="CENTER"/>
+         <Label fx:id="lblFeedbackSTP" id="lblFeedbackSTP" textAlignment="CENTER"/>
 
       </VBox>
    </top>
@@ -42,9 +42,8 @@
          </BorderPane.margin>
          <HBox alignment="CENTER" spacing="20.0">
 
-            <TextField fx:id="txtNaamSTP" maxWidth="250.0" promptText="%txtNaam-STP"/>
-
-            <TextField fx:id="txtGeboortejaarSTP" maxWidth="250.0" promptText="%txtGeboortejaar-STP"/>
+            <TextField fx:id="txtNaamSTP" promptText="%txtNaam-STP"/>
+            <TextField fx:id="txtGeboortejaarSTP" promptText="%txtGeboortejaar-STP"/>
 
          </HBox>
 
