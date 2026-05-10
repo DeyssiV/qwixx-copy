@@ -40,7 +40,7 @@ public class Spel {
         dobbelstenen.add(new Dobbelsteen(Kleur.BLAUW));
 
         for (Speler speler : spelers) {
-            speler.maakNieuwScoreBlad(alternatiefModus);
+            speler.resetSpeler(alternatiefModus);
         }
     }
 

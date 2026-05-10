@@ -11,6 +11,7 @@ public class Rij {
     private boolean gesloten;
     private List<Vakje> vakjes;
     private int laatsteIndex = -1;
+    public static final int MIN_KRUISJES_VOOR_SLUITEN = 2;
 
 
     /**
@@ -85,7 +86,7 @@ public class Rij {
             return false;
         }
         boolean isUitersteVakje = gekozenIndex == vakjes.size() - 1;
-        if (isUitersteVakje && getAantalKruisjes() < 6) {
+        if (isUitersteVakje && getAantalKruisjes() < MIN_KRUISJES_VOOR_SLUITEN) {
             return false;
         }
         // enkel rechts van vorige kruisjes mogen gekozen worden
@@ -155,6 +156,6 @@ public class Rij {
      */
     public boolean magSluiten() {
         Vakje laatste = vakjes.get(vakjes.size() - 1);
-        return !gesloten && !laatste.isAangekruist() && getAantalKruisjes() >= 6;
+        return !gesloten && !laatste.isAangekruist() && getAantalKruisjes() >= MIN_KRUISJES_VOOR_SLUITEN;
     }
 }
