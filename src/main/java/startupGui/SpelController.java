@@ -1,6 +1,7 @@
 package startupGui;
 
 import domein.Dobbelsteen;
+import dtos.SpelDTO;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,9 +55,7 @@ public class SpelController {
         grpScorekaart.setVgap(5);
         grpScorekaart.setHgap(2);
         vulScorekaart(dc.isAlternatiefModus());
-        updateSpelerAanDeBeurt();
-        updateMislukteWorpen();
-        updateScore();
+        refreshSpelerAanBeurt();
         zetFeedback5("", true);
     }
 
@@ -66,7 +65,6 @@ public class SpelController {
      */
     @FXML
     void annuleer(ActionEvent event) throws Exception {
-        //TODO reset scoreblad, mislukte worp, score
         dc.resetSpel();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 
@@ -185,11 +183,12 @@ public class SpelController {
     /**
      * Verandert de label zodat het overeenkomt met de speler van wie het scoreblad wordt getoond (speler die aan de beurt is)
      */
-    private void updateSpelerAanDeBeurt() {
+    private void refreshSpelerAanBeurt() {
+        SpelDTO status = dc.geefSpelStatus();
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-        String tekst = String.format(bundle.getString("LabelBeurtVan"), dc.geefSpelerAanDeBeurt());
-
-        lblTitelSPEL.setText(tekst);
+        lblTitelSPEL.setText(String.format(bundle.getString("LabelBeurtVan"), status.spelerAanDeBeurt()));
+        lblTotaleScore.setText(String.valueOf(status.totaleScore()));
+        updateMislukteWorpen(status.aantalMislukteWorpen());
     }
 
 
@@ -238,7 +237,7 @@ public class SpelController {
 
             knop.setDisable(true);
             dc.startBeurt();
-            toonDobbelstenen(dc.geefDobbelstenen());
+            toonDobbelstenen(dc.geefSpelStatus().dobbelstenen());
             heeftGerold = true;
             omrandMogelijkeVakjes("W");
 
@@ -330,7 +329,7 @@ public class SpelController {
      */
     private void omrandMogelijkeVakjes(String type) {
         resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
-        List<Dobbelsteen> dobbelstenen = dc.geefDobbelstenen();
+        List<Dobbelsteen> dobbelstenen = dc.geefSpelStatus().dobbelstenen();
 
         if (type.equals("W")) {
             int witteSom = dc.geefWitteSom();
@@ -429,7 +428,7 @@ public class SpelController {
 
         resetScorekaartRanden();
         omrandMogelijkLockKnoppen();
-        updateScore();
+        refreshSpelerAanBeurt();
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         int aantalInRij = dc.geefAantalKruisjesInRij(dc.geefSpelerAanDeBeurt(), kleur);
@@ -454,9 +453,7 @@ public class SpelController {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         lblFeedback5kruisjes.setText("");
         resetScorekaartRanden();
-        updateSpelerAanDeBeurt();
-        updateMislukteWorpen();
-        updateScore();
+        refreshSpelerAanBeurt();
         updateScorekaartVisueel();
         omrandMogelijkLockKnoppen();
 
@@ -566,11 +563,8 @@ public class SpelController {
     /**
      * Toont de mislukte worpen visueel.
      */
-    private void updateMislukteWorpen() {
+    private void updateMislukteWorpen(int aantalMislukt) {
         grpMislukteWorpen.getChildren().clear();
-        String huidigeNaam = dc.geefSpelerAanDeBeurt();
-        int aantalMislukt = dc.geefAantalMislukteWorpen(huidigeNaam);
-
         for (int i = 0; i < 2; i++) {
             Label vakje = new Label();
             vakje.setMinSize(40, 40);
@@ -592,17 +586,7 @@ public class SpelController {
     }
 
 
-    /**
-     * Update het label met de huidige score van de speler die aan de beurt is.
-     */
-    @FXML
-    private void updateScore() {
-        String huidigeNaam = dc.geefSpelerAanDeBeurt();
-        int score = dc.geefTotaleScore(huidigeNaam);
-        lblTotaleScore.setText(String.valueOf(score));
-    }
 
-    @FXML
     private void handleLockClick(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String kleurNaam = (String) btn.getProperties().get("kleur");
@@ -615,7 +599,7 @@ public class SpelController {
         btn.setDisable(true);
         btn.setOpacity(1.0);
         updateScorekaartVisueel();
-        updateScore();
+        refreshSpelerAanBeurt();
         omrandMogelijkLockKnoppen();
         lblFeedback5kruisjes.setText("");
         if (dc.isEindeSpelDoorRijDoorkruising()) {

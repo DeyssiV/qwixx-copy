@@ -30,7 +30,7 @@ public class Dobbelsteen {
      * rolt een random getal tussen 1 en 6.
      * @return een waarde tussen 1 en 6
      */
-    public int rolDobbelsteen(){
+    private int rolDobbelsteen(){
         int max=6,min=1;
         waarde = r.nextInt(max - min + 1) + min; //Door klasse Random te gebruiken kan je een specifieke interval instellen hier is dat van 1 tem 6 (dobbelsteen)
         return waarde;

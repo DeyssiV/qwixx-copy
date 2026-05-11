@@ -46,25 +46,31 @@ public class Speler implements Comparable<Speler> {
    * geeft het scoreblad terug.
    * @return het scoreblad.
    */
-  public ScoreBlad getScoreBlad() {
-    return scoreBlad;
-  }
-
+  public ScoreBlad getScoreBlad() { return scoreBlad; }
   /**
    * geeft de gebruikersnaam terug.
    * @return de gebruikersnaam.
    */
-  public String getGebruikersnaam() {
-    return gebruikersnaam;
-  }
-
+  public String getGebruikersnaam() { return gebruikersnaam; }
   /**
    * geeft het geboortejaar terug.
    * @return het geboortejaar.
    */
-  public int getGeboortejaar() {
-    return geboortejaar;
-  }
+  public int getGeboortejaar() { return geboortejaar; }
+  /**
+   * geeft het aantal mislukte worpen.
+   * @return aantal mislukte worpen.
+   */
+  public int getMislukteWorpen() { return mislukteWorpen; }
+  /**
+   * @return het totaal aantal spellen dat deze speler heeft gespeeld.
+   */
+  public int getAantalGespeeld() { return aantalGespeeld; }
+  /**
+   * @return het totaal aantal spellen dat deze speler heeft gewonnen.
+   */
+  public int getAantalGewonnen() { return aantalGewonnen; }
+
 
   /**
    * verhoogt het aantal mislukte worpen met 1.
@@ -74,11 +80,34 @@ public class Speler implements Comparable<Speler> {
   }
 
   /**
-   * geeft het aantal mislukte worpen.
-   * @return aantal mislukte worpen.
+   * Reset de status van de speler voor een nieuw spel. De mislukte worpen worden
+   * op nul gezet en er wordt een nieuw scoreblad aangemaakt.
+   *
+   * @param alternatiefModus {@code true} als het scoreblad de alternatieve regels
+   *                         moet gebruiken, anders {@code false}.
    */
-  public int getMislukteWorpen() {
-    return mislukteWorpen;
+  public void resetSpeler(boolean alternatiefModus) {
+    this.mislukteWorpen = 0;
+    maakNieuwScoreBlad(alternatiefModus);
+  }
+
+
+  /**
+   * Verhoogt de teller van het aantal gespeelde spellen met één.
+   */
+  public void verhoogAantalGespeeld() { this.aantalGespeeld++; }
+  /**
+   * Verhoogt de teller van het aantal gewonnen spellen met één.
+   */
+  public void verhoogAantalGewonnen() { this.aantalGewonnen++; }
+
+  /**
+   * berekent de leeftijd van de speler.
+   * @return waarde van huidigJaar - geboortejaar.
+   */
+  public int berekenLeeftijd() {
+    int huidigJaar = LocalDate.now().getYear();
+    return huidigJaar - this.geboortejaar;
   }
 
   /**
@@ -96,44 +125,6 @@ public class Speler implements Comparable<Speler> {
     {
       throw new IllegalArgumentException("Gebruikersnaam moet minstens 5 karakters hebben!");
     }
-  }
-
-  /**
-   * Reset de status van de speler voor een nieuw spel. De mislukte worpen worden
-   * op nul gezet en er wordt een nieuw scoreblad aangemaakt.
-   *
-   * @param alternatiefModus {@code true} als het scoreblad de alternatieve regels
-   *                         moet gebruiken, anders {@code false}.
-   */
-  public void resetSpeler(boolean alternatiefModus) {
-    this.mislukteWorpen = 0;
-    maakNieuwScoreBlad(alternatiefModus);
-  }
-
-  /**
-   * @return het totaal aantal spellen dat deze speler heeft gespeeld.
-   */
-  public int getAantalGespeeld() { return aantalGespeeld; }
-  /**
-   * @return het totaal aantal spellen dat deze speler heeft gewonnen.
-   */
-  public int getAantalGewonnen() { return aantalGewonnen; }
-  /**
-   * Verhoogt de teller van het aantal gespeelde spellen met één.
-   */
-  public void verhoogAantalGespeeld() { this.aantalGespeeld++; }
-  /**
-   * Verhoogt de teller van het aantal gewonnen spellen met één.
-   */
-  public void verhoogAantalGewonnen() { this.aantalGewonnen++; }
-
-  /**
-   * berekent de leeftijd van de speler.
-   * @return waarde van huidigJaar - geboortejaar.
-   */
-  public int berekenLeeftijd() {
-    int huidigJaar = LocalDate.now().getYear();
-    return huidigJaar - this.geboortejaar;
   }
 
   /**

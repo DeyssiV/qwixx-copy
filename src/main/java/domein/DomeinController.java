@@ -14,7 +14,7 @@
     private final SpelerRepository spelerRepository;
     private Spel spel;
     private boolean alternatiefModus = false;
-    private List<String> gekozenNamen = new ArrayList<>();
+    private final List<String> gekozenNamen = new ArrayList<>();
     public static final int MAX_MISLUKTE_WORPEN = 2;
     public static final int MAX_DOORKRUISTE_RIJEN = 2;
     public static final int MIN_KRUISJES_VOOR_LOCK = 2;
@@ -29,15 +29,6 @@
     }
 
 
-    //TODO
-    //public SpelDTO geefSpelDTO() {
-      //return new SpelDTO(spel.getSpelers(), spel.getDobbelstenen());
-    //}
-
-    /*public SpelerDTO geefSpelerDTO() {
-      return new SpelerDTO(speler.getGebruikersnaam(),speler.getGeboortejaar(),speler.geefTotaleScore(),speler.getAantalGespeeld(),speler.getAantalGewonnen());
-    }*/
-
     /**
      * Geeft een lijst met gebruikersnamen van alle geregistreerde spelers in het systeem.
      *
@@ -50,6 +41,31 @@
       }
       return mogelijkeSpelers;
     }
+
+    /**
+     * Geeft de spelers van het huidige spel terug als DTO's, in speelvolgorde.
+     * Gebruik dit vanuit de UI om alle gegevens (naam, leeftijd, score, ...) in
+     * één keer te tonen zonder de domeinobjecten zelf te lekken.
+     */
+    public List<SpelerDTO> geefSpelerDTOsInVolgorde() {
+      List<SpelerDTO> spelerdto = new ArrayList<>();
+      for (Speler s : spel.getSpelers()) {
+        spelerdto.add(maakSpelerDTO(s));
+      }
+      return spelerdto;
+    }
+
+    private SpelerDTO maakSpelerDTO(Speler s) {
+      return new SpelerDTO(
+              s.getGebruikersnaam(),
+              s.getGeboortejaar(),
+              s.berekenLeeftijd(),
+              s.geefTotaleScore(),
+              s.getAantalGespeeld(),
+              s.getAantalGewonnen()
+      );
+    }
+
 
     /**
      * Reset de status van alle actieve spelers voor een nieuw spel.
@@ -182,7 +198,6 @@
      * @param gebruikersnaam de naam van de speler waarvan de status wordt opgevraagd.
      * @return een 2D-integer array die de status van de vakjes representeert.
      */
-    //TODO deze methode moet in SCOREBLAD staan
     public int[][] geefStatus(String gebruikersnaam) {
       Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
       return speler.getScoreBlad().getScoreBladMatrix();
@@ -223,7 +238,6 @@
      * @param gebruikersnaam de naam van de speler waarvan het scoreblad gecontroleerd wordt.
      * @param kleurNaam de naam van de kleur-rij (bijv. "ROOD", "BLAUW").
      * @return {@code true} als de rij gesloten is, anders {@code false}.
-     * @throws IllegalArgumentException als de opgegeven kleurNaam niet overeenkomt met een bestaande kleur.
      */
     public boolean geefIsRijGesloten(String gebruikersnaam, String kleurNaam) {
         Speler s = spelerRepository.geefSpeler(gebruikersnaam);
@@ -272,9 +286,39 @@
     public List<SpelerDTO> geefGeregistreerdeSpelerDTOs() {
       List<SpelerDTO> spelerdto = new ArrayList<>();
       for (Speler s : spelerRepository.geefSpelersLijst()) {
-        spelerdto.add(new SpelerDTO(s.getGebruikersnaam(), s.getGeboortejaar(), s.berekenLeeftijd(), s.geefTotaleScore(), s.getAantalGespeeld(), s.getAantalGewonnen()));
+        spelerdto.add(maakSpelerDTO(s));
       }
       return spelerdto;
+    }
+
+    /**
+     * Maakt een snapshot van de huidige spelstatus voor de UI. Bundelt de
+     * speler aan de beurt, zijn score en mislukte worpen, de dobbelstenen en
+     * het aantal gesloten rijen in één DTO.
+     */
+    public SpelDTO geefSpelStatus() {
+      String huidigeNaam = spel.getSpelerAanDeBeurt();
+      Speler huidigeSpeler = spelerRepository.geefSpeler(huidigeNaam);
+      return new SpelDTO(
+              huidigeNaam,
+              huidigeSpeler.geefTotaleScore(),
+              huidigeSpeler.getMislukteWorpen(),
+              spel.getDobbelstenen(),
+              spel.getAantalDoorkruisteRijen(),
+              alternatiefModus
+      );
+    }
+
+    /**
+     * Sluit het huidige spel netjes af: verhoogt de gespeeld-teller voor alle
+     * spelers, kent een win toe aan de winnaar(s) en synchroniseert alles met
+     * de databank. Vervangt drie aparte UI-calls.
+     */
+    public void afsluitenSpel() {
+      List<String> namen = volgordeSpelersInStringLijst();
+      verhoogAantalGespeeldVoorSpelers(namen);
+      verhoogAantalGewonnenVoorWinnaar();
+      slaStatsOpInDB(namen);
     }
 
     /**
@@ -445,7 +489,7 @@
      *
      * @param gebruikersnaam de naam van de speler.
      * @param kleurNaam de kleur van de te controleren rij.
-     * @return {@code true} als aan de sluitvoorwaarden is voldaan.
+     * @return {@code true} als aan het sluit voorwaarden is voldaan.
      */
     public boolean rijSluitenToegestaan(String gebruikersnaam, String kleurNaam) {
       Speler s = spelerRepository.geefSpeler(gebruikersnaam);
@@ -565,12 +609,4 @@
       return s.getScoreBlad().getAantalKruisjes(k);
     }
 
-    /**
-     * Geeft de lijst met dobbelsteen-objecten terug die momenteel in het spel zijn.
-     *
-     * @return een lijst van {@link Dobbelsteen} objecten.
-     */
-    public List<Dobbelsteen> geefDobbelstenen() {
-      return spel.getDobbelstenen();
-    }
   }

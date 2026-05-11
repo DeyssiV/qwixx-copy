@@ -32,9 +32,7 @@ public class Vakje {
      *
      * @return true als het vakje aangekruist is, anders false
      */
-    public boolean isAangekruist() {
-        return aangekruist;
-    }
+    public boolean isAangekruist() { return aangekruist; }
 
     /**
      * Stelt de aangekruiste status van het vakje in.

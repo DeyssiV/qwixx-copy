@@ -316,3 +316,7 @@
 .transparant-scrollpane {
     -fx-background-color: transparent;
 }
+
+.extraSpeler {
+    -fx-font-size: 16px;
+}

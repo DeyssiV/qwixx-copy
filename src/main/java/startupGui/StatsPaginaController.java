@@ -1,6 +1,7 @@
 package startupGui;
 
 import domein.DomeinController;
+import dtos.SpelerDTO;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -11,12 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,33 +27,28 @@ public class StatsPaginaController implements Initializable {
     private Button btnAnnuleren;
 
     @FXML
-    private TableColumn<String[], String> kolomNaamSTATP;
+    private TableColumn<SpelerDTO, String> kolomNaamSTATP;
 
     @FXML
-    private TableColumn<String[], Integer> kolomAantalGespeeldSTATP, kolomAantalGewonnenSTATP;
+    private TableColumn<SpelerDTO, Integer> kolomAantalGespeeldSTATP, kolomAantalGewonnenSTATP;
 
     @FXML
-    private TableView<String[]> tabelSpelersSTATP;
+    private TableView<SpelerDTO> tabelSpelersSTATP;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Kolommen instellen
-        kolomNaamSTATP.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
-        kolomAantalGespeeldSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(
-                Integer.parseInt(data.getValue()[1])).asObject());
-        kolomAantalGewonnenSTATP.setCellValueFactory(data -> new SimpleIntegerProperty(
-                Integer.parseInt(data.getValue()[2])).asObject());
+        kolomNaamSTATP.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().gebruikersnaam()));
+        kolomAantalGespeeldSTATP.setCellValueFactory(data ->
+                new SimpleIntegerProperty(data.getValue().aantalGespeeld()).asObject());
+        kolomAantalGewonnenSTATP.setCellValueFactory(data ->
+                new SimpleIntegerProperty(data.getValue().aantalGewonnen()).asObject());
 
         dc.herlaadSpelers();
 
         ObservableList<String[]> rijen = FXCollections.observableArrayList();
-        for (String naam : dc.geefGeregistreerdeSpelers()) {
-            int gespeeld = dc.geefAantalGespeeld(naam);
-            int gewonnen = dc.geefAantalGewonnen(naam);
-            rijen.add(new String[]{naam, String.valueOf(gespeeld), String.valueOf(gewonnen)}); // 3 elementen!
-        }
-
-        tabelSpelersSTATP.setItems(rijen);
+        tabelSpelersSTATP.setItems(FXCollections.observableArrayList(dc.geefGeregistreerdeSpelerDTOs()));
         tabelSpelersSTATP.setSelectionModel(null);
     }
 

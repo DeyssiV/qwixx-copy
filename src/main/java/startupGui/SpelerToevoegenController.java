@@ -55,12 +55,8 @@ public class SpelerToevoegenController {
             txtNaamSTP.clear();
             txtGeboortejaarSTP.clear();
 
-        }catch (exceptions.GebruikersnaamInGebruikException e) {
-            zetFeedback(e.getMessage(), false);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             zetFeedback(bundle.getString("GeboortejaarFout"), false);
-        }catch (IllegalArgumentException e) {
-            zetFeedback(e.getMessage(), false);
         } catch (Exception e) {
             zetFeedback(e.getMessage(), false);
         }

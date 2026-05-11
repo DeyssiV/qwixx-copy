@@ -1,5 +1,6 @@
 package startupGui;
 
+import dtos.SpelerDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static startupGui.QwixxApplication.dc;
 
@@ -25,53 +22,41 @@ public class GameOverController {
 
     @FXML
     public void initialize() {
-        List<String> spelers = dc.volgordeSpelersInStringLijst();
-        List<String[]> dataLijst = new ArrayList<>();
+        List<SpelerDTO> spelers = new ArrayList<>(dc.geefSpelerDTOsInVolgorde());
+        spelers.sort(Comparator.comparingInt(SpelerDTO::score).reversed());
 
-        for (String naam : spelers) {
-            int score = dc.geefTotaleScore(naam);
-            dataLijst.add(new String[]{naam, String.valueOf(score)});
+        if (!spelers.isEmpty()) {
+            lblNaamGoud.setText(spelers.get(0).gebruikersnaam());
+            lblScoreGoud.setText(spelers.get(0).score() + " pts");
         }
 
-        dataLijst.sort((a, b) -> Integer.compare(Integer.parseInt(b[1]), Integer.parseInt(a[1])));
-
-
-        if (!dataLijst.isEmpty()) {
-            lblNaamGoud.setText(dataLijst.get(0)[0]);
-            lblScoreGoud.setText(dataLijst.get(0)[1] + " pts");
+        if (spelers.size() >= 2) {
+            lblNaamZilver.setText(spelers.get(1).gebruikersnaam());
+            lblScoreZilver.setText(spelers.get(1).score() + " pts");
         }
 
-        if (dataLijst.size() >= 2) {
-            lblNaamZilver.setText(dataLijst.get(1)[0]);
-            lblScoreZilver.setText(dataLijst.get(1)[1] + " pts");
-        }
-
-        if (dataLijst.size() >= 3) {
-            lblNaamBrons.setText(dataLijst.get(2)[0]);
-            lblScoreBrons.setText(dataLijst.get(2)[1] + " pts");
+        if (spelers.size() >= 3) {
+            lblNaamBrons.setText(spelers.get(2).gebruikersnaam());
+            lblScoreBrons.setText(spelers.get(2).score() + " pts");
         } else {
             brons.setVisible(false);
         }
 
-        if (dataLijst.size() > 3) {
-            for (int i = 3; i < dataLijst.size(); i++) {
-                String[] spelerData = dataLijst.get(i);
-                Label extraSpeler = new Label((i + 1) + ". " + spelerData[0] + ": " + spelerData[1] + " pts");
-                extraSpeler.setStyle("-fx-font-size: 16px;");
-                vboxOverigeSpelers.getChildren().add(extraSpeler);
-            }
+        for (int i = 3; i < spelers.size(); i++) {
+            SpelerDTO speler = spelers.get(i);
+            Label extraSpeler = new Label(String.format("%d. %s: %d pts",
+                    i + 1, speler.gebruikersnaam(), speler.score()));
+            extraSpeler.getStyleClass().add("extraSpeler");
+            vboxOverigeSpelers.getChildren().add(extraSpeler);
         }
 
-        List<String> huidigeSpelers = dc.volgordeSpelersInStringLijst();
-        dc.verhoogAantalGespeeldVoorSpelers(huidigeSpelers);
-        dc.verhoogAantalGewonnenVoorWinnaar();
-        dc.slaStatsOpInDB(huidigeSpelers);
+        dc.afsluitenSpel();
 
     }
 
+
     @FXML
     void annuleer(ActionEvent event) throws Exception {
-        //TODO reset scoreblad, mislukte worp, score
         dc.resetSpel();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/StartPagina.fxml"));
 

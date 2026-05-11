@@ -1,6 +1,7 @@
 package startupGui;
 
-import domein.DomeinController;
+import dtos.SpelDTO;
+import dtos.SpelerDTO;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class GekozenSpelersPaginaController implements Initializable {
     private Button btnAnnuleren, btnStartSpel;
 
     @FXML
-    private ListView<String> lijstGekozenSpelers;
+    private ListView<SpelerDTO> lijstGekozenSpelers;
 
 
     @FXML
@@ -57,17 +58,19 @@ public class GekozenSpelersPaginaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lijstGekozenSpelers.setItems(FXCollections.observableArrayList(
-                dc.volgordeSpelersInStringLijst()
+                dc.geefSpelerDTOsInVolgorde()
         ));
-
-        lijstGekozenSpelers.setCellFactory(lv -> new ListCell<String>() {
+        lijstGekozenSpelers.setCellFactory(lv -> new ListCell<>() {
             @Override
-            protected void updateItem(String naam, boolean empty) {
-                super.updateItem(naam, empty);
-                if (empty || naam == null) {
+            protected void updateItem(SpelerDTO speler, boolean empty) {
+                super.updateItem(speler, empty);
+                if (empty || speler == null) {
                     setText(null);
                 } else {
-                    setText((getIndex() + 1) + ". " + naam);
+                    setText(String.format("%d. %s (%d jaar)",
+                            getIndex() + 1,
+                            speler.gebruikersnaam(),
+                            speler.leeftijd()));
                 }
             }
         });
