@@ -366,26 +366,6 @@
     }
 
     /**
-     * Geeft het totaal aantal spellen terug dat een specifieke speler ooit heeft gespeeld.
-     *
-     * @param gebruikersnaam de naam van de speler.
-     * @return het totaal aantal gespeelde spellen.
-     */
-    public int geefAantalGespeeld(String gebruikersnaam) {
-      return spelerRepository.geefSpeler(gebruikersnaam).getAantalGespeeld();
-    }
-
-    /**
-     * Geeft het totaal aantal gewonnen spellen terug van een specifieke speler.
-     *
-     * @param gebruikersnaam de naam van de speler.
-     * @return het totaal aantal gewonnen spellen.
-     */
-    public int geefAantalGewonnen(String gebruikersnaam) {
-      return spelerRepository.geefSpeler(gebruikersnaam).getAantalGewonnen();
-    }
-
-    /**
      * Stelt in of het spel in de alternatieve modus (met een ander scoreblad)
      * gespeeld moet worden.
      *
