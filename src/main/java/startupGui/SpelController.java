@@ -225,7 +225,7 @@ public class SpelController {
 
         if (wachtOpVolgendeBeurt) {
             wachtOpVolgendeBeurt = false;
-            lblFeedback5kruisjes.setText("");
+            zetFeedback5("", true);
             gaNaarVolgendeBeurt();
             return;
         }
@@ -431,8 +431,7 @@ public class SpelController {
         refreshSpelerAanBeurt();
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-        int aantalInRij = dc.geefAantalKruisjesInRij(dc.geefSpelerAanDeBeurt(), kleur);
-        if (aantalInRij == dc.MIN_KRUISJES_VOOR_LOCK) {
+        if (dc.magRijSluitenViaLockKnop(dc.geefSpelerAanDeBeurt(), kleur)) {
             zetFeedback5(bundle.getString("lblFeedback5kruisjes"), true);
         } else {
             zetFeedback5("", true);
@@ -451,7 +450,7 @@ public class SpelController {
      */
     private void volgendeBeurt(boolean isEindeBeurt) {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
-        lblFeedback5kruisjes.setText("");
+        zetFeedback5("", true);
         resetScorekaartRanden();
         refreshSpelerAanBeurt();
         updateScorekaartVisueel();
@@ -601,7 +600,7 @@ public class SpelController {
         updateScorekaartVisueel();
         refreshSpelerAanBeurt();
         omrandMogelijkLockKnoppen();
-        lblFeedback5kruisjes.setText("");
+        zetFeedback5("", true);
         if (dc.isEindeSpelDoorRijDoorkruising()) {
             try {
                 controleerEindeSpel(actieveSpeler);

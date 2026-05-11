@@ -88,9 +88,9 @@
             <VBox.margin>
                <Insets left="30.0" top="20.0"/>
             </VBox.margin>
-            <Label id="btnRolDobbelstenen" text="%LabelMislukteWorpen"/>
+            <Label id="LabelMislukteWorpen" text="%LabelMislukteWorpen"/>
 
-            <GridPane fx:id="grpMislukteWorpen" hgap="10.0">
+            <GridPane fx:id="grpMislukteWorpen"  hgap="10.0">
                <columnConstraints>
                   <ColumnConstraints minWidth="40.0" prefWidth="40.0"/>
                   <ColumnConstraints minWidth="40.0" prefWidth="40.0"/>

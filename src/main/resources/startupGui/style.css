@@ -30,7 +30,7 @@
     -fx-font-size: 25px;
 }
 
-#btnRolDobbelstenen, #LabelTotaleScore, #lblTotaleScore{
+#btnRolDobbelstenen, #LabelTotaleScore, #lblTotaleScore, #LabelMislukteWorpen{
     -fx-font-family: "Calibri";
     -fx-font-size: 20px;
 }
