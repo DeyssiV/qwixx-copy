@@ -539,17 +539,4 @@
               .toList();
     }
 
-    /**
-     * Geeft het aantal reeds aangekruiste vakjes in een specifieke rij.
-     *
-     * @param gebruikersnaam de naam van de speler.
-     * @param kleurNaam de kleur van de rij.
-     * @return het aantal kruisjes.
-     */
-    public int geefAantalKruisjesInRij(String gebruikersnaam, String kleurNaam) {
-      Speler s = spelerRepository.geefSpeler(gebruikersnaam);
-      Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
-      return s.getScoreBlad().getAantalKruisjes(k);
-    }
-
   }
