@@ -1,8 +1,6 @@
 package domein;
 
-/**
- * Stelt een vakje voor op het scoreblad met een waarde en een aangeruiste status.
- */
+
 public class Vakje {
     private int waarde;
     private boolean aangekruist;
@@ -20,7 +18,7 @@ public class Vakje {
     /**
      * Geeft de waarde van het vakje terug.
      *
-     * @return De waarde van het vakje als Integer
+     * @return De waarde van het vakje
      */
      public int getWaarde() {
         return waarde;
@@ -34,7 +32,7 @@ public class Vakje {
     public boolean isAangekruist() { return aangekruist; }
 
     /**
-     * Stelt de aangekruiste status van het vakje in.
+     * Kruist het vakje aan.
      *
      */
     public void kruisAan() {

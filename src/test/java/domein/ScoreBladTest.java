@@ -49,13 +49,13 @@ class ScoreBladTest {
     }
     @Test
     void alternatiefScoreblad_GebruiktAndereWaardenDanStandaard() {
-        int[][] standaardWaarden = scorebladStandaard.getMatrixVanWaarden();
-        int[][] alternatieveWaarden = scorebladAlternatief.getMatrixVanWaarden();
+        int[][] standaardWaarden = scorebladStandaard.getScorebladWaarden();
+        int[][] alternatieveWaarden = scorebladAlternatief.getScorebladWaarden();
         assertNotEquals(standaardWaarden[0][0], alternatieveWaarden[0][0]);
     }
     @Test
-    void getScoreBladMatrix_LeegScoreblad_AllesNul() {
-        int[][] matrix = scorebladStandaard.getScoreBladMatrix();
+    void getScoreBladStatus_LeegScoreblad_AllesNul() {
+        int[][] matrix = scorebladStandaard.getScoreBladStatus();
         for (int[] rij : matrix) {
             for (int v : rij) {
                 assertEquals(0, v);

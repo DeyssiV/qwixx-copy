@@ -188,7 +188,7 @@
      */
     public int[][] geefStatus(String gebruikersnaam) {
       Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
-      return speler.getScoreBlad().getScoreBladMatrix();
+      return speler.getScoreBlad().getScoreBladStatus();
     }
 
     /**
@@ -292,7 +292,7 @@
               huidigeSpeler.geefTotaleScore(),
               huidigeSpeler.getMislukteWorpen(),
               spel.getDobbelstenen(),
-              spel.getAantalDoorkruisteRijen(),
+              spel.getAantalGeslotenRijen(),
               alternatiefModus
       );
     }
@@ -458,7 +458,7 @@
      * @return {@code true} als het spel is afgelopen, anders {@code false}.
      */
     public boolean isEindeSpelDoorRijDoorkruising(){
-      return spel.getAantalDoorkruisteRijen() >= MAX_DOORKRUISTE_RIJEN;
+      return spel.getAantalGeslotenRijen() >= MAX_DOORKRUISTE_RIJEN;
     }
 
     /**
@@ -514,7 +514,7 @@
         }
       }
 
-      spel.verhoogAantalDoorkruisteRijen();
+      spel.verhoogAantalGeslotenRijen();
       spel.verwijderDobbelsteenVanKleur(kleur);
     }
 
@@ -538,7 +538,7 @@
      */
     public int[][] geefVakWaarden(String gebruikersnaam) {
       Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
-      return speler.getScoreBlad().getMatrixVanWaarden();
+      return speler.getScoreBlad().getScorebladWaarden();
     }
 
     /**

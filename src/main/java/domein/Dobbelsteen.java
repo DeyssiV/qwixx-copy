@@ -11,7 +11,7 @@ public class Dobbelsteen {
 
     /**
      * Maakt een nieuwe dobbelsteen aan.
-     * @param kleur de kleur dat de dobbelsteen moet krijgen.
+     * @param kleur de kleur dat de dobbelsteen moet krijgen
      */
     public Dobbelsteen(Kleur kleur) {
         if (kleur == null) {
@@ -22,15 +22,15 @@ public class Dobbelsteen {
     }
 
     /**
-     * geeft de kleur van de dobbelsteen.
-     * @return de kleur van de dobbelsteen.
+     * Geeft de kleur van de dobbelsteen.
+     * @return de kleur van de dobbelsteen
      */
     public Kleur getKleur() {
         return kleur;
     }
 
     /**
-     * rolt een random getal tussen 1 en 6.
+     * Rolt een random getal tussen 1 en 6.
      * @return een waarde tussen 1 en 6
      */
     int rolDobbelsteen(){
@@ -40,8 +40,8 @@ public class Dobbelsteen {
     }
 
     /**
-     * geeft de waarde van de dobbelsteen terug.
-     * @return de waarde van de dobbelsteen.
+     * Geeft de waarde van de dobbelsteen terug.
+     * @return de waarde van de dobbelsteen
      */
     public int getWaarde() {
         return waarde;

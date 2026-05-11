@@ -6,24 +6,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Stelt een Spel voor van QWIXX met spelers en dobbelstenen.
- * Beheert de dobbelstenen, spelers en de spellogica.
- */
 public class Spel {
     public static final int MIN_AANTAL_SPELERS = 2;
     public static final int MAX_AANTAL_SPELERS = 5;
     private final List<Speler> spelers;
     private final List<Dobbelsteen> dobbelstenen;
     private final boolean alternatiefModus;
-    private int aantalDoorkruisteRijen = 0;
+    private int aantalGeslotenRijen = 0;
     private int huidigeSpelerIndex = 0;
 
     /**
      * Maakt een nieuw spel aan met de gegeven spelers en initialiseert
      * de 6 dobbelstenen volgens de QWIXX-spelregels (2 wit, 1 rood, 1 geel, 1 groen, 1 blauw).
-     * De spelers worden gesorteerd bij aanmaak.
      * @param spelers De lijst van spelers die deelnemen aan het spel
+     * @param alternatiefModus true als de alternatieve spelregels gebruikt worden anders false
+     * @throws IllegalArgumentException als het aantal spelers buiten het toegestane bereik valt
      */
     public Spel(List<Speler> spelers, boolean alternatiefModus) {
         if (spelers.size() < MIN_AANTAL_SPELERS || spelers.size() > MAX_AANTAL_SPELERS) {
@@ -48,16 +45,16 @@ public class Spel {
     }
 
     /**
-     * Geeft het aantal doorkruiste (gesloten) rijen in het spel terug.
-     * @return Het aantal doorkruiste rijen als Integer
+     * Geeft het aantal gesloten rijen in het spel terug.
+     * @return Het aantal doorkruiste rijen
      */
-    public int getAantalDoorkruisteRijen() {
-        return aantalDoorkruisteRijen;
+    public int getAantalGeslotenRijen() {
+        return aantalGeslotenRijen;
     }
 
     /**
-     * Geeft de lijst van alle spelers in het spel terug.
-     * @return Een lijst van Speler-objecten
+     * Geeft de lijst van alle spelers terug.
+     * @return een onwijzigbare lijst van spelers
      */
     public List<Speler> getSpelers()
     {
@@ -66,7 +63,7 @@ public class Spel {
 
     /**
      * Geeft de lijst van alle dobbelstenen in het spel terug.
-     * @return Een lijst van Dobbelsteen-objecten
+     * @return een onwijzigbare lijst van dobbelstenen
      */
     public List<Dobbelsteen> getDobbelstenen()
     {
@@ -75,7 +72,6 @@ public class Spel {
 
     /**
      * Geeft de waarde terug van de eerste of tweede witte dobbelsteen.
-     *
      * @param getal 1 voor de eerste witte dobbelsteen, 2 voor de tweede
      * @return De waarde van de gevraagde witte dobbelsteen, of 0 als niet gevonden
      */
@@ -94,7 +90,6 @@ public class Spel {
 
     /**
      * Geeft de waarde terug van de dobbelsteen met de opgegeven kleur.
-     *
      * @param kleur De kleur van de gezochte dobbelsteen
      * @return De waarde van de gekleurde dobbelsteen, of 0 als niet gevonden
      */
@@ -108,8 +103,7 @@ public class Spel {
     }
 
     /**
-     * Rolt alle dobbelstenen in het spel opnieuw.
-     * Elke dobbelsteen krijgt een nieuwe willekeurige waarde.
+     * Rolt alle dobbelstenen opnieuw.
      */
     public void rolDobbelstenen() {
         for (Dobbelsteen dobbelsteen : dobbelstenen) {
@@ -118,16 +112,16 @@ public class Spel {
     }
 
     /**
-     * Verhoogt het totaal aantal volledig doorkruiste rijen met één.
+     * Verhoogt het totaal aantal gesloten rijen met 1.
      */
-    public void verhoogAantalDoorkruisteRijen() {
-        aantalDoorkruisteRijen++;
+    public void verhoogAantalGeslotenRijen() {
+        aantalGeslotenRijen++;
     }
 
+
     /**
-     * Past de beurt aan naar de volgende speler in de lijst.
-     * Indien de laatste speler in de lijst aan de beurt was, wordt de beurt
-     * teruggegeven aan de eerste speler (index 0).
+     * Zet de beurt door naar de volgende speler.
+     * Na de laatste speler gaat de beurt terug naar de eerste.
      */
     public void zetVolgendeSpeler() {
         huidigeSpelerIndex++;
@@ -138,13 +132,17 @@ public class Spel {
 
     /**
      * Geeft de gebruikersnaam terug van de speler die momenteel aan de beurt is.
-     *
      * @return de gebruikersnaam van de huidige speler.
      */
     public String getSpelerAanDeBeurt() {
         return spelers.get(huidigeSpelerIndex).getGebruikersnaam();
     }
 
+    /**
+     * Verwijdert de eerste dobbelsteen met de opgegeven kleur uit het spel.
+     * @param kleur de kleur van de te verwijderen dobbelsteen
+     * @return true als de dobbelsteen gevonden en verwijderd is anders false
+     */
     public boolean verwijderDobbelsteenVanKleur(Kleur kleur) {
         for (int i = 0; i < dobbelstenen.size(); i++) {
             if (dobbelstenen.get(i).getKleur() == kleur) {
@@ -155,6 +153,13 @@ public class Spel {
         return false;
     }
 
+    /**
+     * Bepaalt de kleur die hoort bij een keuzegetal van een combinatie.
+     * Keuzes 1-2 zijn rood, 3-4 geel, 5-6 groen, 7-8 blauw.
+     *
+     * @param keuze het keuzegetal van de speler
+     * @return de bijhorende kleur
+     */
     public Kleur bepaalKleurVanKeuze(int keuze) {
         if (keuze <= 2) return Kleur.ROOD;
         if (keuze <= 4) return Kleur.GEEL;

@@ -37,7 +37,6 @@ public class StatsPaginaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Kolommen instellen
         kolomNaamSTATP.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().gebruikersnaam()));
         kolomAantalGespeeldSTATP.setCellValueFactory(data ->

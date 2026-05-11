@@ -31,11 +31,10 @@ import static startupGui.QwixxApplication.dc;
 
 public class SpelController {
 
-    private int ronde = 1; //wit = 1; gekleurd = 2
-    private String actieveSpeler; //speler die dobbelstenen gerold heeft
-    private boolean wachtOpVolgendeBeurt = false; //melding laten zien voor volgende beurt
+    private int ronde = 1;
+    private String actieveSpeler;
+    private boolean wachtOpVolgendeBeurt = false;
     private boolean heeftGerold = false;
-
 
     @FXML
     private Label lblTotaleScore,lblTitelSPEL, lblFeedback5kruisjes;
@@ -46,9 +45,6 @@ public class SpelController {
     @FXML
     private GridPane grpMislukteWorpen, grpScorekaart, grpDobbelstenen;
 
-    /**
-     * Initialiseert de controller bij het laden van het scherm.
-     */
     @FXML
     private void initialize() {
 
@@ -59,10 +55,6 @@ public class SpelController {
         zetFeedback5("", true);
     }
 
-    /**
-     * Keert terug naar de startpagina van de applicatie.
-     * @param event Klikken van de knop zorgt voor event -> naar startpagina teruggaan.
-     */
     @FXML
     void annuleer(ActionEvent event) throws Exception {
         dc.resetSpel();
@@ -75,11 +67,6 @@ public class SpelController {
         stage.setScene(new Scene(loader.load()));
     }
 
-
-    /**
-     * Vult het scoreblad in met de juiste nummers obv keuze (klassiek, alternatief)
-     * @param isAlternatief Geeft aan of de alternatieve getallenreeksen gebruikt moeten worden.
-     */
     private void vulScorekaart(boolean isAlternatief) {
         String[] kleuren = {"ROOD", "GEEL", "GROEN", "BLAUW"};
         int[][] waarden;
@@ -101,7 +88,6 @@ public class SpelController {
         }
 
         for (int rij = 0; rij < 4; rij++) {
-            // Bepaal de kleur voor deze hele rij
             String kleurNaam = kleuren[rij].toLowerCase();
             String hexAchtergrond;
             String hexTekst = switch (kleurNaam) {
@@ -126,7 +112,6 @@ public class SpelController {
                     yield "#7F8C8D";
                 }
             };
-
 
             String buttonStyle = "-fx-background-color: " + hexAchtergrond + "; " +
                     "-fx-text-fill: " + hexTekst + "; " +
@@ -180,9 +165,6 @@ public class SpelController {
         }
     }
 
-    /**
-     * Verandert de label zodat het overeenkomt met de speler van wie het scoreblad wordt getoond (speler die aan de beurt is)
-     */
     private void refreshSpelerAanBeurt() {
         SpelDTO status = dc.geefSpelStatus();
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
@@ -214,10 +196,6 @@ public class SpelController {
         }
     }
 
-    /**
-     * Behandelt het rollen van de dobbelstenen of het overslaan van de huidige beurt.
-     * @param event Klikken van de knop zorgt voor event -> dobbelstenen rollen.
-     */
     @FXML
     void rolDobbelstenen(ActionEvent event) throws Exception {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
@@ -232,7 +210,6 @@ public class SpelController {
 
         if (!heeftGerold) {
             actieveSpeler = dc.geefSpelerAanDeBeurt();
-            //de speler van wie het scoreblad getoond wordt
             ronde = 1;
 
             knop.setDisable(true);
@@ -276,20 +253,13 @@ public class SpelController {
     }
 
 
-    /**
-     * Toont de visuele weergave van de gerolde dobbelstenen.
-     * @param dobbelstenen Lijst met dobbelstenen die gerold zijn.
-     */
     public void toonDobbelstenen(List<Dobbelsteen> dobbelstenen) {
         grpDobbelstenen.getChildren().clear();
 
         for (int i = 0; i < dobbelstenen.size(); i++) {
             Dobbelsteen ds = dobbelstenen.get(i);
             Button dbsteen = new Button(String.valueOf(ds.getWaarde()));
-
-            // Zet de kleur om naar kleine letters zodat de switch altijd matcht
             String kleurNaam = String.valueOf(ds.getKleur()).toLowerCase();
-
             String achtergrondKleur;
             String tekstKleur = "white";
 
@@ -310,7 +280,7 @@ public class SpelController {
                             "-fx-background-radius: 12; " +
                             "-fx-min-width: 60px; " +
                             "-fx-min-height: 60px; " +
-                            "-fx-border-color: rgba(0,0,0,0.2); " + // Subtiel randje voor diepte
+                            "-fx-border-color: rgba(0,0,0,0.2); " +
                             "-fx-border-radius: 12;"
             );
 
@@ -323,14 +293,10 @@ public class SpelController {
     }
 
 
-    /**
-     * Bepaalt welke vakjes omrand worden adhv de beurt en speler.
-     * @param type "W" voor de witte som ronde, "G" voor de gekleurde ronde van de speler aan de beurt/ die gerold heeft..
-     */
     private void omrandMogelijkeVakjes(String type) {
-        resetScorekaartRanden(); // scoreblad resetten van de omrande vakjes
-        List<Dobbelsteen> dobbelstenen = dc.geefSpelStatus().dobbelstenen();
+        resetScorekaartRanden();
 
+        List<Dobbelsteen> dobbelstenen = dc.geefSpelStatus().dobbelstenen();
         if (type.equals("W")) {
             int witteSom = dc.geefWitteSom();
             for (String kleurDb : new String[]{"ROOD", "GEEL", "GROEN", "BLAUW"}) {
@@ -341,7 +307,6 @@ public class SpelController {
             for (Dobbelsteen ds : dobbelstenen) {
                 if (ds.getKleur() == Kleur.WIT) witteWaarden.add(ds.getWaarde());
             }
-
             for (Dobbelsteen ds : dobbelstenen) {
                 if (ds.getKleur() != Kleur.WIT) {
                     int gekleurdeWaarde = ds.getWaarde();
@@ -357,11 +322,6 @@ public class SpelController {
         omrandMogelijkLockKnoppen();
     }
 
-    /**
-     * Voegt een gekleurde rand toe aan een specifieke vakje in de scorekaart.
-     * @param kleur De kleur van de rij.
-     * @param getal De waarde van het vakje.
-     */
     private void highlightButton(String kleur, int getal) {
         for (Node node : grpScorekaart.getChildren()) {
             if (node instanceof Button buttonInScoreKaart) {
@@ -385,23 +345,13 @@ public class SpelController {
     }
 
 
-    /**
-     * Actie verwerken zodra er op een vakje wordt geklikt.
-     * Het verwerkt het kruisje via domeinklasses en gaat door naar volgende beurt/speler.
-     * @param event Klikken van de knop zorgt voor event ->vakje aankruisen.
-     */
     @FXML
     private void handleScoreClick(ActionEvent event) {
-
         Button geklikteKnop = (Button) event.getSource();
-
         if ("LOCK".equals(geklikteKnop.getProperties().get("type"))) return;
-
-
         if (!heeftGerold || !geklikteKnop.getStyle().contains("-fx-border-width: 3px")) {
             return;
         }
-
         String kleur = (String) geklikteKnop.getProperties().get("kleur");
         int getal = (Integer) geklikteKnop.getProperties().get("getal");
 
@@ -410,7 +360,6 @@ public class SpelController {
         geklikteKnop.setText("X");
         geklikteKnop.setDisable(true);
 
-        //de vakjes links van aangekruiste niet meer klikbaar maken
         int rij = GridPane.getRowIndex(geklikteKnop);
         int kolom = GridPane.getColumnIndex(geklikteKnop);
 
@@ -444,10 +393,6 @@ public class SpelController {
     }
 
 
-    /**
-     * Reset de UI componenten voor de volgende beurt.
-     * @param isEindeBeurt Toont aan of de beurt van speler gedaan is om de dobbelstenen te vernieuwen.
-     */
     private void volgendeBeurt(boolean isEindeBeurt) {
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", Locale.getDefault());
         zetFeedback5("", true);
@@ -466,9 +411,6 @@ public class SpelController {
 
     }
 
-    /**
-     * Controleert of het spel beëindigd moet worden en navigeert naar de GameOver pagina.
-     */
     private void controleerEindeSpel(String actieveSpeler) throws Exception {
         if (dc.isEindeSpelDoorMislukteWorpen(actieveSpeler) || dc.isEindeSpelDoorRijDoorkruising()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/startupGui/GameOver.fxml"));
@@ -484,10 +426,6 @@ public class SpelController {
 
     }
 
-    /**
-     * Vernieuwt het scoreblad bij (mbv de domeinklasses).
-     * Zet kruisjes en blokkeert vakjes die niet meer te kiezen zijn.
-     */
     private void updateScorekaartVisueel() {
         String huidigeSpeler = dc.geefSpelerAanDeBeurt();
         int[][] status = dc.geefStatus(huidigeSpeler);
@@ -498,7 +436,7 @@ public class SpelController {
                 Integer r = GridPane.getRowIndex(node);
                 Integer k = GridPane.getColumnIndex(node);
 
-                if (r != null && k != null && k < 11) {
+                if (r != null && k != null && k <= 11) {
                     boolean rijGesloten = dc.geefIsRijGesloten(huidigeSpeler, kleuren[r]);
 
                     if (k == 11) {
@@ -543,11 +481,6 @@ public class SpelController {
         }
     }
 
-
-
-    /**
-     * Reset de scoreblad bij elke beurt
-     */
     private void resetScorekaartRanden() {
         grpScorekaart.getChildren().forEach(node -> {
             if (node instanceof Button btn) {
@@ -559,9 +492,6 @@ public class SpelController {
     }
 
 
-    /**
-     * Toont de mislukte worpen visueel.
-     */
     private void updateMislukteWorpen(int aantalMislukt) {
         grpMislukteWorpen.getChildren().clear();
         for (int i = 0; i < 2; i++) {
@@ -584,13 +514,10 @@ public class SpelController {
         }
     }
 
-
-
     private void handleLockClick(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String kleurNaam = (String) btn.getProperties().get("kleur");
         String speler = dc.geefSpelerAanDeBeurt();
-        // ENIGE voorwaarde: heeft deze speler ≥5 kruisjes in deze rij?
         if (!dc.magRijSluitenViaLockKnop(speler, kleurNaam)) return;
         Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
         dc.sluitRij(k);

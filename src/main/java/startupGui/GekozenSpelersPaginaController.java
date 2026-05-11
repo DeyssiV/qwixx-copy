@@ -1,6 +1,5 @@
 package startupGui;
 
-import dtos.SpelDTO;
 import dtos.SpelerDTO;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

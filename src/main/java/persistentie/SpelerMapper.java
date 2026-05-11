@@ -14,20 +14,11 @@ public class SpelerMapper {
 
     private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar, aantalGespeeld, aantalGewonnen FROM speler";
 
-    // Nieuw: voor updaten na een spel
     private static final String UPDATE_STATS = "UPDATE g85.speler SET aantalGespeeld = ?, aantalGewonnen = ? WHERE gebruikersnaam = ?";
-//  // TODO: PreparedStatement Query invullen (Tip: kijk in het voorbeeldproject dobbelsteen)
-//  private static final String INSERT_SPELER = "INSERT INTO G85.speler (gebruikersnaam, geboortejaar) VALUES (?, ?)";
-//
-//  // TODO: PreparedStatement Query invullen (Tip: kijk in het voorbeeldproject dobbelsteen)
-//  private static final String GEEF_SPELER = "SELECT gebruikersnaam, geboortejaar FROM speler WHERE gebruikersnaam = ?";
-//
-//  private static final String GEEF_SPELERS = "SELECT gebruikersnaam, geboortejaar FROM speler";
 
     public void voegToe(Speler speler) {
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
              PreparedStatement query = conn.prepareStatement(INSERT_SPELER)) {
-            // TODO: Query variabelen invullen en uitvoeren, gebruik Speler (Tip: kijk in het voorbeeldproject dobbelsteen)
             query.setString(1, speler.getGebruikersnaam());
             query.setInt(2, speler.getGeboortejaar());
             query.setInt(3, speler.getAantalGespeeld());
@@ -46,7 +37,6 @@ public class SpelerMapper {
         Speler speler = null;
         try (Connection conn = DriverManager.getConnection(Connectie.JDBC_URL);
              PreparedStatement query = conn.prepareStatement(GEEF_SPELER)) {
-            // TODO: Query variabelen invullen en uitvoeren, speler object aanmaken (Tip: kijk in het voorbeeldproject dobbelsteen)
             query.setString(1, gebruikersnaam);
             try (ResultSet rs = query.executeQuery()){
                 if(rs.next()){
@@ -62,7 +52,7 @@ public class SpelerMapper {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        return null; // TODO: gevonden Speler of null retourneren
+        return null;
     }
 
     public void updateStats(Speler speler) {
@@ -100,7 +90,4 @@ public class SpelerMapper {
         return spelers;
     }
 
-    public Speler geefSpelerDummy(String gebruikersnaam) {
-        return new Speler(gebruikersnaam, 1994);
-    }
 }

@@ -18,10 +18,9 @@ public class Rij {
 
 
     /**
-     * Maakt een nieuwe rij aan met specifieke kleur.
-     * Volgorde van vakjes bepaald door kleur (rood/geel == oplopend en groen/blauw == aflopend).
-     * @param kleur De kleur (Kleur) van rij.
-     * @param waarden de waarden die gebruikt worden om de vakjes in de rij aan te maken
+     * Maakt een nieuwe rij aan met de opgegeven kleur en vakjes waarden.
+     * @param kleur de kleur van rij
+     * @param waarden de waarden van de vakjes in de rij
      */
     public Rij(Kleur kleur, int[] waarden) {
         this.kleur = kleur;
@@ -36,24 +35,24 @@ public class Rij {
     }
 
     /**
-     * Geeft kleur van rij.
-     * @return kleur Kleur van rij in Kleur.
+     * Geeft kleur van rij terug.
+     * @return de kleur van de rij
      */
     public Kleur getKleur() {
         return kleur;
     }
 
     /**
-     * Controleert of de rij gesloten is.
-     * @return true, false Indien gesloten true, anders false.
+     * Controleert of de rij gesloten is
+     * @return true als de rij gesloten is anders false
      */
     public boolean isGesloten() {
         return gesloten;
     }
 
     /**
-     * Geeft lijst van vakjes.
-     * @return vakjes Lijst van vakjes Vakje.
+     * Geeft lijst van vakjes in rij terug.
+     * @return een onwijzigbare lijst van vakjes
      */
     public List<Vakje> getVakjes() {
         return Collections.unmodifiableList(vakjes);
@@ -61,7 +60,7 @@ public class Rij {
 
     /**
      * Stelt in of de rij gesloten is of niet.
-     * @param gesloten De status van rij.
+     * @param gesloten true om de rij te sluiten, false om te openen
      */
     public void setGesloten(boolean gesloten) {
         this.gesloten = gesloten;
@@ -71,9 +70,8 @@ public class Rij {
      * Zet kruisje op gekozen vakje in rij.
      * Controleert ook of de rij niet gesloten is of als het vakje al aangekruist is
      * of voldoet aan de volgorde van aankruising en of het laatste vakje aangekruist mag worden.
-     * @param waardeVak De waarde in Integer van het vakje dat overeenstemt met het nummer op vakje
-     *                  in scoreblad die aangekruist mag worden.
-     * @return true, false Als het kruisje gezet is true, anders false.
+     * @param waardeVak de waarde van het aan te kruisen vakje
+     * @return true als het kruisje gezet is anders false
      */
     public boolean registreerKruis(int waardeVak){
         Vakje gekozenVakje;
@@ -107,9 +105,8 @@ public class Rij {
     }
 
     /**
-     * Berekent de score voor gekozen rij o.b.v. aantal gezette kruisjes.
-     * Hiervoor wordt een array met de score gebruikt.
-     * @return score Behaalde score in de rij in Integer.
+     * Berekent de score van deze rij op basis van het aantal kruisjes.
+     * @return de behaalde score, of 0 als er geen kruisjes zijn
      */
     public int berekenScoreRij(){
         int aantal = getAantalKruisjes();
@@ -121,8 +118,9 @@ public class Rij {
     }
 
     /**
-     * Telt aantal kruisjes op.
-     * @return aantal kruisjes Totaal aantal kruisjes in rij als Integer.
+     * Geeft het totaal aantal aangekruiste vakjes terug.
+     * Als de rij gesloten is, wordt het sluitkruisje meegeteld.
+     * @return het aantal kruisjes in de rij
      */
     public int getAantalKruisjes() {
         int teller = 0;
@@ -137,8 +135,7 @@ public class Rij {
      * Zoekt de index van een vakje met de opgegeven waarde.
      *
      * @param waarde de waarde waarvan de index gezocht wordt
-     * @return de index van het vakje met de opgegeven waarde,
-     *         of -1 als de waarde niet gevonden werd
+     * @return de index van het vakje, of -1 als de waarde niet gevonden wordt
      */
     private int zoekIndexVanWaarde(int waarde) {
         for (int i = 0; i < vakjes.size(); i++) {
@@ -150,14 +147,10 @@ public class Rij {
     }
 
     /**
-     * Controleert of de rij momenteel mag worden afgesloten.
-     * Een rij mag alleen worden gesloten als:
-     * <ul>
-     *   <li>De rij niet al eerder gesloten is.</li>
-     *   <li>Het laatste vakje in de rij nog niet is aangekruist.</li>
-     *   <li>Er minimaal 5 kruisjes in de rij staan.</li>
-     * </ul>
-     * @return {@code true} als aan alle voorwaarden is voldaan, anders {@code false}.
+     * Controleert of de rij momenteel gesloten mag worden.
+     * Dit is toegestaan als de rij nog niet gesloten is, het laatste vakje
+     * nog niet aangekruist is, en er minstens 5 kruisjes staan.
+     * @return true als aan alle voorwaarden is voldaan, anders false
      */
     public boolean magSluiten() {
         Vakje laatste = vakjes.get(vakjes.size() - 1);

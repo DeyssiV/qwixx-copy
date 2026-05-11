@@ -4,7 +4,6 @@ import exceptions.GebruikersnaamInGebruikException;
 import exceptions.SpelerNietGevondenException;
 import persistentie.SpelerMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpelerRepository {
@@ -12,9 +11,7 @@ public class SpelerRepository {
   private final List<Speler> spelers;
 
   /**
-   * maakt een spelerRepository aan.
-   * maakt een SpelerMapper aan.
-   * gebruikt SpelerMapper om alle spelers lokaal op te slaan.
+   * Maakt een nieuwe SpelerRepository aan en laadt alle spelers uit de database.
    */
   public SpelerRepository() {
     mapper = new SpelerMapper();
@@ -22,9 +19,10 @@ public class SpelerRepository {
   }
 
   /**
-   * kijkt of de gebruikersnaam al gebruikt wordt.
+   * Zoekt een speler op basis van gebruikersnaam, hoofdletterongevoelig.
    * @param gebruikersnaam de gebruikersnaam die je wil checken.
-   * @return een speler of null.
+   * @return de gevonden speler.
+   * @throws SpelerNietGevondenException als geen speler met die gebruikersnaam bestaat.
    */
   public Speler geefSpeler(String gebruikersnaam){
     for (Speler s : spelers){
@@ -36,7 +34,6 @@ public class SpelerRepository {
 
   /**
    * Werkt de statistieken van de opgegeven speler bij in de database.
-   *
    * @param speler de speler waarvan de statistieken gesynchroniseerd moeten worden.
    */
   public void updateStats(Speler speler) {
@@ -44,8 +41,7 @@ public class SpelerRepository {
   }
 
   /**
-   * Herlaadt de interne lijst van spelers door de huidige data te wissen
-   * en de meest recente gegevens uit de mapper op te halen.
+   * Herlaadt de interne spelerslijst vanuit de database.
    */
   public void herlaadSpelers() {
     spelers.clear();
@@ -53,16 +49,17 @@ public class SpelerRepository {
   }
 
   /**
-   * geeft een lijst van spelers.
-   * @return een lijst van spelers.
+   * Geeft de volledige lijst van spelers terug.
+   * @return een lijst van alle spelers.
    */
   public List<Speler> geefSpelersLijst(){
     return spelers;
   }
 
   /**
-   * voegt een speler toe lokaal en in de database.
+   * Voegt een nieuwe speler toe aan de lijst en de database.
    * @param speler de speler die je wil toevoegen.
+   * @throws GebruikersnaamInGebruikException als de gebruikersnaam al bezet is
    */
   public void voegToe(Speler speler) {
     if (bestaatSpeler(speler.getGebruikersnaam())) {
@@ -77,7 +74,7 @@ public class SpelerRepository {
    * ongeacht of er hoofdletters of kleine letters worden gebruikt.
    *
    * @param gebruikersnaam de naam van de speler die gecontroleerd moet worden.
-   * @return {@code true} als de speler in de lijst voorkomt, anders {@code false}.
+   * @return true als de speler in de lijst voorkomt, anders false.
    */
   private boolean bestaatSpeler(String gebruikersnaam) {
     for (Speler speler : spelers) {

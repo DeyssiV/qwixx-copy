@@ -14,7 +14,6 @@ public class QwixxCui {
         this.dc = dc;
     }
 
-    //hoofdmenu en setup
     public void start() {
         int keuze;
         do {
@@ -28,7 +27,6 @@ public class QwixxCui {
         } while (keuze != 3); // zolang de gebruiker niet voor afsluiten kiest
     }
 
-    //tekst voor het hoofdmenu weergeven
     private void toonMenuTekst() {
         System.out.printf("%n--- Hoofdmenu ---%n");
         System.out.println("1. Registreer nieuwe speler");
@@ -36,7 +34,6 @@ public class QwixxCui {
         System.out.println("3. Afsluiten");
     }
 
-    //hulpmethode om invoer te controleren
     private int leesInvoer(String keuze, int min, int max) {
         while (true) {
             try{
@@ -58,7 +55,6 @@ public class QwixxCui {
         }
     }
 
-    //extra hulpmethode om de Ja of Nee van speler in te lezen
     private boolean leesJaNee(String vraag) {
         while (true) {
             try {
@@ -77,7 +73,6 @@ public class QwixxCui {
         }
     }
 
-    //spel info
     public void startSpel() {
         System.out.println("\nJe spelers zijn gekozen: " + gekozenSpelers);
         gekozenSpelers.forEach(dc::voegSpelerToeAanSpel);
@@ -136,7 +131,6 @@ public class QwixxCui {
                     rijSluiten(naam, keuze);
                 } else {
                     System.out.println("Hier mag je geen kruis zetten! (Check de volgorde of de witte som).");
-                    // scoreblad opnieuw tonen
                     toonScoreBord(naam);
                 }
             } catch (IllegalArgumentException e) {
@@ -240,7 +234,7 @@ public class QwixxCui {
 
     //de ronde van de speler die gedobbeld heeft (witte en gekleurde combo als optie)
     private void rondeActieveSpelerWit(String naam, int witteSom) {
-        System.out.println("\n--- Optie van de witte dobbelstenen ---"); // de witte-combinatie
+        System.out.println("\n--- Optie van de witte dobbelstenen ---");
         toonScoreBord(naam);
         if (leesJaNee(naam + ", wil je de witte som " + witteSom + " aankruisen? J(a)/N(ee): ")) {
             verwerkRijKeuze(naam, witteSom);
@@ -254,7 +248,7 @@ public class QwixxCui {
     private void rondeActieveSpelerGekleurd(String naam) {
         toonScoreBord(naam);
 
-        System.out.println("\n--- Optie van de gekleurde dobbelstenen (VERPLICHT anders strafpunt van -5) ---"); // de kleur-combinaties
+        System.out.println("\n--- Optie van de gekleurde dobbelstenen (VERPLICHT anders strafpunt van -5) ---");
         toonMogelijkCombinaties();
 
         boolean succes = false;
@@ -286,8 +280,6 @@ public class QwixxCui {
 
         System.out.println("\n--- Mogelijke combinaties ---");
         System.out.println("0. Mislukte worp = strafpunt");
-
-        //met for-lus index geven (die later als optie gekozen kan worden) en de som waarde
         for (int i = 0; i < combinaties.size(); i++) {
             System.out.printf("%d. %s%n", (i+1), combinaties.get(i));
         }
@@ -360,7 +352,7 @@ public class QwixxCui {
         System.out.println("\n--------------------------------------------------------------------------");
     }
 
-    //op het einde de afsluiter tekst weergeven winnaar en aantal punten etc
+    //afsluiter
     private void toonResultaat() {
         System.out.println("\n--- Einde van het spel ---");
         for (String naam : gekozenSpelers) {
@@ -375,7 +367,6 @@ public class QwixxCui {
         afsluiten();
     }
 
-    //Methode om het bericht op het einde van het spel te laten zien bv. Mislukte worpen (-5 ptn): [ X ] [   ] [   ] [   ]
     public void afsluiten() {
         System.out.println("Dit was Qwixx! Fijne dag verder!");
     }

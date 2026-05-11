@@ -76,7 +76,7 @@ public class StartPaginaController {
     }
 
     private void laadSchermMetTaal(String taalCode, ActionEvent event) throws Exception {
-        Locale locale = new Locale(taalCode); // dit maakt taal-object aan, en geeft een aanduider (taalcode) om bestand te vinden
+        Locale locale = new Locale(taalCode); // dit maakt taal object aan en geeft een aanduider (taalcode) om bestand te vinden
         Locale.setDefault(locale); //dit zorgt ervoor dat de standaardtaal veranderd is
 
         ResourceBundle bundle = ResourceBundle.getBundle("localisatie", locale);
