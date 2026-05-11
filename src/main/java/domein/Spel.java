@@ -3,6 +3,7 @@ package domein;
 import utils.Kleur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,10 +11,12 @@ import java.util.List;
  * Beheert de dobbelstenen, spelers en de spellogica.
  */
 public class Spel {
-    private List<Speler> spelers;
-    List<Dobbelsteen> dobbelstenen;
+    public static final int MIN_AANTAL_SPELERS = 2;
+    public static final int MAX_AANTAL_SPELERS = 5;
+    private final List<Speler> spelers;
+    private final List<Dobbelsteen> dobbelstenen;
+    private final boolean alternatiefModus;
     private int aantalDoorkruisteRijen = 0;
-    private boolean alternatiefModus;
     private int huidigeSpelerIndex = 0;
 
     /**
@@ -23,8 +26,8 @@ public class Spel {
      * @param spelers De lijst van spelers die deelnemen aan het spel
      */
     public Spel(List<Speler> spelers, boolean alternatiefModus) {
-        if(spelers.size() < 2 || spelers.size() > 5){
-            throw new IllegalArgumentException("Een Qwixx-spel vereist min 2 en max 5 spelers.");
+        if (spelers.size() < MIN_AANTAL_SPELERS || spelers.size() > MAX_AANTAL_SPELERS) {
+            throw new IllegalArgumentException(String.format("Een Qwixx-spel vereist min %d en max %d spelers.", MIN_AANTAL_SPELERS, MAX_AANTAL_SPELERS));
         }
         this.spelers = new ArrayList<>(spelers);
         java.util.Collections.sort(this.spelers);
@@ -58,7 +61,7 @@ public class Spel {
      */
     public List<Speler> getSpelers()
     {
-        return spelers;
+        return Collections.unmodifiableList(spelers);
     }
 
     /**
@@ -67,7 +70,7 @@ public class Spel {
      */
     public List<Dobbelsteen> getDobbelstenen()
     {
-        return dobbelstenen;
+        return Collections.unmodifiableList(dobbelstenen);
     }
 
     /**
@@ -140,5 +143,22 @@ public class Spel {
      */
     public String getSpelerAanDeBeurt() {
         return spelers.get(huidigeSpelerIndex).getGebruikersnaam();
+    }
+
+    public boolean verwijderDobbelsteenVanKleur(Kleur kleur) {
+        for (int i = 0; i < dobbelstenen.size(); i++) {
+            if (dobbelstenen.get(i).getKleur() == kleur) {
+                dobbelstenen.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Kleur bepaalKleurVanKeuze(int keuze) {
+        if (keuze <= 2) return Kleur.ROOD;
+        if (keuze <= 4) return Kleur.GEEL;
+        if (keuze <= 6) return Kleur.GROEN;
+        return Kleur.BLAUW;
     }
 }

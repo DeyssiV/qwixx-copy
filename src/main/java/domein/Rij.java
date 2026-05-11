@@ -3,6 +3,7 @@ package domein;
 import utils.Kleur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -53,7 +54,7 @@ public class Rij {
      * @return vakjes Lijst van vakjes Vakje.
      */
     public List<Vakje> getVakjes() {
-        return vakjes;
+        return Collections.unmodifiableList(vakjes);
     }
 
     /**
@@ -93,7 +94,7 @@ public class Rij {
         if (gekozenIndex <= laatsteIndex) {
             return false;
         }
-        gekozenVakje.setAangekruist(true);
+        gekozenVakje.kruisAan();
         laatsteIndex = gekozenIndex;
 
         if (isUitersteVakje){

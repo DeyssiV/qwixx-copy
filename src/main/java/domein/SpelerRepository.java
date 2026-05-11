@@ -1,6 +1,7 @@
 package domein;
 
 import exceptions.GebruikersnaamInGebruikException;
+import exceptions.SpelerNietGevondenException;
 import persistentie.SpelerMapper;
 
 import java.util.ArrayList;
@@ -31,9 +32,7 @@ public class SpelerRepository {
         return s;
       }
     }
-    return null;
-    //return mapper.geefSpeler(gebruikersnaam);
-  }
+    throw new SpelerNietGevondenException(gebruikersnaam);  }
 
   /**
    * Werkt de statistieken van de opgegeven speler bij in de database.

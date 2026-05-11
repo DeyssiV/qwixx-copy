@@ -15,7 +15,6 @@ public class Vakje {
      */
     public Vakje(int waarde) {
         this.waarde = waarde;
-        this.aangekruist = false;
     }
 
     /**
@@ -37,9 +36,8 @@ public class Vakje {
     /**
      * Stelt de aangekruiste status van het vakje in.
      *
-     * @param aangekruist true om het vakje aan te kruisen, false om het te openen
      */
-    public void setAangekruist(boolean aangekruist) {
-        this.aangekruist = aangekruist;
+    public void kruisAan() {
+        this.aangekruist = true;
     }
 }

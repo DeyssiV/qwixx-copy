@@ -11,6 +11,9 @@ public class Speler implements Comparable<Speler> {
   private int mislukteWorpen;
   private int aantalGespeeld;
   private int aantalGewonnen;
+  private static final int MIN_LEEFTIJD = 8;
+  private static final int MAX_LEEFTIJD = 100;
+  private static final int MIN_LENGTE_GEBRUIKERSNAAM = 5;
 
   /**
    * maakt een speler aan.
@@ -121,7 +124,7 @@ public class Speler implements Comparable<Speler> {
   {
     if (gebruikersnaam == null || gebruikersnaam.isBlank())
       throw new IllegalArgumentException("Gebruikersnaam moet ingevuld zijn!");
-    else if (gebruikersnaam.length() < 5)
+    else if (gebruikersnaam.length() < MIN_LENGTE_GEBRUIKERSNAAM)
     {
       throw new IllegalArgumentException("Gebruikersnaam moet minstens 5 karakters hebben!");
     }
@@ -135,13 +138,10 @@ public class Speler implements Comparable<Speler> {
    */
   private void controleerGeboortejaar(int geboortejaar)
   {
-    // haal de huidige datum op
-    LocalDate huidigeDatum = LocalDate.now();
-    // zet het huidig jaar in een variabele
-    int huidigJaar = huidigeDatum.getYear();
-    // kijk of de speler ouder is dan 8 en jonger dan 100
-    if ((huidigJaar - geboortejaar) < 8 || (huidigJaar - geboortejaar) > 100)
-      throw new IllegalArgumentException("Alleen mensen tussen de 8 en 100 jaar mogen dit spel spelen!");
+    int huidigJaar = LocalDate.now().getYear();
+    int leeftijd = huidigJaar - geboortejaar;
+    if (leeftijd < MIN_LEEFTIJD || leeftijd > MAX_LEEFTIJD)
+      throw new IllegalArgumentException(String.format("Alleen mensen tussen de %d en %d jaar mogen dit spel spelen!", MIN_LEEFTIJD, MAX_LEEFTIJD));
   }
 
   /**
@@ -174,15 +174,15 @@ public class Speler implements Comparable<Speler> {
    */
   @Override
   public int compareTo(Speler andereSpeler) {
-    // sortering obv geboortejaar
+    // sortering obv geboortejaar (jongste start als eerste)
     if (this.geboortejaar != andereSpeler.geboortejaar) {
       return Integer.compare(andereSpeler.geboortejaar, this.geboortejaar);
     }
-    // sortering obv lengte gebruikersnaam
+    // sortering obv lengte gebruikersnaam (langste gebruikersnaam gaat eerst)
     if (this.gebruikersnaam.length() != andereSpeler.gebruikersnaam.length()) {
       return Integer.compare(andereSpeler.gebruikersnaam.length(), this.gebruikersnaam.length());
     }
-    // sortering obv alfabetische volgorde
+    // sortering obv alfabetische volgorde (eerst in alfabet gaat eerst)
     return this.gebruikersnaam.compareToIgnoreCase(andereSpeler.gebruikersnaam);
   }
 

@@ -140,7 +140,7 @@
      * @return {@code true} als het aankruisen volgens de spelregels is gelukt, anders {@code false}.
      */
     public boolean kiesCombinatie(String gebruikersnaam, int keuze){
-      Kleur gekozenKleur = kiesKleur(keuze);
+      Kleur gekozenKleur = spel.bepaalKleurVanKeuze(keuze);
 
       int witteWaarde = (keuze % 2 != 0) ? spel.getWitteWaarde(1) : spel.getWitteWaarde(2);
       int kleurWaarde = spel.getGekleurdeWaarde(gekozenKleur);
@@ -508,8 +508,7 @@
     public boolean magRijSluitenViaLockKnop(String gebruikersnaam, String kleurNaam) {
       Speler s = spelerRepository.geefSpeler(gebruikersnaam);
       Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
-      return !s.getScoreBlad().isRijGesloten(k)
-              && s.getScoreBlad().getAantalKruisjes(k) >= MIN_KRUISJES_VOOR_LOCK;
+      return !s.getScoreBlad().isRijGesloten(k) && s.getScoreBlad().getAantalKruisjes(k) >= MIN_KRUISJES_VOOR_LOCK;
     }
 
     /**
@@ -528,19 +527,7 @@
       }
 
       spel.verhoogAantalDoorkruisteRijen();
-
-      Dobbelsteen teVerwijderenDS = null;
-
-      for (Dobbelsteen d : spel.getDobbelstenen()) {
-        if (d.getKleur() == kleur) {
-          teVerwijderenDS = d;
-          break;
-        }
-      }
-
-      if (teVerwijderenDS != null) {
-        spel.getDobbelstenen().remove(teVerwijderenDS);
-      }
+      spel.verwijderDobbelsteenVanKleur(kleur);
     }
 
     /**
@@ -561,21 +548,9 @@
      * @param gebruikersnaam de naam van de speler.
      * @return een 2D-integer array van 4 bij 12 met de getalwaarden.
      */
-    //TODO deze methode moet in SCOREBLAD
     public int[][] geefVakWaarden(String gebruikersnaam) {
       Speler speler = spelerRepository.geefSpeler(gebruikersnaam);
-
-      int[][] waarden = new int[4][12];
-
-      for (int r = 0; r < speler.getScoreBlad().getRijen().size(); r++) {
-        List<Vakje> vakjes = speler.getScoreBlad().getRijen().get(r).getVakjes();
-
-        for (int v = 0; v < vakjes.size(); v++) {
-          waarden[r][v] = vakjes.get(v).getWaarde();
-        }
-      }
-
-      return waarden;
+      return speler.getScoreBlad().getMatrixVanWaarden();
     }
 
     /**

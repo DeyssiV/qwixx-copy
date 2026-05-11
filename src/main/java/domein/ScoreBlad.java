@@ -3,13 +3,16 @@ package domein;
 import utils.Kleur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ScoreBlad {
-    String gebruikersnaam;
-    private int score;
-    private List<Rij> rijen;
-    private boolean alternatiefModus;
+    public static final int STRAFPUNTEN_PER_MISLUKTE_WORP = 5;
+    public static final int AANTAL_RIJEN = 4;
+    public static final int AANTAL_VAKJES_PER_RIJ = 12;
+    private final String gebruikersnaam;
+    private final boolean alternatiefModus;
+    private final List<Rij> rijen;
     private static final int[][] STANDAARD_MATRIX = {
             {2,3,4,5,6,7,8,9,10,11,12,0},
             {2,3,4,5,6,7,8,9,10,11,12,0},
@@ -31,14 +34,12 @@ public class ScoreBlad {
     public ScoreBlad(String gebruikersnaam, boolean alternatiefModus) {
         this.gebruikersnaam = gebruikersnaam;
         this.alternatiefModus = alternatiefModus;
-        this.score = 0;
 
         int[][] matrix = alternatiefModus
                 ? ALTERNATIEVE_MATRIX
                 : STANDAARD_MATRIX;
 
         this.rijen = new ArrayList<>();
-
         this.rijen.add(new Rij(Kleur.ROOD, matrix[0]));
         this.rijen.add(new Rij(Kleur.GEEL, matrix[1]));
         this.rijen.add(new Rij(Kleur.GROEN, matrix[2]));
@@ -50,19 +51,11 @@ public class ScoreBlad {
      * @return Een lijst van 4 rijen van Rij.
      */
     public List<Rij> getRijen() {
-        return rijen;
+        return Collections.unmodifiableList(rijen);
     }
 
-    /**
-     * Geeft huidige score van scoreblad terug.
-     * @return Een score in Integer.
-     */
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
     }
 
     /**
@@ -110,7 +103,7 @@ public class ScoreBlad {
         for (Rij rij:rijen){
             totScore += rij.berekenScoreRij();
         }
-        totScore -= (aantalMislukteWorpen*5);
+        totScore -= (aantalMislukteWorpen*STRAFPUNTEN_PER_MISLUKTE_WORP);
         return totScore;
     }
 
@@ -147,6 +140,19 @@ public class ScoreBlad {
      * @return het aantal kruisjes in de rij, of {@code 0} als de rij niet bestaat.
      */
     public int getAantalKruisjes(Kleur kleur)        { Rij r = isRijVan(kleur); return r == null ? 0 : r.getAantalKruisjes(); }
+
+
+    public int[][] getMatrixVanWaarden() {
+        int[][] waarden = new int[AANTAL_RIJEN][AANTAL_VAKJES_PER_RIJ];
+        for (int r = 0; r < rijen.size(); r++) {
+            List<Vakje> vakjes = rijen.get(r).getVakjes();
+            for (int v = 0; v < vakjes.size(); v++) {
+                waarden[r][v] = vakjes.get(v).getWaarde();
+            }
+        }
+        return waarden;
+    }
+
 
 
 
