@@ -160,6 +160,7 @@ public class Speler implements Comparable<Speler> {
    * @return boolean of het gelukt is of niet.
    */
   public boolean kruisAan(Kleur kleur, int vakje){
+    if (scoreBlad == null) return false;
     return scoreBlad.kruisVakje(kleur, vakje);
   }
 

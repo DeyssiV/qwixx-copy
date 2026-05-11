@@ -30,7 +30,7 @@ public class Spel {
             throw new IllegalArgumentException(String.format("Een Qwixx-spel vereist min %d en max %d spelers.", MIN_AANTAL_SPELERS, MAX_AANTAL_SPELERS));
         }
         this.spelers = new ArrayList<>(spelers);
-        java.util.Collections.sort(this.spelers);
+        Collections.sort(this.spelers);
         this.alternatiefModus = alternatiefModus;
         this.dobbelstenen = new ArrayList<>();
 

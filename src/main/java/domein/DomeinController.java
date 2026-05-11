@@ -15,9 +15,11 @@
     private Spel spel;
     private boolean alternatiefModus = false;
     private final List<String> gekozenNamen = new ArrayList<>();
-    public static final int MAX_MISLUKTE_WORPEN = 2;
+    public static final int TEST_MAX_MISLUKTE_WORPEN = 2;
+    public static final int MAX_MISLUKTE_WORPEN = 4;
     public static final int MAX_DOORKRUISTE_RIJEN = 2;
-    public static final int MIN_KRUISJES_VOOR_LOCK = 2;
+    public static final int TEST_MIN_KRUISJES_VOOR_LOCK = 2;
+    public static final int MIN_KRUISJES_VOOR_LOCK = 5;
 
 
     /**
@@ -154,27 +156,13 @@
     }
 
     /**
-     * Bepaalt de kleur die hoort bij een specifieke numerieke keuze uit de gebruikersinterface.
-     *
-     * @param keuze de numerieke index van de geselecteerde combinatie.
-     * @return de {@link Kleur} die gekoppeld is aan de geselecteerde index.
-     */
-    //TODO deze methode moet in SPEL staan
-    private Kleur kiesKleur(int keuze) {
-      if (keuze <= 2) return Kleur.ROOD;
-      if (keuze <= 4) return Kleur.GEEL;
-      if (keuze <= 6) return Kleur.GROEN;
-      return Kleur.BLAUW;
-    }
-
-    /**
      * Vertaalt een numerieke keuze uit de UI naar de bijbehorende kleurnaam.
      *
      * @param keuze de numerieke index van de kleurselectie.
      * @return de naam van de kleur (bijv. "ROOD", "GEEL").
      */
     public String geefKleurVanKeuze(int keuze) {
-      return kiesKleur(keuze).toString();
+      return spel.bepaalKleurVanKeuze(keuze).toString();
     }
 
     /**
@@ -460,7 +448,7 @@
      */
     public boolean isEindeSpelDoorMislukteWorpen(String gebruikersnaam){
       Speler s = spelerRepository.geefSpeler(gebruikersnaam);
-      return s.getMislukteWorpen() >= MAX_MISLUKTE_WORPEN;
+      return s.getMislukteWorpen() >= TEST_MAX_MISLUKTE_WORPEN;
     }
 
     /**
@@ -508,7 +496,7 @@
     public boolean magRijSluitenViaLockKnop(String gebruikersnaam, String kleurNaam) {
       Speler s = spelerRepository.geefSpeler(gebruikersnaam);
       Kleur k = Kleur.valueOf(kleurNaam.toUpperCase());
-      return !s.getScoreBlad().isRijGesloten(k) && s.getScoreBlad().getAantalKruisjes(k) >= MIN_KRUISJES_VOOR_LOCK;
+      return !s.getScoreBlad().isRijGesloten(k) && s.getScoreBlad().getAantalKruisjes(k) >= TEST_MIN_KRUISJES_VOOR_LOCK;
     }
 
     /**

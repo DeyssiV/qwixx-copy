@@ -25,9 +25,14 @@
     -fx-background-color: #ecf0f1;
 }
 
-#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP{
+#btnStartSpelSP, #btnSpelerToevoegenSP, #btnSpelRegelsSP, #btnStatsSP, #btnRolDobbelstenen{
     -fx-font-family: "Calibri";
     -fx-font-size: 25px;
+}
+
+#btnRolDobbelstenen, #LabelTotaleScore, #lblTotaleScore{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20px;
 }
 
 #btnStartSpelSP {
@@ -136,16 +141,6 @@
     -fx-font-size: 20px;
 }
 
-#lblLaatstGewonnenSTATP {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 18px;
-    -fx-text-fill: #7f8c8d;
-}
-
-#lblLaatsteWinnaarSTATP {
-    -fx-font-weight: bold;
-    -fx-font-size: 20px;
-}
 
 .list-cell:filled:selected {
     -fx-background-color: #f39c12;
@@ -169,7 +164,7 @@
     -fx-background-color: #595959;
 }
 
-#lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL, #lblTitelGSP {
+#lblTitelSKP, #lblTitelSRP, #lblTitelSTATP, #lblTitelSPEL, #lblTitelGSP, #lblTitelSTP, #lblTitelGameOver {
     -fx-font-size: 50px;
     -fx-text-fill: black;
 }
@@ -187,37 +182,6 @@
     -fx-max-width: 60px;
     -fx-max-height: 60px;
     -fx-padding: 0;
-}
-
-.input-field {
-    -fx-font-family: "Calibri";
-    -fx-font-size: 20px;
-}
-
-#btnRegistrerenSTP {
-    -fx-font-size: 24px;
-}
-
-#lblTitelSTP {
-    -fx-font-size: 50px;
-    -fx-text-fill: black;
-}
-
-#btnStop {
-    -fx-background-color: #e74c3c;
-    -fx-background-radius: 5em;
-    -fx-min-width: 45px;
-    -fx-min-height: 45px;
-    -fx-max-width: 45px;
-    -fx-max-height: 45px;
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-padding: 0;
-}
-
-#btnStop:hover {
-    -fx-background-color: #c0392b;
 }
 
 #btnRolDobbelstenen {
@@ -244,14 +208,7 @@
     -fx-text-fill: #922b21;
     -fx-background-color: #fadbd8;
 }
-.input-field {
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #bdc3c7;
-    -fx-padding: 10;
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 16px;
-}
+
 
 .text-field {
     -fx-pref-width: 400px;
@@ -283,10 +240,6 @@
     -fx-padding: 15;
 }
 
-#lblTitelGameOver {
-     -fx-font-size: 50px;
-     -fx-text-fill: black;
- }
 
 #lblTotaleScore {
     -fx-background-color: #ecf0f1;

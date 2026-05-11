@@ -14,6 +14,9 @@ public class Dobbelsteen {
      * @param kleur de kleur dat de dobbelsteen moet krijgen.
      */
     public Dobbelsteen(Kleur kleur) {
+        if (kleur == null) {
+            throw new IllegalArgumentException("Kleur van dobbelsteen mag niet null zijn.");
+        }
         this.kleur = kleur;
         rolDobbelsteen();
     }

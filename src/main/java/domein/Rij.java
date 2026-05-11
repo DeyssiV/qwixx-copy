@@ -12,7 +12,9 @@ public class Rij {
     private boolean gesloten;
     private List<Vakje> vakjes;
     private int laatsteIndex = -1;
-    public static final int MIN_KRUISJES_VOOR_SLUITEN = 2;
+    public static final int TEST_MIN_KRUISJES_VOOR_SLUITEN = 2;
+    public static final int MIN_KRUISJES_VOOR_SLUITEN = 5;
+    private static final int[] SCORE_PER_AANTAL_KRUISJES = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91};
 
 
     /**
@@ -87,7 +89,7 @@ public class Rij {
             return false;
         }
         boolean isUitersteVakje = gekozenIndex == vakjes.size() - 1;
-        if (isUitersteVakje && getAantalKruisjes() < MIN_KRUISJES_VOOR_SLUITEN) {
+        if (isUitersteVakje && getAantalKruisjes() < TEST_MIN_KRUISJES_VOOR_SLUITEN) {
             return false;
         }
         // enkel rechts van vorige kruisjes mogen gekozen worden
@@ -112,8 +114,10 @@ public class Rij {
     public int berekenScoreRij(){
         int aantal = getAantalKruisjes();
         if (aantal<=0) return 0;
-        int [] scoreRij = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78};
-        return scoreRij[aantal-1];
+        if (aantal > SCORE_PER_AANTAL_KRUISJES.length) {
+            aantal = SCORE_PER_AANTAL_KRUISJES.length;
+        }
+        return SCORE_PER_AANTAL_KRUISJES[aantal - 1];
     }
 
     /**
